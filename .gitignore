@@ -2,6 +2,7 @@
 ### UnrealEngine ###
 # Visual Studio 2022 user specific files
 .vs/
+.idea/
 
 # Compiled Object files
 *.slo
