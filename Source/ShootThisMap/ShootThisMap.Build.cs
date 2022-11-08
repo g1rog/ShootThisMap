@@ -1,5 +1,4 @@
 
-
 using UnrealBuildTool;
 
 public class ShootThisMap : ModuleRules

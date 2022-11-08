@@ -7,6 +7,8 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class USTMHealthComponent;
+class UTextRenderComponent;
 
 UCLASS()
 class SHOOTTHISMAP_API ASTMBaseCharacter : public ACharacter
@@ -14,7 +16,7 @@ class SHOOTTHISMAP_API ASTMBaseCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	ASTMBaseCharacter(const FObjectInitializer& ObjInit);
+    ASTMBaseCharacter(const FObjectInitializer& ObjInit);
     
     UFUNCTION(BlueprintCallable, Category = "Movement")
     bool IsRunning() const;
@@ -29,10 +31,13 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-    void MoveForward(const float Amount);
-    void MoveRight(const float Amount);
-    void OnStartRunning();
-    void OnStopRunning();
+    FORCEINLINE void MoveForward(const float Amount);
+    FORCEINLINE void MoveRight(const float Amount);
+    FORCEINLINE void OnStartRunning();
+    FORCEINLINE void OnStopRunning();
+
+    void OnDeath();
+    void OnHealthChanged(const float Health) const;
     
 public:
     /**/
@@ -42,6 +47,15 @@ protected:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
     TObjectPtr<USpringArmComponent> SpringArmComponent;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+    TObjectPtr<USTMHealthComponent> HealthComponent;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+    TObjectPtr<UTextRenderComponent> HealthTextComponent;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Animations")
+    TObjectPtr<UAnimMontage> DeathAnimMontage;
     
 private:
     bool WantsToRun = false;
