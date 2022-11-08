@@ -1,6 +1,6 @@
 
 ### UnrealEngine ###
-# Visual Studio 2022 user specific files
+# Visual Studio 2022 and Rider user specific files
 .vs/
 .idea/
 
@@ -50,7 +50,6 @@ SourceArt/**/*.tga
 
 # Binary Files
 Binaries/*
-Plugins/*/Binaries/*
 
 # Builds
 Build/*
@@ -71,7 +70,7 @@ Saved/*
 
 # Compiled source files for the engine to use
 Intermediate/*
-Plugins/*/Intermediate/*
+Plugins/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
@@ -88,6 +87,4 @@ Build/Android/res/*
 !Build/Android/res/*/
 Build/Android/res/*/*
 !Build/Android/res/*/*.png
-# Ignore plugins binaries on deep subfolders
-Plugins/**/Binaries/*
-Plugins/**/Intermediate/*
+
