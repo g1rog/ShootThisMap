@@ -9,6 +9,7 @@ class UCameraComponent;
 class USpringArmComponent;
 class USTMHealthComponent;
 class UTextRenderComponent;
+class USTMWeaponComponent;
 
 UCLASS()
 class SHOOTTHISMAP_API ASTMBaseCharacter : public ACharacter
@@ -54,8 +55,13 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
     TObjectPtr<UTextRenderComponent> HealthTextComponent;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    USTMWeaponComponent* WeaponComponent;
+
     UPROPERTY(EditDefaultsOnly, Category = "Animations")
     TObjectPtr<UAnimMontage> DeathAnimMontage;
+
+   
     
 private:
     bool WantsToRun = false;

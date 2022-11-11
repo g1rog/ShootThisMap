@@ -6,6 +6,7 @@
 #include "Components/STMHealthComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/Controller.h"
+#include "Components/STMWeaponComponent.h"
 
 ASTMBaseCharacter::ASTMBaseCharacter(const FObjectInitializer& ObjInit)
     : Super(ObjInit.SetDefaultSubobjectClass<USTMCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
@@ -23,6 +24,8 @@ ASTMBaseCharacter::ASTMBaseCharacter(const FObjectInitializer& ObjInit)
     
     HealthTextComponent = CreateDefaultSubobject<UTextRenderComponent>("HealthTextComponent");
     HealthTextComponent->SetupAttachment(GetRootComponent());
+
+    WeaponComponent = CreateDefaultSubobject<USTMWeaponComponent>("WeaponComponent");
 }
 
 void ASTMBaseCharacter::BeginPlay()
@@ -38,6 +41,7 @@ void ASTMBaseCharacter::BeginPlay()
     OnHealthChanged(HealthComponent->GetHealth());
     HealthComponent->OnDeath.AddUObject(this, &ASTMBaseCharacter::OnDeath);
     HealthComponent->OnHealthChanged.AddUObject(this, &ASTMBaseCharacter::OnHealthChanged);
+
 }
 
 void ASTMBaseCharacter::Tick(const float DeltaTime)
@@ -49,6 +53,7 @@ void ASTMBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
     check(PlayerInputComponent);
+    check(WeaponComponent);
     
     PlayerInputComponent->BindAxis("MoveForward", this, &ASTMBaseCharacter::MoveForward);
     PlayerInputComponent->BindAxis("MoveRight", this, &ASTMBaseCharacter::MoveRight);
@@ -58,11 +63,13 @@ void ASTMBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ASTMBaseCharacter::Jump);
     PlayerInputComponent->BindAction("Run", IE_Pressed, this, &ASTMBaseCharacter::OnStartRunning);
     PlayerInputComponent->BindAction("Run", IE_Released, this, &ASTMBaseCharacter::OnStopRunning);
+    PlayerInputComponent->BindAction("Fire", IE_Pressed, WeaponComponent, &USTMWeaponComponent::Fire);
+
 }
 
 FORCEINLINE void ASTMBaseCharacter::MoveForward(const float Amount)
 {
-    if (Amount == 0.0f) return;
+    if (FMath::IsNearlyZero(Amount, 0.0f)) return;
     IsMovingForward = Amount > 0.0f;
     AddMovementInput(GetActorForwardVector(), Amount);
 }
@@ -72,15 +79,9 @@ FORCEINLINE void ASTMBaseCharacter::MoveRight(const float Amount)
     AddMovementInput(GetActorRightVector(), Amount);
 }
 
-FORCEINLINE void ASTMBaseCharacter::OnStartRunning()
-{
-    WantsToRun = true;
-}
+FORCEINLINE void ASTMBaseCharacter::OnStartRunning() { WantsToRun = true; }
 
-FORCEINLINE void ASTMBaseCharacter::OnStopRunning()
-{
-    WantsToRun = false;
-}
+FORCEINLINE void ASTMBaseCharacter::OnStopRunning() { WantsToRun = false; }
 
 bool ASTMBaseCharacter::IsRunning() const
 {
@@ -109,3 +110,4 @@ void ASTMBaseCharacter::OnHealthChanged(const float Health) const
 {
     HealthTextComponent->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), Health)));
 }
+
