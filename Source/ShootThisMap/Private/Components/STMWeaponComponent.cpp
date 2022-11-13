@@ -20,7 +20,7 @@ void USTMWeaponComponent::SpawnWeapon()
 {
     if (!GetWorld()) return;
 
-    const auto Character = Cast<ACharacter>(GetOwner());
+    const TObjectPtr<ACharacter> Character = Cast<ACharacter>(GetOwner());
     if (!Character) return;
     
     CurrentWeapon = GetWorld()->SpawnActor<ASTMBaseWeapon>(WeaponClass);
@@ -28,11 +28,18 @@ void USTMWeaponComponent::SpawnWeapon()
     
     const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
     CurrentWeapon->AttachToComponent(Character->GetMesh(), AttachmentRules, WeaponAttachPointName);
+    CurrentWeapon->SetOwner(Character);
     
 }
 
-void USTMWeaponComponent::Fire()
+void USTMWeaponComponent::StartFire()
 {
     if (!CurrentWeapon) return;
-    CurrentWeapon->Fire();
+    CurrentWeapon->StartFire();
+}
+
+void USTMWeaponComponent::StopFire()
+{
+    if (!CurrentWeapon) return;
+    CurrentWeapon->StopFire();
 }

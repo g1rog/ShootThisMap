@@ -15,7 +15,8 @@ class SHOOTTHISMAP_API USTMWeaponComponent : public UActorComponent
 public:	
 	USTMWeaponComponent();
 
-    void Fire();
+    void StartFire();
+    void StopFire();
     
 protected:
 	virtual void BeginPlay() override;

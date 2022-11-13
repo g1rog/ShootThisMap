@@ -17,10 +17,7 @@ void USTMHealthComponent::BeginPlay()
         ComponentOwner->OnTakeAnyDamage.AddDynamic(this, &USTMHealthComponent::OnTakeAnyDamage);
 }
 
-CONSTEXPR FORCEINLINE float USTMHealthComponent::GetHealth() const
-{
-    return Health;
-}
+CONSTEXPR FORCEINLINE float USTMHealthComponent::GetHealth() const { return Health; }
 
 void USTMHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, const float Damage, const class UDamageType* DamageType,
       class AController* InstigatedBy, AActor* DamageCauser)
@@ -31,13 +28,13 @@ void USTMHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, const float Dama
     
     if (IsDead())
         OnDeath.Broadcast();
-    else if (AutoHeal)
+    else if (AutoHeal && GetWorld())
         GetWorld()->GetTimerManager().SetTimer(HealTimerHandle, this, &USTMHealthComponent::HealUpdate, HealUpdateTime, true, HealDelay);
 }
 
 bool USTMHealthComponent::IsDead() const
 {
-    return FMath::IsNearlyZero(Health) ? true : false;
+    return FMath::IsNearlyZero(Health);
 }
 
 void USTMHealthComponent::HealUpdate()
@@ -49,7 +46,7 @@ void USTMHealthComponent::HealUpdate()
 
 void USTMHealthComponent::SetHealth(const float NewHealth)
 {
-    Health = FMath::Min(Health + NewHealth, MaxHealth);
+    Health = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
     OnHealthChanged.Broadcast(Health);
 }
 

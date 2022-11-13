@@ -41,7 +41,6 @@ private:
     void OnHealthChanged(const float Health) const;
     
 public:
-    /**/
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
     TObjectPtr<UCameraComponent> CameraComponent;
@@ -61,11 +60,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Animations")
     TObjectPtr<UAnimMontage> DeathAnimMontage;
 
-   
     
 private:
     bool WantsToRun = false;
     bool IsMovingForward = false;
-	
-
+    
 };

@@ -7,6 +7,7 @@
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/Controller.h"
 #include "Components/STMWeaponComponent.h"
+#include "Components/CapsuleComponent.h"
 
 ASTMBaseCharacter::ASTMBaseCharacter(const FObjectInitializer& ObjInit)
     : Super(ObjInit.SetDefaultSubobjectClass<USTMCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
@@ -47,6 +48,7 @@ void ASTMBaseCharacter::BeginPlay()
 void ASTMBaseCharacter::Tick(const float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 }
 
 void ASTMBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -63,14 +65,15 @@ void ASTMBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ASTMBaseCharacter::Jump);
     PlayerInputComponent->BindAction("Run", IE_Pressed, this, &ASTMBaseCharacter::OnStartRunning);
     PlayerInputComponent->BindAction("Run", IE_Released, this, &ASTMBaseCharacter::OnStopRunning);
-    PlayerInputComponent->BindAction("Fire", IE_Pressed, WeaponComponent, &USTMWeaponComponent::Fire);
+    PlayerInputComponent->BindAction("Fire", IE_Pressed, WeaponComponent, &USTMWeaponComponent::StartFire);
+    PlayerInputComponent->BindAction("Fire", IE_Released, WeaponComponent, &USTMWeaponComponent::StopFire);
 
 }
 
 FORCEINLINE void ASTMBaseCharacter::MoveForward(const float Amount)
 {
     if (FMath::IsNearlyZero(Amount, 0.0f)) return;
-    IsMovingForward = Amount > 0.0f;
+    IsMovingForward = FMath::IsNearlyEqual(Amount, 0.0f);
     AddMovementInput(GetActorForwardVector(), Amount);
 }
 
@@ -104,6 +107,7 @@ void ASTMBaseCharacter::OnDeath()
     GetCharacterMovement()->DisableMovement();
     SetLifeSpan(5.0f);
     if (Controller) Controller->ChangeState(NAME_Spectating);
+    GetCapsuleComponent()->SetCollisionResponseToChannels(ECollisionResponse::ECR_Ignore);
 }
 
 void ASTMBaseCharacter::OnHealthChanged(const float Health) const
