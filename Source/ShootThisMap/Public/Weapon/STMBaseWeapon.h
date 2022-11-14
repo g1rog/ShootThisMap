@@ -18,16 +18,16 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-    void MakeShot();
 
-private:
-    TObjectPtr<APlayerController> GetPlayerController() const;
-    FORCEINLINE FVector GetMuzzleSocketLocation() const;
-    bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
+    virtual void MakeShot();
+    virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
     bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
     void MakeDamage(const FHitResult& HitResult);
+    FORCEINLINE FVector GetMuzzleSocketLocation() const;
+    TObjectPtr<APlayerController> GetPlayerController() const;
 
+private:
 
 public:
 protected:
@@ -42,11 +42,7 @@ protected:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
     float DamageAmount = 20.0f;
-    
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-    float TimeBetweenShots = 0.1f;
 
 private:
-    FTimerHandle ShotTimerHandle;
     
 };
