@@ -17,11 +17,15 @@ public:
 protected:
     virtual void MakeShot() override;
 private:
+    void MakeDamage(const FHitResult& HitResult);
 
 public:
 protected:
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
     float TimeBetweenShots = 0.1f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+    float DamageAmount = 20.0f;
     
 private:
     FTimerHandle ShotTimerHandle;

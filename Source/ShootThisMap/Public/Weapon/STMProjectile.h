@@ -29,10 +29,10 @@ private:
 
 public:
 protected:
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
     TObjectPtr<USphereComponent> CollisionComponent;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
     TObjectPtr<UProjectileMovementComponent> MovementComponent;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
