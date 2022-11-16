@@ -48,7 +48,6 @@ void ASTMBaseCharacter::BeginPlay()
 void ASTMBaseCharacter::Tick(const float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void ASTMBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -67,6 +66,7 @@ void ASTMBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     PlayerInputComponent->BindAction("Run", IE_Released, this, &ASTMBaseCharacter::OnStopRunning);
     PlayerInputComponent->BindAction("Fire", IE_Pressed, WeaponComponent, &USTMWeaponComponent::StartFire);
     PlayerInputComponent->BindAction("Fire", IE_Released, WeaponComponent, &USTMWeaponComponent::StopFire);
+    PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, WeaponComponent, &USTMWeaponComponent::NextWeapon);
 
 }
 
@@ -105,6 +105,7 @@ void ASTMBaseCharacter::OnDeath()
 {
     PlayAnimMontage(DeathAnimMontage);
     GetCharacterMovement()->DisableMovement();
+    WeaponComponent->StopFire();
     SetLifeSpan(5.0f);
     if (Controller) Controller->ChangeState(NAME_Spectating);
     GetCapsuleComponent()->SetCollisionResponseToChannels(ECollisionResponse::ECR_Ignore);

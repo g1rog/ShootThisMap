@@ -9,5 +9,4 @@ UCLASS()
 class SHOOTTHISMAP_API ASTMPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
 };

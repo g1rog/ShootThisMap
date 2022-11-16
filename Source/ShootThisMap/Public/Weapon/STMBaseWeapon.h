@@ -15,16 +15,14 @@ public:
     virtual void StartFire();
     virtual void StopFire();
 
-
 protected:
 	virtual void BeginPlay() override;
-
     virtual void MakeShot();
     virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
     bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
-    FORCEINLINE FVector GetMuzzleSocketLocation() const;
     TObjectPtr<APlayerController> GetPlayerController() const;
+    FORCEINLINE FVector GetMuzzleSocketLocation() const;
 
 private:
 
@@ -40,5 +38,4 @@ protected:
     float TraceMaxDistance = 1000.0f;
 
 private:
-    
 };

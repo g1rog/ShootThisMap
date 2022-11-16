@@ -1,9 +1,7 @@
 
 #include "Weapon/STMBaseWeapon.h"
 #include "Components/SkeletalMeshComponent.h"
-#include "DrawDebugHelpers.h"
 #include "GameFramework/Character.h"
-#include "GameFramework/Controller.h"
 
 ASTMBaseWeapon::ASTMBaseWeapon()
 {
@@ -20,20 +18,11 @@ void ASTMBaseWeapon::BeginPlay()
 	
 }
 
-void ASTMBaseWeapon::StartFire()
-{
-    
-}
+void ASTMBaseWeapon::StartFire() {}
 
-void ASTMBaseWeapon::StopFire()
-{
-  
-}
+void ASTMBaseWeapon::StopFire() {}
 
-void ASTMBaseWeapon::MakeShot()
-{
-   
-}
+void ASTMBaseWeapon::MakeShot() {}
 
 TObjectPtr<APlayerController> ASTMBaseWeapon::GetPlayerController() const
 {

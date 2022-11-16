@@ -1,5 +1,4 @@
 
-
 #include "Weapon/STMProjectile.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
@@ -26,7 +25,6 @@ void ASTMProjectile::BeginPlay()
 	Super::BeginPlay();
     check(MovementComponent);
     check(CollisionComponent);
-
     
     MovementComponent->Velocity = ShotDirection * MovementComponent->InitialSpeed;
     CollisionComponent->IgnoreActorWhenMoving(GetOwner(), true);
@@ -47,7 +45,7 @@ void ASTMProjectile::OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* 
     Destroy();
 }
 
-FORCEINLINE void ASTMProjectile::SetShotDirection(const FVector& Direction) { ShotDirection = Direction; }
+CONSTEXPR FORCEINLINE void ASTMProjectile::SetShotDirection(const FVector& Direction) { ShotDirection = Direction; }
 
 FORCEINLINE TObjectPtr<AController> ASTMProjectile::GetController() const
 {

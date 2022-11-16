@@ -60,7 +60,6 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Animations")
     TObjectPtr<UAnimMontage> DeathAnimMontage;
 
-    
 private:
     bool WantsToRun = false;
     bool IsMovingForward = false;

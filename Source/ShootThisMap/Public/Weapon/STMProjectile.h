@@ -16,7 +16,7 @@ class SHOOTTHISMAP_API ASTMProjectile : public AActor
 public:	
 	ASTMProjectile();
 
-    FORCEINLINE void SetShotDirection(const FVector& Direction);
+    CONSTEXPR FORCEINLINE void SetShotDirection(const FVector& Direction);
 protected:
 	virtual void BeginPlay() override;
 
