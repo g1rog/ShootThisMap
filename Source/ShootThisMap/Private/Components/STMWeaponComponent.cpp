@@ -2,6 +2,7 @@
 #include "Components/STMWeaponComponent.h"
 #include "Weapon/STMBaseWeapon.h"
 #include "GameFramework/Character.h"
+#include "Animations/STMEquipFinishedAnimNotify.h"
 
 USTMWeaponComponent::USTMWeaponComponent()
 {
@@ -11,6 +12,8 @@ USTMWeaponComponent::USTMWeaponComponent()
 void USTMWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+    InitAnimations();
 
     CurrentWeaponId = 0;
     SpawnWeapons();
@@ -64,11 +67,13 @@ void USTMWeaponComponent::EquipWeapon(const int32 WeaponId)
 
     CurrentWeapon = Weapons[WeaponId];
     AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName);
+    EquipAnimInProgress = true;
+    PlayAnimMontage(EquipAnimMontage);
 }
 
 void USTMWeaponComponent::StartFire()
 {
-    if (!CurrentWeapon) return;
+    if (!CanFire()) return;
     CurrentWeapon->StartFire();
 }
 
@@ -80,8 +85,48 @@ void USTMWeaponComponent::StopFire()
 
 void USTMWeaponComponent::NextWeapon()
 {
+    if (!CanEquip()) return;
     CurrentWeaponId = (CurrentWeaponId + 1) % Weapons.Num();
     EquipWeapon(CurrentWeaponId);
 }
+
+void USTMWeaponComponent::PlayAnimMontage(const TObjectPtr<UAnimMontage> &Animation) const
+{
+    const auto Character = Cast<ACharacter>(GetOwner());
+    if (!Character) return;
+    Character->PlayAnimMontage(Animation);
+    
+}
+
+void USTMWeaponComponent::InitAnimations()
+{
+    if (!EquipAnimMontage) return;
+    const auto NotifyEvents = EquipAnimMontage->Notifies;
+    for (const auto& i : NotifyEvents)
+    {
+        const auto EquipFinishedNotify = Cast<USTMEquipFinishedAnimNotify>(i.Notify);
+        if (EquipFinishedNotify) EquipFinishedNotify->OnNotified.AddUObject(this, &USTMWeaponComponent::OnEquipFinished);
+        break;
+    }
+}
+
+void USTMWeaponComponent::OnEquipFinished(const TObjectPtr<USkeletalMeshComponent> MeshComponent)
+{
+    const auto Character = Cast<ACharacter>(GetOwner());
+    if (!Character || Character->GetMesh() != MeshComponent) return;
+    EquipAnimInProgress = false;
+}
+
+bool USTMWeaponComponent::CanFire() const
+{
+   return CurrentWeapon && !EquipAnimInProgress;
+    
+}
+
+bool USTMWeaponComponent::CanEquip() const
+{
+    return !EquipAnimInProgress;
+}
+
 
 

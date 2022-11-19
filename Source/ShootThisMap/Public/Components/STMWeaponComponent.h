@@ -27,7 +27,11 @@ private:
     void SpawnWeapons();
     void AttachWeaponToSocket(const TObjectPtr<ASTMBaseWeapon>& Weapon, const TObjectPtr<USceneComponent>& SceneComponent, const FName& SocketName);
     void EquipWeapon(int32 WeaponId);
-
+    void PlayAnimMontage(const TObjectPtr<UAnimMontage>& Animation) const;
+    void InitAnimations();
+    void OnEquipFinished(const TObjectPtr<USkeletalMeshComponent> MeshComponent);
+    bool CanFire() const;
+    bool CanEquip() const;
 public:
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")
@@ -38,10 +42,14 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")
     FName WeaponArmorySocketName = "ArmorySocket";
+
+    UPROPERTY(EditDefaultsOnly, Category = "Animation")
+    TObjectPtr<UAnimMontage> EquipAnimMontage;
     
 private:
     TObjectPtr<ASTMBaseWeapon> CurrentWeapon = nullptr;
     TArray<ASTMBaseWeapon*> Weapons;
     int32 CurrentWeaponId = 0;
+    bool EquipAnimInProgress = false;
 		
 };
