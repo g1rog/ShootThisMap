@@ -15,6 +15,8 @@ void ASTMBaseWeapon::BeginPlay()
 {
 	Super::BeginPlay();
     check(WeaponMesh);
+
+    CurrentAmmo = DefaultAmmo;
 	
 }
 
@@ -65,6 +67,33 @@ void ASTMBaseWeapon::MakeHit(FHitResult &HitResult, const FVector &TraceStart, c
     FCollisionQueryParams CollisionParams;
     CollisionParams.AddIgnoredActor(GetOwner());
     GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility);
+}
+
+void ASTMBaseWeapon::DecreaseAmmo()
+{
+    CurrentAmmo.Bullets--;
+    if (IsClipEmpty() && !IsAmmoEmpty())
+        ChangeClip();
+
+        
+}
+
+bool ASTMBaseWeapon::IsAmmoEmpty() const
+{
+    return !CurrentAmmo.Infinite && CurrentAmmo.Clips == 0 && IsClipEmpty();
+}
+
+bool ASTMBaseWeapon::IsClipEmpty() const
+{
+    return CurrentAmmo.Bullets == 0;
+
+}
+
+void ASTMBaseWeapon::ChangeClip()
+{
+    CurrentAmmo.Bullets = DefaultAmmo.Bullets;
+    if (!CurrentAmmo.Infinite)
+        CurrentAmmo.Clips--;
 }
 
 

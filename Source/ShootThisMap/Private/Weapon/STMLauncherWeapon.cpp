@@ -9,7 +9,7 @@ void ASTMLauncherWeapon::StartFire()
 
 void ASTMLauncherWeapon::MakeShot()
 {
-    if(!GetWorld()) return;
+    if(!GetWorld() || IsAmmoEmpty()) return;
     
     FVector TraceStart, TraceEnd;
     if (!GetTraceData(TraceStart, TraceEnd)) return;
@@ -27,6 +27,6 @@ void ASTMLauncherWeapon::MakeShot()
         Projectile->SetOwner(GetOwner());
         Projectile->FinishSpawning(SpawnTransform);
     }
-    
+    DecreaseAmmo();
 }
 
