@@ -2,6 +2,7 @@
 #include "Weapon/STMBaseWeapon.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/Character.h"
+#include "Animations/AnimUtils.h"
 
 ASTMBaseWeapon::ASTMBaseWeapon()
 {
@@ -17,7 +18,6 @@ void ASTMBaseWeapon::BeginPlay()
     check(WeaponMesh);
 
     CurrentAmmo = DefaultAmmo;
-	
 }
 
 void ASTMBaseWeapon::StartFire() {}
@@ -74,8 +74,6 @@ void ASTMBaseWeapon::DecreaseAmmo()
     CurrentAmmo.Bullets--;
     if (IsClipEmpty() && !IsAmmoEmpty())
         ChangeClip();
-
-        
 }
 
 bool ASTMBaseWeapon::IsAmmoEmpty() const
@@ -86,7 +84,6 @@ bool ASTMBaseWeapon::IsAmmoEmpty() const
 bool ASTMBaseWeapon::IsClipEmpty() const
 {
     return CurrentAmmo.Bullets == 0;
-
 }
 
 void ASTMBaseWeapon::ChangeClip()

@@ -1,5 +1,7 @@
 
 #include "Components/STMWeaponComponent.h"
+
+#include "Animations/AnimUtils.h"
 #include "Weapon/STMBaseWeapon.h"
 #include "GameFramework/Character.h"
 #include "Animations/STMEquipFinishedAnimNotify.h"
@@ -105,7 +107,7 @@ void USTMWeaponComponent::PlayAnimMontage(const TObjectPtr<UAnimMontage> &Animat
 
 void USTMWeaponComponent::InitAnimations()
 {
-    const auto EquipFinishedNotify = FindNotifyByClass<USTMEquipFinishedAnimNotify>(EquipAnimMontage);
+    const auto EquipFinishedNotify = AnimUtils::FindNotifyByClass<USTMEquipFinishedAnimNotify>(EquipAnimMontage);
     if (EquipFinishedNotify)
         EquipFinishedNotify->OnNotified.AddUObject(this, &USTMWeaponComponent::OnEquipFinished);
     else
@@ -113,7 +115,7 @@ void USTMWeaponComponent::InitAnimations()
 
     for (const auto& i : WeaponData)
     {
-        const auto ReloadFinishedNotify = FindNotifyByClass<USTMReloadFinishedAnimNotify>(i.ReloadAnimMontage);
+        const auto ReloadFinishedNotify = AnimUtils::FindNotifyByClass<USTMReloadFinishedAnimNotify>(i.ReloadAnimMontage);
         if (!ReloadFinishedNotify) continue;
         EquipFinishedNotify->OnNotified.AddUObject(this, &USTMWeaponComponent::OnReloadFinished);
     }
@@ -156,6 +158,26 @@ void USTMWeaponComponent::Reload()
     if (!CanReload()) return;
     ReloadAnimInProgress = true;
     PlayAnimMontage(CurrentReloadAnimMontage);
+}
+
+bool USTMWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData &UIData) const
+{
+    if (CurrentWeapon)
+    {
+        UIData = CurrentWeapon->GetUIData();
+        return true;
+    }
+    return false;
+}
+
+ bool USTMWeaponComponent::GetCurrentWeaponAmmoData(FAmmoData& AmmoData) const
+ {
+    if (CurrentWeapon)
+    {
+        AmmoData = CurrentWeapon->GetAmmoData();
+        return true;
+    }
+    return false;
 }
 
 

@@ -3,10 +3,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "STMCoreTypes.h"
 #include "STMHealthComponent.generated.h"
-
-DECLARE_MULTICAST_DELEGATE(FOnDeathSignature);
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SHOOTTHISMAP_API USTMHealthComponent : public UActorComponent
@@ -18,8 +16,12 @@ public:
 
     UFUNCTION(BlueprintCallable)
     bool IsDead() const;
+
+    UFUNCTION(BlueprintCallable, Category = "Health")
+    float GetHealthPercent() const { return Health / MaxHealth; }
     
     CONSTEXPR FORCEINLINE float GetHealth() const;
+    
 
 protected:
 	virtual void BeginPlay() override;

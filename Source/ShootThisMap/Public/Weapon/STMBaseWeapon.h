@@ -3,22 +3,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/STMWeaponComponent.h"
+#include "STMCoreTypes.h"
 #include "STMBaseWeapon.generated.h"
-
-USTRUCT(BlueprintType)
-struct FAmmoData
-{
-    GENERATED_USTRUCT_BODY()
-    
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    int32 Bullets;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon", meta = (EditCondition = "!Infinite"))
-    int32 Clips;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    bool Infinite;
-};
 
 UCLASS()
 class SHOOTTHISMAP_API ASTMBaseWeapon : public AActor
@@ -30,21 +17,25 @@ public:
     virtual void StartFire();
     virtual void StopFire();
 
+    FORCEINLINE FWeaponUIData GetUIData() const { return UIData; }
+    FORCEINLINE FAmmoData GetAmmoData() const { return CurrentAmmo; }
 protected:
 	virtual void BeginPlay() override;
+
     virtual void MakeShot();
+    void ChangeClip();
+    void DecreaseAmmo();
+    void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
+    
     virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
     bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
-    void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
-    TObjectPtr<APlayerController> GetPlayerController() const;
-    FORCEINLINE FVector GetMuzzleSocketLocation() const;
-    void DecreaseAmmo();
     bool IsAmmoEmpty() const;
     bool IsClipEmpty() const;
-    void ChangeClip();
-
-private:
     
+    TObjectPtr<APlayerController> GetPlayerController() const;
+    FORCEINLINE FVector GetMuzzleSocketLocation() const;
+private:
+
     
 public:
 protected:
@@ -59,6 +50,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     FAmmoData DefaultAmmo{15,10, false};
+    
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
+    FWeaponUIData UIData;
 
 private:
     FAmmoData CurrentAmmo;

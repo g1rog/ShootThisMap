@@ -11,7 +11,8 @@ USTMHealthComponent::USTMHealthComponent()
 void USTMHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
+    check(MaxHealth > 0);
+    
     SetHealth(MaxHealth);
     if (const TObjectPtr<AActor> ComponentOwner = GetOwner())
         ComponentOwner->OnTakeAnyDamage.AddDynamic(this, &USTMHealthComponent::OnTakeAnyDamage);

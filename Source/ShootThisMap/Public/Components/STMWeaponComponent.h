@@ -3,22 +3,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "STMCoreTypes.h"
 #include "STMWeaponComponent.generated.h"
 
 class ASTMBaseWeapon;
 class UAnimMontage;
-
-USTRUCT(BlueprintType)
-struct FWeaponData
-{
-    GENERATED_USTRUCT_BODY()
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    TSubclassOf<ASTMBaseWeapon> WeaponClass;
-    
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    TObjectPtr<UAnimMontage> ReloadAnimMontage;
-};
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SHOOTTHISMAP_API USTMWeaponComponent : public UActorComponent
@@ -26,13 +15,15 @@ class SHOOTTHISMAP_API USTMWeaponComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	USTMWeaponComponent();
 
+    USTMWeaponComponent();
     void StartFire();
     void StopFire();
     void NextWeapon();
     void Reload();
-    
+    FORCEINLINE bool GetCurrentWeaponUIData(FWeaponUIData& UIData) const;
+    FORCEINLINE bool GetCurrentWeaponAmmoData(FAmmoData& AmmoData) const;
+
 protected:
 	virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
@@ -50,17 +41,7 @@ private:
     bool CanEquip() const;
     bool CanReload() const;
 
-    template <typename Type> static Type* FindNotifyByClass(const TObjectPtr<UAnimSequenceBase>& Animation)
-    {
-        if (!Animation) return nullptr;
-        const auto NotifyEvents = Animation->Notifies;
-        for (const auto& i : NotifyEvents)
-        {
-            if (const auto AnimNotify = Cast<Type>(i.Notify))
-                return AnimNotify;
-        }
-        return nullptr;
-    }
+  
 
 public:
 protected:
@@ -81,7 +62,7 @@ private:
     TObjectPtr<UAnimMontage> CurrentReloadAnimMontage = nullptr;
     
     TObjectPtr<ASTMBaseWeapon> CurrentWeapon = nullptr;
-    TArray<ASTMBaseWeapon*> Weapons;
+    TArray<TObjectPtr<ASTMBaseWeapon>> Weapons;
     int32 CurrentWeaponId = 0;
     bool EquipAnimInProgress = false;
     bool ReloadAnimInProgress = false;
