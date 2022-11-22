@@ -3,7 +3,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Components/STMWeaponComponent.h"
 #include "STMCoreTypes.h"
 #include "STMBaseWeapon.generated.h"
 
@@ -14,30 +13,37 @@ class SHOOTTHISMAP_API ASTMBaseWeapon : public AActor
 	
 public:	
 	ASTMBaseWeapon();
+    
     virtual void StartFire();
     virtual void StopFire();
-
+    void ChangeClip();
+    bool TryToAddAmmo(int32 ClipsAmount);
+    FORCEINLINE bool CanReload() const;
     FORCEINLINE FWeaponUIData GetUIData() const { return UIData; }
     FORCEINLINE FAmmoData GetAmmoData() const { return CurrentAmmo; }
+    
 protected:
 	virtual void BeginPlay() override;
 
     virtual void MakeShot();
-    void ChangeClip();
     void DecreaseAmmo();
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
     
     virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
     bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
-    bool IsAmmoEmpty() const;
-    bool IsClipEmpty() const;
+
+    FORCEINLINE bool IsAmmoEmpty() const;
+    FORCEINLINE bool IsClipEmpty() const;
+    FORCEINLINE bool IsAmmoFull() const;
+    FORCEINLINE FVector GetMuzzleSocketLocation() const;
     
     TObjectPtr<APlayerController> GetPlayerController() const;
-    FORCEINLINE FVector GetMuzzleSocketLocation() const;
 private:
 
     
 public:
+    FOnClipEmptySignature OnClipEmpty;
+    
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     TObjectPtr<USkeletalMeshComponent> WeaponMesh;

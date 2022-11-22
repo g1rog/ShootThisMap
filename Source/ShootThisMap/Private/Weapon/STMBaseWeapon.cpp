@@ -71,19 +71,30 @@ void ASTMBaseWeapon::MakeHit(FHitResult &HitResult, const FVector &TraceStart, c
 
 void ASTMBaseWeapon::DecreaseAmmo()
 {
+    if (CurrentAmmo.Bullets == 0)
+        return;
     CurrentAmmo.Bullets--;
     if (IsClipEmpty() && !IsAmmoEmpty())
-        ChangeClip();
+    {
+        StopFire();
+        OnClipEmpty.Broadcast(this);
+    }
 }
 
-bool ASTMBaseWeapon::IsAmmoEmpty() const
+FORCEINLINE bool ASTMBaseWeapon::IsAmmoEmpty() const
 {
     return !CurrentAmmo.Infinite && CurrentAmmo.Clips == 0 && IsClipEmpty();
 }
 
-bool ASTMBaseWeapon::IsClipEmpty() const
+FORCEINLINE bool ASTMBaseWeapon::IsClipEmpty() const
 {
     return CurrentAmmo.Bullets == 0;
+}
+
+FORCEINLINE bool ASTMBaseWeapon::IsAmmoFull() const
+{
+    return CurrentAmmo.Clips == DefaultAmmo.Clips &&
+           CurrentAmmo.Bullets == DefaultAmmo.Bullets;
 }
 
 void ASTMBaseWeapon::ChangeClip()
@@ -92,6 +103,40 @@ void ASTMBaseWeapon::ChangeClip()
     if (!CurrentAmmo.Infinite)
         CurrentAmmo.Clips--;
 }
+
+bool ASTMBaseWeapon::TryToAddAmmo(int32 ClipsAmount)
+{
+    if (CurrentAmmo.Infinite || IsAmmoFull() || ClipsAmount <= 0) return false;
+    if (IsAmmoEmpty())
+    {
+        CurrentAmmo.Clips = FMath::Clamp(ClipsAmount, 0, DefaultAmmo.Clips + 1);
+        OnClipEmpty.Broadcast(this);
+    }
+    else if (CurrentAmmo.Clips < DefaultAmmo.Clips)
+    {
+        const auto NextClipsAmount = CurrentAmmo.Clips + ClipsAmount;
+        if (DefaultAmmo.Clips - NextClipsAmount >= 0 )
+        {
+            CurrentAmmo.Clips = NextClipsAmount;
+        }
+        else
+        {
+            CurrentAmmo.Clips = DefaultAmmo.Clips;
+            CurrentAmmo.Bullets = DefaultAmmo.Bullets;
+        }
+    }
+    else
+    {
+        CurrentAmmo.Bullets = DefaultAmmo.Bullets;
+    }
+    return true;
+}
+
+FORCEINLINE bool ASTMBaseWeapon::CanReload() const
+{
+    return CurrentAmmo.Bullets < DefaultAmmo.Bullets && CurrentAmmo.Clips > 0;
+}
+
 
 
 

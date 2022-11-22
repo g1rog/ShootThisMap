@@ -48,7 +48,7 @@ void ASTMBaseCharacter::BeginPlay()
 void ASTMBaseCharacter::Tick(const float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-    TakeDamage(1.0f, FDamageEvent{}, nullptr, this);
+   // TakeDamage(0.3f, FDamageEvent{}, nullptr, this);
 }
 
 void ASTMBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

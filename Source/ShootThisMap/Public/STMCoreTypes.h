@@ -2,11 +2,12 @@
 
 #include "STMCoreTypes.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(FOnClipEmptySignature);
+class ASTMBaseWeapon;
+
 DECLARE_MULTICAST_DELEGATE(FOnDeathSignature);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnClipEmptySignature, const TObjectPtr<ASTMBaseWeapon>&);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float);
 
-class ASTMBaseWeapon;
 
 USTRUCT(BlueprintType)
 struct FAmmoData

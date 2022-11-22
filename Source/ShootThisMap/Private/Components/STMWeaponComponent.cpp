@@ -51,29 +51,27 @@ void USTMWeaponComponent::SpawnWeapons()
     }
 }
 
-void USTMWeaponComponent::AttachWeaponToSocket(const TObjectPtr<ASTMBaseWeapon>& Weapon, const TObjectPtr<USceneComponent>& Mesh, const FName& SocketName)
+void USTMWeaponComponent::AttachWeaponToSocket(const TObjectPtr<ASTMBaseWeapon>& Weapon,
+    const TObjectPtr<USceneComponent>& Mesh, const FName& SocketName)
 {
     const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
     Weapon->AttachToComponent(Mesh, AttachmentRules, SocketName);
 }
 
-void USTMWeaponComponent::EquipWeapon(const int32 WeaponId)
+void USTMWeaponComponent::EquipWeapon(const int32& WeaponId)
 {
     const TObjectPtr<ACharacter> Character = Cast<ACharacter>(GetOwner());
     if (!Character) return;
-
     if (CurrentWeapon)
     {
         StopFire();
         AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponArmorySocketName);
     }
-
     CurrentWeapon = Weapons[WeaponId];
-    const auto CurrentWeaponData =
-        WeaponData.FindByPredicate([&](const FWeaponData& Data) -> bool { return Data.WeaponClass == CurrentWeapon->GetClass(); });
-    AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName);
+    const auto CurrentWeaponData = WeaponData.FindByPredicate([&]<typename Type>(const Type& Data)
+        -> bool { return Data.WeaponClass == CurrentWeapon->GetClass(); });
     CurrentReloadAnimMontage = CurrentWeaponData ? CurrentWeaponData->ReloadAnimMontage : nullptr;
-
+    AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName);
     EquipAnimInProgress = true;
     PlayAnimMontage(EquipAnimMontage);
 }
@@ -116,15 +114,15 @@ void USTMWeaponComponent::InitAnimations()
     for (const auto& i : WeaponData)
     {
         const auto ReloadFinishedNotify = AnimUtils::FindNotifyByClass<USTMReloadFinishedAnimNotify>(i.ReloadAnimMontage);
-        if (!ReloadFinishedNotify) continue;
-        EquipFinishedNotify->OnNotified.AddUObject(this, &USTMWeaponComponent::OnReloadFinished);
+        if (!ReloadFinishedNotify) checkNoEntry();
+        ReloadFinishedNotify->OnNotified.AddUObject(this, &USTMWeaponComponent::OnReloadFinished);
     }
 }
 
 void USTMWeaponComponent::OnEquipFinished(const TObjectPtr<USkeletalMeshComponent> MeshComponent)
 {
     const auto Character = Cast<ACharacter>(GetOwner());
-    if (!Character || Character->GetMesh() != MeshComponent) return;
+    if (!Character || MeshComponent != Character->GetMesh()) return;
     EquipAnimInProgress = false;
 }
 
@@ -148,16 +146,51 @@ bool USTMWeaponComponent::CanEquip() const
 
 bool USTMWeaponComponent::CanReload() const
 {
-    return CurrentWeapon && !EquipAnimInProgress && !ReloadAnimInProgress;
+    return CurrentWeapon
+            && !EquipAnimInProgress
+            && !ReloadAnimInProgress
+            && CurrentWeapon->CanReload();
     
 }
 
-
 void USTMWeaponComponent::Reload()
 {
+    ChangeClip();
+}
+
+void USTMWeaponComponent::OnClipEmpty(const TObjectPtr<ASTMBaseWeapon> AmmoEmptyWeapon)
+{
+    if (!AmmoEmptyWeapon) return;
+    if (CurrentWeapon == AmmoEmptyWeapon)
+    {
+        ChangeClip();
+    }
+    else
+    {
+        for (auto Weapon : Weapons)
+        {
+            if (Weapon == AmmoEmptyWeapon)
+                Weapon->ChangeClip();
+        }
+    }
+}
+
+void USTMWeaponComponent::ChangeClip()
+{
     if (!CanReload()) return;
+    CurrentWeapon->StopFire();
+    CurrentWeapon->ChangeClip();
     ReloadAnimInProgress = true;
     PlayAnimMontage(CurrentReloadAnimMontage);
+}
+
+bool USTMWeaponComponent::TryToAddAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType, int32 ClipsAmount)
+{
+    for (const auto& Weapon : Weapons)
+        if (Weapon && Weapon->IsA(WeaponType))
+            return Weapon->TryToAddAmmo(ClipsAmount);
+    
+    return false;
 }
 
 bool USTMWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData &UIData) const
@@ -170,7 +203,7 @@ bool USTMWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData &UIData) const
     return false;
 }
 
- bool USTMWeaponComponent::GetCurrentWeaponAmmoData(FAmmoData& AmmoData) const
+bool USTMWeaponComponent::GetCurrentWeaponAmmoData(FAmmoData& AmmoData) const
  {
     if (CurrentWeapon)
     {

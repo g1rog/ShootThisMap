@@ -21,6 +21,9 @@ public:
     void StopFire();
     void NextWeapon();
     void Reload();
+    void OnClipEmpty(const TObjectPtr<ASTMBaseWeapon> AmmoEmptyWeapon);
+    void ChangeClip();
+    bool TryToAddAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType, int32 ClipsAmount);
     FORCEINLINE bool GetCurrentWeaponUIData(FWeaponUIData& UIData) const;
     FORCEINLINE bool GetCurrentWeaponAmmoData(FAmmoData& AmmoData) const;
 
@@ -31,7 +34,7 @@ protected:
 private:
     void SpawnWeapons();
     void AttachWeaponToSocket(const TObjectPtr<ASTMBaseWeapon>& Weapon, const TObjectPtr<USceneComponent>& SceneComponent, const FName& SocketName);
-    void EquipWeapon(int32 WeaponId);
+    void EquipWeapon(const int32& WeaponId);
     void PlayAnimMontage(const TObjectPtr<UAnimMontage>& Animation) const;
     void InitAnimations();
     void OnEquipFinished(const TObjectPtr<USkeletalMeshComponent> MeshComponent);
@@ -60,7 +63,6 @@ protected:
 private:
     UPROPERTY()
     TObjectPtr<UAnimMontage> CurrentReloadAnimMontage = nullptr;
-    
     TObjectPtr<ASTMBaseWeapon> CurrentWeapon = nullptr;
     TArray<TObjectPtr<ASTMBaseWeapon>> Weapons;
     int32 CurrentWeaponId = 0;

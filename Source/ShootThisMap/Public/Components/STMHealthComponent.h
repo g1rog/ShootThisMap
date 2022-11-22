@@ -22,6 +22,9 @@ public:
     
     CONSTEXPR FORCEINLINE float GetHealth() const;
     
+    FORCEINLINE bool IsHealthFull () const;
+    bool TryToAddHealth(const float HealthAmount);
+    
 
 protected:
 	virtual void BeginPlay() override;
