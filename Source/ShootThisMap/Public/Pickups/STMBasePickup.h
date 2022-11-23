@@ -14,7 +14,7 @@ class SHOOTTHISMAP_API ASTMBasePickup : public AActor
 	
 public:	
 	ASTMBasePickup();
-    virtual void Tick(float DeltaTime) override;
+    virtual void Tick(const float DeltaTime) override;
 
 protected:
 	virtual void BeginPlay() override;

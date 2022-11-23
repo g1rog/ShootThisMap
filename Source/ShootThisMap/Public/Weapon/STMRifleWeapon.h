@@ -5,12 +5,16 @@
 #include "Weapon/STMBaseWeapon.h"
 #include "STMRifleWeapon.generated.h"
 
+class USTMWeaponFXComponent;
+
 UCLASS()
 class SHOOTTHISMAP_API ASTMRifleWeapon : public ASTMBaseWeapon
 {
 	GENERATED_BODY()
 
 public:
+    ASTMRifleWeapon();
+    virtual void BeginPlay() override;
     virtual void StartFire() override;
     virtual void StopFire() override;
 
@@ -26,6 +30,10 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
     float DamageAmount = 20.0f;
+
+    UPROPERTY(VisibleAnywhere, Category = "VFX")
+    TObjectPtr<USTMWeaponFXComponent> WeaponFXComponent;
+    
     
 private:
     FTimerHandle ShotTimerHandle;

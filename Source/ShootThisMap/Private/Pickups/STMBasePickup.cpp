@@ -21,7 +21,7 @@ void ASTMBasePickup::BeginPlay()
 	GenerateRotationYaw();
 }
 
-void ASTMBasePickup::Tick(float DeltaTime)
+void ASTMBasePickup::Tick(const float DeltaTime)
 {
 	Super::Tick(DeltaTime);
     AddActorLocalRotation(FRotator(0.0f, RotationYaw, 0.0f));

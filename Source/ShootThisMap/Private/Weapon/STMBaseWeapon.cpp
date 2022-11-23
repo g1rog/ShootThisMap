@@ -66,6 +66,7 @@ void ASTMBaseWeapon::MakeHit(FHitResult &HitResult, const FVector &TraceStart, c
     if (!GetWorld()) return;
     FCollisionQueryParams CollisionParams;
     CollisionParams.AddIgnoredActor(GetOwner());
+    CollisionParams.bReturnPhysicalMaterial = true;
     GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility);
 }
 
