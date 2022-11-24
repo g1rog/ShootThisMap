@@ -38,6 +38,7 @@ void ASTMBaseCharacter::BeginPlay()
     check(HealthComponent);
     check(HealthTextComponent);
     check(GetCharacterMovement());
+    check(GetMesh());
 
     OnHealthChanged(HealthComponent->GetHealth());
     HealthComponent->OnDeath.AddUObject(this, &ASTMBaseCharacter::OnDeath);
@@ -48,7 +49,7 @@ void ASTMBaseCharacter::BeginPlay()
 void ASTMBaseCharacter::Tick(const float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-   // TakeDamage(0.3f, FDamageEvent{}, nullptr, this);
+    TakeDamage(0.3f, FDamageEvent{}, nullptr, this);
 }
 
 void ASTMBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -105,12 +106,14 @@ float ASTMBaseCharacter::GetMovementDirection() const
 
 void ASTMBaseCharacter::OnDeath()
 {
-    PlayAnimMontage(DeathAnimMontage);
+    //PlayAnimMontage(DeathAnimMontage);
     GetCharacterMovement()->DisableMovement();
     WeaponComponent->StopFire();
     SetLifeSpan(5.0f);
     if (Controller) Controller->ChangeState(NAME_Spectating);
     GetCapsuleComponent()->SetCollisionResponseToChannels(ECollisionResponse::ECR_Ignore);
+    GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+    GetMesh()->SetSimulatePhysics(true);
 }
 
 void ASTMBaseCharacter::OnHealthChanged(const float Health) const

@@ -6,6 +6,8 @@
 #include "STMCoreTypes.h"
 #include "STMHealthComponent.generated.h"
 
+class UCameraShakeBase;
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SHOOTTHISMAP_API USTMHealthComponent : public UActorComponent
 {
@@ -36,6 +38,7 @@ private:
 
     void SetHealth(const float NewHealth);
     void HealUpdate();
+    void PlayCameraShake() const;
 
 public:
     FOnDeathSignature OnDeath;
@@ -56,6 +59,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health")
     bool AutoHeal = true;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    TSubclassOf<UCameraShakeBase> CameraShake;
     
 private:
     FTimerHandle HealTimerHandle;

@@ -1,7 +1,11 @@
 
 #include "Components/STMHealthComponent.h"
+#include "GameFramework/Pawn.h"
+#include "GameFramework/Controller.h"
+#include "Camera/CameraShakeBase.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+
 
 USTMHealthComponent::USTMHealthComponent()
 {
@@ -31,6 +35,8 @@ void USTMHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, const float Dama
         OnDeath.Broadcast();
     else if (AutoHeal && GetWorld())
         GetWorld()->GetTimerManager().SetTimer(HealTimerHandle, this, &USTMHealthComponent::HealUpdate, HealUpdateTime, true, HealDelay);
+
+    PlayCameraShake();
 }
 
 bool USTMHealthComponent::IsDead() const
@@ -63,4 +69,14 @@ bool USTMHealthComponent::TryToAddHealth(const float HealthAmount)
     return true;
 }
 
+void USTMHealthComponent::PlayCameraShake() const
+{
+    if (IsDead()) return;
+    if (const auto Player = Cast<APawn>(GetOwner()))
+    {
+        const auto Controller = Player->GetController<APlayerController>();
+        if (!Controller || !Controller->PlayerCameraManager) return;
+        Controller->PlayerCameraManager->StartCameraShake(CameraShake);
+    }
+}
 

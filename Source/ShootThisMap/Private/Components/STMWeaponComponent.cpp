@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Animations/STMEquipFinishedAnimNotify.h"
 #include "Animations/STMReloadFinishedAnimNotify.h"
+#include "Dataflow/DataflowEdNode.h"
 
 USTMWeaponComponent::USTMWeaponComponent()
 {
@@ -68,8 +69,9 @@ void USTMWeaponComponent::EquipWeapon(const int32& WeaponId)
         AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponArmorySocketName);
     }
     CurrentWeapon = Weapons[WeaponId];
-    const auto CurrentWeaponData = WeaponData.FindByPredicate([&]<typename Type>(const Type& Data)
-        -> bool { return Data.WeaponClass == CurrentWeapon->GetClass(); });
+    
+    const auto CurrentWeaponData = WeaponData.FindByPredicate([&]<typename Type> (const Type& Data)
+        -> bool {return Data.WeaponClass == CurrentWeapon->GetClass();});
     CurrentReloadAnimMontage = CurrentWeaponData ? CurrentWeaponData->ReloadAnimMontage : nullptr;
     AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName);
     EquipAnimInProgress = true;
