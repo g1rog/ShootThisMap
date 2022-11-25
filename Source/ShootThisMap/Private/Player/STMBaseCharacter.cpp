@@ -40,7 +40,7 @@ void ASTMBaseCharacter::BeginPlay()
     check(GetCharacterMovement());
     check(GetMesh());
 
-    OnHealthChanged(HealthComponent->GetHealth());
+    OnHealthChanged(HealthComponent->GetHealth(), 0.0f);
     HealthComponent->OnDeath.AddUObject(this, &ASTMBaseCharacter::OnDeath);
     HealthComponent->OnHealthChanged.AddUObject(this, &ASTMBaseCharacter::OnHealthChanged);
 
@@ -49,7 +49,7 @@ void ASTMBaseCharacter::BeginPlay()
 void ASTMBaseCharacter::Tick(const float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-    TakeDamage(0.3f, FDamageEvent{}, nullptr, this);
+   // TakeDamage(0.3f, FDamageEvent{}, nullptr, this);
 }
 
 void ASTMBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -116,7 +116,7 @@ void ASTMBaseCharacter::OnDeath()
     GetMesh()->SetSimulatePhysics(true);
 }
 
-void ASTMBaseCharacter::OnHealthChanged(const float Health) const
+void ASTMBaseCharacter::OnHealthChanged(const float Health, const float HealthDelta) const
 {
     HealthTextComponent->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), Health)));
 }

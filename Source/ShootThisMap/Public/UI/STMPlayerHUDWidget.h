@@ -23,10 +23,16 @@ public:
     bool IsPlayerAlive() const;
 
     UFUNCTION(BlueprintCallable, Category = "UI")
-    bool IsPlayerSpectating() const; 
+    bool IsPlayerSpectating() const;
+
+    UFUNCTION(BlueprintImplementableEvent, Category = "UI")
+    void OnTakeDamage();
     
+    virtual bool Initialize() override;
+
 protected:
 private:
+    void OnHealthChanged(const float Health, const float HealthDelta);
    
 
 };

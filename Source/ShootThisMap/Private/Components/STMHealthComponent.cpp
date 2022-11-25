@@ -34,7 +34,8 @@ void USTMHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, const float Dama
     if (IsDead())
         OnDeath.Broadcast();
     else if (AutoHeal && GetWorld())
-        GetWorld()->GetTimerManager().SetTimer(HealTimerHandle, this, &USTMHealthComponent::HealUpdate, HealUpdateTime, true, HealDelay);
+        GetWorld()->GetTimerManager().SetTimer(HealTimerHandle, this,
+            &USTMHealthComponent::HealUpdate, HealUpdateTime, true, HealDelay);
 
     PlayCameraShake();
 }
@@ -53,8 +54,10 @@ void USTMHealthComponent::HealUpdate()
 
 void USTMHealthComponent::SetHealth(const float NewHealth)
 {
-    Health = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
-    OnHealthChanged.Broadcast(Health);
+    const auto NextHealth = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
+    const auto HealthDelta = NextHealth - Health;
+    Health = NextHealth;
+    OnHealthChanged.Broadcast(Health, HealthDelta);
 }
 
 FORCEINLINE bool USTMHealthComponent::IsHealthFull() const

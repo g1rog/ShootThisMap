@@ -36,3 +36,17 @@ bool USTMPlayerHUDWidget::IsPlayerSpectating() const
     const auto Controller = GetOwningPlayer();
     return Controller && Controller->GetStateName() == NAME_Spectating;
 }
+
+bool USTMPlayerHUDWidget::Initialize()
+{
+    const auto HealthComponent = STMUtils::GetSTMPlayerComponent<USTMHealthComponent>(GetOwningPlayerPawn());
+    if (HealthComponent)
+        HealthComponent->OnHealthChanged.AddUObject(this, &USTMPlayerHUDWidget::OnHealthChanged);
+    return Super::Initialize();
+}
+
+void USTMPlayerHUDWidget::OnHealthChanged(const float Health, const float HealthDelta)
+{
+    if (HealthDelta < 0.0f)
+        OnTakeDamage();
+}

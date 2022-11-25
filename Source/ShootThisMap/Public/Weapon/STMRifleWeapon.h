@@ -6,6 +6,8 @@
 #include "STMRifleWeapon.generated.h"
 
 class USTMWeaponFXComponent;
+class UNiagaraComponent;
+class UNiagaraSystem;
 
 UCLASS()
 class SHOOTTHISMAP_API ASTMRifleWeapon : public ASTMBaseWeapon
@@ -22,6 +24,9 @@ protected:
     virtual void MakeShot() override;
 private:
     void MakeDamage(const FHitResult& HitResult);
+    void InitMuzzleFX();
+    void SetMuzzleFXVisibility(const bool Visible);
+    void SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd);
 
 public:
 protected:
@@ -33,8 +38,16 @@ protected:
 
     UPROPERTY(VisibleAnywhere, Category = "VFX")
     TObjectPtr<USTMWeaponFXComponent> WeaponFXComponent;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    TObjectPtr<UNiagaraSystem> TraceFX;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    FString TraceTargetName = "TraceTarget";
     
     
 private:
+    UPROPERTY()
+    TObjectPtr<UNiagaraComponent> MuzzleFXComponent;
     FTimerHandle ShotTimerHandle;
 };

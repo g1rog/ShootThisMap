@@ -28,5 +28,6 @@ void ASTMLauncherWeapon::MakeShot()
         Projectile->FinishSpawning(SpawnTransform);
     }
     DecreaseAmmo();
+    SpawnMuzzleFX();
 }
 

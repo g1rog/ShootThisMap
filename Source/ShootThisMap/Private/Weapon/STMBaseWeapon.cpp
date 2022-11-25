@@ -3,6 +3,8 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/Character.h"
 #include "Animations/AnimUtils.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 
 ASTMBaseWeapon::ASTMBaseWeapon()
 {
@@ -136,6 +138,13 @@ bool ASTMBaseWeapon::TryToAddAmmo(int32 ClipsAmount)
 FORCEINLINE bool ASTMBaseWeapon::CanReload() const
 {
     return CurrentAmmo.Bullets < DefaultAmmo.Bullets && CurrentAmmo.Clips > 0;
+}
+
+
+TObjectPtr<UNiagaraComponent> ASTMBaseWeapon::SpawnMuzzleFX()
+{
+    return UNiagaraFunctionLibrary::SpawnSystemAttached(MuzzleFX, WeaponMesh, MuzzleSocketName,
+        FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::SnapToTarget, true);
 }
 
 

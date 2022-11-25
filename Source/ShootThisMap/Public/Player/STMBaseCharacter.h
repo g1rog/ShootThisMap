@@ -38,7 +38,7 @@ private:
     FORCEINLINE void OnStopRunning();
 
     void OnDeath();
-    void OnHealthChanged(const float Health) const;
+    void OnHealthChanged(const float Health, const float HealthDelta) const;
     
 public:
 protected:

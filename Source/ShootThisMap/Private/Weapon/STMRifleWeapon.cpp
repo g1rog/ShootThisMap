@@ -1,6 +1,9 @@
 
 #include "Weapon/STMRifleWeapon.h"
 #include "Weapon/Components/STMWeaponFXComponent.h"
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
+
 
 ASTMRifleWeapon::ASTMRifleWeapon()
 {
@@ -15,7 +18,8 @@ void ASTMRifleWeapon::BeginPlay()
 
 void ASTMRifleWeapon::StartFire()
 {
-    GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Red, FString::Printf(TEXT("Fire")));
+    InitMuzzleFX();
+   // GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Red, FString::Printf(TEXT("Fire")));
     MakeShot();
     GetWorldTimerManager().SetTimer(ShotTimerHandle, this, &ASTMRifleWeapon::MakeShot, TimeBetweenShots, true);
     
@@ -24,6 +28,7 @@ void ASTMRifleWeapon::StartFire()
 void ASTMRifleWeapon::StopFire()
 {
     GetWorldTimerManager().ClearTimer(ShotTimerHandle);
+    SetMuzzleFXVisibility(false);
 }
 
 void ASTMRifleWeapon::MakeShot()
@@ -35,20 +40,18 @@ void ASTMRifleWeapon::MakeShot()
     
     FHitResult HitResult;
     MakeHit(HitResult, TraceStart, TraceEnd);
-
+    
+    FVector TraceFXEnd = TraceEnd;
     if (HitResult.bBlockingHit)
     {
+        TraceFXEnd = HitResult.ImpactPoint;
         MakeDamage(HitResult);
         WeaponFXComponent->PlayImpactFX(HitResult);
         //DrawDebugLine(GetWorld(), GetMuzzleSocketLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.0f, 0, 3.0f);
         //DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 24, FColor::Red, false, 5.0f);
         //GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Blue, FString::Printf(TEXT("%s"), *HitResult.BoneName.ToString()));
     }
-    else
-    {
-        WeaponFXComponent->PlayImpactFX(HitResult);
-       // DrawDebugLine(GetWorld(), GetMuzzleSocketLocation(), TraceEnd, FColor::Red, false, 3.0f, 0, 3.0f);
-    }
+    SpawnTraceFX(GetMuzzleSocketLocation(), TraceFXEnd);
     DecreaseAmmo();
 }
 
@@ -56,5 +59,30 @@ void ASTMRifleWeapon::MakeDamage(const FHitResult& HitResult)
 {
     const auto DamagedActor = HitResult.GetActor();
     if (!DamagedActor) return;
-    DamagedActor->TakeDamage(DamageAmount, FDamageEvent(), GetPlayerController(), this);
+    DamagedActor->TakeDamage(DamageAmount, FDamageEvent{}, GetPlayerController(), this);
+}
+
+void ASTMRifleWeapon::InitMuzzleFX()
+{
+    if (!MuzzleFXComponent)
+        MuzzleFXComponent = SpawnMuzzleFX();
+    SetMuzzleFXVisibility(true);
+}
+
+void ASTMRifleWeapon::SetMuzzleFXVisibility(const bool Visible)
+{
+    if (MuzzleFXComponent)
+    {
+        MuzzleFXComponent->SetPaused(!Visible);
+        MuzzleFXComponent->SetVisibility(Visible, true);
+    }
+    
+}
+
+void ASTMRifleWeapon::SpawnTraceFX(const FVector &TraceStart, const FVector &TraceEnd)
+{
+    const auto TraceFXComponent = UNiagaraFunctionLibrary::SpawnSystemAtLocation
+    (GetWorld(), TraceFX, TraceStart);
+    if (TraceFXComponent)
+        TraceFXComponent->SetNiagaraVariableVec3(TraceTargetName, TraceEnd);
 }

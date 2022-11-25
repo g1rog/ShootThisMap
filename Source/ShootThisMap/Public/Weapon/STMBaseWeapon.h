@@ -6,6 +6,10 @@
 #include "STMCoreTypes.h"
 #include "STMBaseWeapon.generated.h"
 
+class USkeletalMeshComponent;
+class UNiagaraSystem;
+class UNiagaraComponent;
+
 UCLASS()
 class SHOOTTHISMAP_API ASTMBaseWeapon : public AActor
 {
@@ -38,6 +42,8 @@ protected:
     FORCEINLINE FVector GetMuzzleSocketLocation() const;
     
     TObjectPtr<APlayerController> GetPlayerController() const;
+    TObjectPtr<UNiagaraComponent> SpawnMuzzleFX();
+
 private:
 
     
@@ -59,6 +65,9 @@ protected:
     
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     FWeaponUIData UIData;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    TObjectPtr<UNiagaraSystem> MuzzleFX;
 
 private:
     FAmmoData CurrentAmmo;
