@@ -13,7 +13,9 @@ public class ShootThisMap : ModuleRules
 				"Engine", 
 				"InputCore", 
 				"Niagara", 
-				"PhysicsCore" 
+				"PhysicsCore",
+				"GameplayTasks",
+				"NavigationSystem"
 			}
 		);
 		CppStandard = CppStandardVersion.Cpp20;
