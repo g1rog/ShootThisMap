@@ -19,7 +19,8 @@ private:
 
 public:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "AI")
-    UBehaviorTree* BehaviorTreeAsset;
+    TObjectPtr<UBehaviorTree> BehaviorTreeAsset;
+    
 protected:
    
 
