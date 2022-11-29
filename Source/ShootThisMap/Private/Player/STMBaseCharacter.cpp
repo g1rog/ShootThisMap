@@ -22,7 +22,6 @@ ASTMBaseCharacter::ASTMBaseCharacter(const FObjectInitializer& ObjInit)
     CameraComponent->SetupAttachment(SpringArmComponent);
 
     HealthComponent = CreateDefaultSubobject<USTMHealthComponent>("HealthComponent");
-    
     HealthTextComponent = CreateDefaultSubobject<UTextRenderComponent>("HealthTextComponent");
     HealthTextComponent->SetupAttachment(GetRootComponent());
 
@@ -43,7 +42,6 @@ void ASTMBaseCharacter::BeginPlay()
     OnHealthChanged(HealthComponent->GetHealth(), 0.0f);
     HealthComponent->OnDeath.AddUObject(this, &ASTMBaseCharacter::OnDeath);
     HealthComponent->OnHealthChanged.AddUObject(this, &ASTMBaseCharacter::OnHealthChanged);
-
 }
 
 void ASTMBaseCharacter::Tick(const float DeltaTime)
@@ -85,9 +83,15 @@ FORCEINLINE void ASTMBaseCharacter::MoveRight(const float Amount)
     AddMovementInput(GetActorRightVector(), Amount);
 }
 
-FORCEINLINE void ASTMBaseCharacter::OnStartRunning() { WantsToRun = true; }
+FORCEINLINE void ASTMBaseCharacter::OnStartRunning()
+{
+    WantsToRun = true;
+}
 
-FORCEINLINE void ASTMBaseCharacter::OnStopRunning() { WantsToRun = false; }
+FORCEINLINE void ASTMBaseCharacter::OnStopRunning()
+{
+    WantsToRun = false;
+}
 
 bool ASTMBaseCharacter::IsRunning() const
 {

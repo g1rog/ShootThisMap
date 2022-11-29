@@ -5,19 +5,16 @@
 ASTMBasePickup::ASTMBasePickup()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
     CollisionComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
     CollisionComponent->InitSphereRadius(50.0f);
     CollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
     CollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
     SetRootComponent(CollisionComponent);
-    
 }
 
 void ASTMBasePickup::BeginPlay()
 {
 	Super::BeginPlay();
-    
 	GenerateRotationYaw();
 }
 
@@ -25,7 +22,6 @@ void ASTMBasePickup::Tick(const float DeltaTime)
 {
 	Super::Tick(DeltaTime);
     AddActorLocalRotation(FRotator(0.0f, RotationYaw, 0.0f));
-
 }
 
 void ASTMBasePickup::NotifyActorBeginOverlap(AActor *OtherActor)

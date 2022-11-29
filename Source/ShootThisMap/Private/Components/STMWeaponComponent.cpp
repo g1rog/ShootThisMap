@@ -16,11 +16,10 @@ USTMWeaponComponent::USTMWeaponComponent()
 void USTMWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
     InitAnimations();
-
-    CurrentWeaponId = 0;
     SpawnWeapons();
+    
+    CurrentWeaponId = 0;
     EquipWeapon(CurrentWeaponId);
 }
 
@@ -34,14 +33,12 @@ void USTMWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
     }
     Weapons.Empty();
     Super::EndPlay(EndPlayReason);
-
 }
 
 void USTMWeaponComponent::SpawnWeapons() 
 {
     const TObjectPtr<ACharacter> Character = Cast<ACharacter>(GetOwner());
     if (!Character || !GetWorld()) return;
-
     for (const auto& i : WeaponData)
     {
         const auto Weapon = GetWorld()->SpawnActor<ASTMBaseWeapon>(i.WeaponClass);
@@ -69,7 +66,6 @@ void USTMWeaponComponent::EquipWeapon(const int32& WeaponId)
         AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponArmorySocketName);
     }
     CurrentWeapon = Weapons[WeaponId];
-    
     const auto CurrentWeaponData = WeaponData.FindByPredicate([&]<typename Type> (const Type& Data)
         -> bool {return Data.WeaponClass == CurrentWeapon->GetClass();});
     CurrentReloadAnimMontage = CurrentWeaponData ? CurrentWeaponData->ReloadAnimMontage : nullptr;
@@ -102,7 +98,6 @@ void USTMWeaponComponent::PlayAnimMontage(const TObjectPtr<UAnimMontage> &Animat
     const auto Character = Cast<ACharacter>(GetOwner());
     if (!Character) return;
     Character->PlayAnimMontage(Animation);
-    
 }
 
 void USTMWeaponComponent::InitAnimations()
@@ -138,7 +133,6 @@ void USTMWeaponComponent::OnReloadFinished(const TObjectPtr<USkeletalMeshCompone
 bool USTMWeaponComponent::CanFire() const
 {
    return CurrentWeapon && !EquipAnimInProgress && !ReloadAnimInProgress;
-    
 }
 
 bool USTMWeaponComponent::CanEquip() const
@@ -152,7 +146,6 @@ bool USTMWeaponComponent::CanReload() const
             && !EquipAnimInProgress
             && !ReloadAnimInProgress
             && CurrentWeapon->CanReload();
-    
 }
 
 void USTMWeaponComponent::Reload()
@@ -191,7 +184,6 @@ bool USTMWeaponComponent::TryToAddAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType, i
     for (const auto& Weapon : Weapons)
         if (Weapon && Weapon->IsA(WeaponType))
             return Weapon->TryToAddAmmo(ClipsAmount);
-    
     return false;
 }
 

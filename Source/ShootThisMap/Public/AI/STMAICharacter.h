@@ -14,6 +14,8 @@ class SHOOTTHISMAP_API ASTMAICharacter : public ASTMBaseCharacter
     
 public:
     ASTMAICharacter(const FObjectInitializer& ObjInit);
+    virtual void Tick(const float DeltaTime) override;
+    
 protected:
 private:
 
@@ -22,9 +24,6 @@ public:
     TObjectPtr<UBehaviorTree> BehaviorTreeAsset;
     
 protected:
-   
-
-    
 private:
     
 	

@@ -22,8 +22,6 @@ void USTMHealthComponent::BeginPlay()
         ComponentOwner->OnTakeAnyDamage.AddDynamic(this, &USTMHealthComponent::OnTakeAnyDamage);
 }
 
-CONSTEXPR FORCEINLINE float USTMHealthComponent::GetHealth() const { return Health; }
-
 void USTMHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, const float Damage, const class UDamageType* DamageType,
       class AController* InstigatedBy, AActor* DamageCauser)
 {
@@ -36,7 +34,6 @@ void USTMHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, const float Dama
     else if (AutoHeal && GetWorld())
         GetWorld()->GetTimerManager().SetTimer(HealTimerHandle, this,
             &USTMHealthComponent::HealUpdate, HealUpdateTime, true, HealDelay);
-
     PlayCameraShake();
 }
 
@@ -48,8 +45,7 @@ bool USTMHealthComponent::IsDead() const
 void USTMHealthComponent::HealUpdate()
 {
     SetHealth(Health + HealModifier);
-    if (IsHealthFull() && GetWorld())
-        GetWorld()->GetTimerManager().ClearTimer(HealTimerHandle);
+    if (IsHealthFull() && GetWorld()) GetWorld()->GetTimerManager().ClearTimer(HealTimerHandle);
 }
 
 void USTMHealthComponent::SetHealth(const float NewHealth)

@@ -39,7 +39,8 @@ bool USTMPlayerHUDWidget::IsPlayerSpectating() const
 
 bool USTMPlayerHUDWidget::Initialize()
 {
-    const auto HealthComponent = STMUtils::GetSTMPlayerComponent<USTMHealthComponent>(GetOwningPlayerPawn());
+    const auto HealthComponent =
+        STMUtils::GetSTMPlayerComponent<USTMHealthComponent>(GetOwningPlayerPawn());
     if (HealthComponent)
         HealthComponent->OnHealthChanged.AddUObject(this, &USTMPlayerHUDWidget::OnHealthChanged);
     return Super::Initialize();
@@ -47,6 +48,5 @@ bool USTMPlayerHUDWidget::Initialize()
 
 void USTMPlayerHUDWidget::OnHealthChanged(const float Health, const float HealthDelta)
 {
-    if (HealthDelta < 0.0f)
-        OnTakeDamage();
+    if (HealthDelta < 0.0f) OnTakeDamage();
 }

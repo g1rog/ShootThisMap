@@ -8,9 +8,7 @@ bool ASTMAmmoPickup::GivePickUpTo(const TObjectPtr<APawn> &PlayerPawn)
 {
     const auto HealthComponent = STMUtils::GetSTMPlayerComponent<USTMHealthComponent>(PlayerPawn);
     if (!HealthComponent || HealthComponent->IsDead()) return false;
-
     const auto WeaponComponent = STMUtils::GetSTMPlayerComponent<USTMWeaponComponent>(PlayerPawn);
     if (!WeaponComponent) return false;
-    
     return WeaponComponent->TryToAddAmmo(WeaponType, ClipsAmount);
 }

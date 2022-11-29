@@ -39,7 +39,6 @@ private:
     void InitAnimations();
     void OnEquipFinished(const TObjectPtr<USkeletalMeshComponent> MeshComponent);
     void OnReloadFinished(const TObjectPtr<USkeletalMeshComponent> MeshComponent);
-
     bool CanFire() const;
     bool CanEquip() const;
     bool CanReload() const;

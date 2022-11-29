@@ -35,7 +35,6 @@ TObjectPtr<AActor> USTMAIPerceptionComponent::GetClosestEnemy() const
                 BestPawn = PercieveActor;
             }
         }
-        
     }
     return BestPawn;
 }

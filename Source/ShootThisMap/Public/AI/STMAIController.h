@@ -23,9 +23,10 @@ public:
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     TObjectPtr<USTMAIPerceptionComponent> STMAIPerceptionComponent;
-    
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+    FName FocusOnKeyName = "Enemy Actor";
+
 private:
-    
-    
-	
+    TObjectPtr<AActor> GetFocusOnActor() const;
 };

@@ -5,5 +5,4 @@ void USTMAnimNotify::Notify(USkeletalMeshComponent *MeshComp, UAnimSequenceBase 
 {
     OnNotified.Broadcast(MeshComp);
     Super::Notify(MeshComp, Animation);
-    
 }

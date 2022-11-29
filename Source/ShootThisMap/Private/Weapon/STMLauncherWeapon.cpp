@@ -10,7 +10,6 @@ void ASTMLauncherWeapon::StartFire()
 void ASTMLauncherWeapon::MakeShot()
 {
     if(!GetWorld() || IsAmmoEmpty()) return;
-    
     FVector TraceStart, TraceEnd;
     if (!GetTraceData(TraceStart, TraceEnd)) return;
     FHitResult HitResult;
@@ -18,7 +17,6 @@ void ASTMLauncherWeapon::MakeShot()
 
     const FVector EndPoint = HitResult.bBlockingHit ? HitResult.ImpactPoint : TraceEnd;
     const FVector Direction = (EndPoint - GetMuzzleSocketLocation()).GetSafeNormal();
-    
     const FTransform SpawnTransform(FRotator::ZeroRotator, GetMuzzleSocketLocation());
     const auto Projectile = GetWorld()->SpawnActorDeferred<ASTMProjectile>(ProjectileClass, SpawnTransform);
     if (Projectile)

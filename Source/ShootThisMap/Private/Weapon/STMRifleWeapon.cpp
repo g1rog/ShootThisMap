@@ -4,7 +4,6 @@
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
 
-
 ASTMRifleWeapon::ASTMRifleWeapon()
 {
     WeaponFXComponent = CreateDefaultSubobject<USTMWeaponFXComponent>("WeaponFXComponent");
@@ -22,7 +21,6 @@ void ASTMRifleWeapon::StartFire()
    // GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Red, FString::Printf(TEXT("Fire")));
     MakeShot();
     GetWorldTimerManager().SetTimer(ShotTimerHandle, this, &ASTMRifleWeapon::MakeShot, TimeBetweenShots, true);
-    
 }
 
 void ASTMRifleWeapon::StopFire()
@@ -34,10 +32,9 @@ void ASTMRifleWeapon::StopFire()
 void ASTMRifleWeapon::MakeShot()
 {
     if (!GetWorld() || IsAmmoEmpty()) return;
-
     FVector TraceStart, TraceEnd;
+
     if (!GetTraceData(TraceStart, TraceEnd)) return;
-    
     FHitResult HitResult;
     MakeHit(HitResult, TraceStart, TraceEnd);
     
@@ -64,8 +61,7 @@ void ASTMRifleWeapon::MakeDamage(const FHitResult& HitResult)
 
 void ASTMRifleWeapon::InitMuzzleFX()
 {
-    if (!MuzzleFXComponent)
-        MuzzleFXComponent = SpawnMuzzleFX();
+    if (!MuzzleFXComponent) MuzzleFXComponent = SpawnMuzzleFX();
     SetMuzzleFXVisibility(true);
 }
 
@@ -76,7 +72,6 @@ void ASTMRifleWeapon::SetMuzzleFXVisibility(const bool Visible)
         MuzzleFXComponent->SetPaused(!Visible);
         MuzzleFXComponent->SetVisibility(Visible, true);
     }
-    
 }
 
 void ASTMRifleWeapon::SpawnTraceFX(const FVector &TraceStart, const FVector &TraceEnd)

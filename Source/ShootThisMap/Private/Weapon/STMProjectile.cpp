@@ -36,23 +36,23 @@ void ASTMProjectile::BeginPlay()
     CollisionComponent->IgnoreActorWhenMoving(GetOwner(), true);
     CollisionComponent->OnComponentHit.AddDynamic(this, &ASTMProjectile::OnProjectileHit);
     SetLifeSpan(LifeSeconds);
-	
 }
 
 void ASTMProjectile::OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
         UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
     if (!GetWorld()) return;
-
     MovementComponent->StopMovementImmediately();
     UGameplayStatics::ApplyRadialDamage(GetWorld(), DamageAmount, GetActorLocation(),
         DamageRadius, UDamageType::StaticClass(), {GetOwner()}, this, GetController(), DoFullDamage);
-    //DrawDebugSphere(GetWorld(), GetActorLocation(), DamageRadius, 24, FColor::Red, false, 5.0f);
     WeaponFXComponent->PlayImpactFX(Hit);
     Destroy();
 }
 
-CONSTEXPR FORCEINLINE void ASTMProjectile::SetShotDirection(const FVector& Direction) { ShotDirection = Direction; }
+CONSTEXPR FORCEINLINE void ASTMProjectile::SetShotDirection(const FVector& Direction)
+{
+    ShotDirection = Direction;
+}
 
 FORCEINLINE TObjectPtr<AController> ASTMProjectile::GetController() const
 {
