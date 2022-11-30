@@ -187,6 +187,14 @@ bool USTMWeaponComponent::TryToAddAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType, i
     return false;
 }
 
+bool USTMWeaponComponent::NeedAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType)
+{
+    for (const auto& Weapon : Weapons)
+        if (Weapon && Weapon->IsA(WeaponType))
+            return !Weapon->IsAmmoFull();
+    return false;
+}
+
 bool USTMWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData &UIData) const
 {
     if (CurrentWeapon)

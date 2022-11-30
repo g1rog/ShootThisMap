@@ -10,7 +10,7 @@ ASTMAIController::ASTMAIController()
     SetPerceptionComponent(*STMAIPerceptionComponent);
 }
 
-void ASTMAIController::Tick(const float DeltaTime)
+void ASTMAIController::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
     SetFocus(GetFocusOnActor());
@@ -20,7 +20,9 @@ void ASTMAIController::OnPossess(APawn *InPawn)
 {
     Super::OnPossess(InPawn);
     if (const auto STMCharacter = Cast<ASTMAICharacter>(InPawn))
+    {
         RunBehaviorTree(STMCharacter->BehaviorTreeAsset);
+    }
 }
 
 TObjectPtr<AActor> ASTMAIController::GetFocusOnActor() const

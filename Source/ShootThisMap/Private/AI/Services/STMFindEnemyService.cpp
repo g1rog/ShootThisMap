@@ -12,6 +12,7 @@ USTMFindEnemyService::USTMFindEnemyService()
 
 void USTMFindEnemyService::TickNode(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory, float DeltaSeconds)
 {
+    GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Red, "find enemy");
     if (const auto Blackboard = OwnerComp.GetBlackboardComponent())
     {
         const auto Controller = OwnerComp.GetAIOwner();

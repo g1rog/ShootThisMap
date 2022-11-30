@@ -14,9 +14,11 @@ class SHOOTTHISMAP_API ASTMAICharacter : public ASTMBaseCharacter
     
 public:
     ASTMAICharacter(const FObjectInitializer& ObjInit);
-    virtual void Tick(const float DeltaTime) override;
+    virtual void Tick(float DeltaTime) override;
     
 protected:
+    virtual void BeginPlay() override;
+    virtual void OnDeath() override;
 private:
 
 public:

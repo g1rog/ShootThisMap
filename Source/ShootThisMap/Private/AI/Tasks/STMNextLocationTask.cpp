@@ -30,7 +30,7 @@ EBTNodeResult::Type USTMNextLocationTask::ExecuteTask(UBehaviorTreeComponent &Ow
         if (!CenterActor) return EBTNodeResult::Failed;
         Location = CenterActor->GetActorLocation();
     }
-    const auto Found = NavSys->GetRandomPointInNavigableRadius(Location, Radius, NavLocation);
+    const auto Found = NavSys->GetRandomReachablePointInRadius(Location, Radius, NavLocation);
     if (!Found) return EBTNodeResult::Failed;
 
     Blackboard->SetValueAsVector(AimLocationKey.SelectedKeyName, NavLocation.Location);

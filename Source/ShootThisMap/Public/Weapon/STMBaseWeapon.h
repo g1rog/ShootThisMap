@@ -22,9 +22,12 @@ public:
     virtual void StopFire();
     void ChangeClip();
     bool TryToAddAmmo(int32 ClipsAmount);
+    FORCEINLINE bool IsAmmoEmpty() const;
     FORCEINLINE bool CanReload() const;
+    FORCEINLINE bool IsAmmoFull() const;
     FORCEINLINE FWeaponUIData GetUIData() const { return UIData; }
     FORCEINLINE FAmmoData GetAmmoData() const { return CurrentAmmo; }
+
     
 protected:
 	virtual void BeginPlay() override;
@@ -36,9 +39,7 @@ protected:
     virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
     bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
 
-    FORCEINLINE bool IsAmmoEmpty() const;
     FORCEINLINE bool IsClipEmpty() const;
-    FORCEINLINE bool IsAmmoFull() const;
     FORCEINLINE FVector GetMuzzleSocketLocation() const;
     
     TObjectPtr<APlayerController> GetPlayerController() const;

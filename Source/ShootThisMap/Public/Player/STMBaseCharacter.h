@@ -30,6 +30,7 @@ public:
     
 protected:
 	virtual void BeginPlay() override;
+    virtual void OnDeath();
 
 private:
     FORCEINLINE void MoveForward(const float Amount);
@@ -37,7 +38,6 @@ private:
     FORCEINLINE void OnStartRunning();
     FORCEINLINE void OnStopRunning();
 
-    void OnDeath();
     void OnHealthChanged(const float Health, const float HealthDelta) const;
     
 public:

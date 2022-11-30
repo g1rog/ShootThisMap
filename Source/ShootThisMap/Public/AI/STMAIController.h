@@ -16,7 +16,7 @@ public:
     
 protected:
     virtual void OnPossess(APawn* InPawn) override;
-    virtual void Tick(const float DeltaTime) override;
+    virtual void Tick(float DeltaTime) override;
 private:
 
 public:
@@ -25,7 +25,7 @@ protected:
     TObjectPtr<USTMAIPerceptionComponent> STMAIPerceptionComponent;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
-    FName FocusOnKeyName = "Enemy Actor";
+    FName FocusOnKeyName = "EnemyActor";
 
 private:
     TObjectPtr<AActor> GetFocusOnActor() const;
