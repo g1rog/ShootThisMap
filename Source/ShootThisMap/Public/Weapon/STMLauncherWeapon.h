@@ -19,7 +19,6 @@ protected:
     virtual void MakeShot() override;
     
 private:
-
 public:
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")

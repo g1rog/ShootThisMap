@@ -5,16 +5,12 @@
 #include "AIController.h"
 #include "STMUtils.h"
 
-USTMAIPerceptionComponent::USTMAIPerceptionComponent()
-{
-}
-
-TObjectPtr<AActor> USTMAIPerceptionComponent::GetClosestEnemy() const
+TObjectPtr<AActor> USTMAIPerceptionComponent::GetClosestEnemy() const 
 {
     TArray<TObjectPtr<AActor>> PercieveActors;
     GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), PercieveActors);
-    if (PercieveActors.Num() == 0) return nullptr;
 
+    if (PercieveActors.Num() == 0) return nullptr;
     const auto Controller = Cast<AAIController>(GetOwner());
     if (!Controller) return nullptr;
     const auto Pawn = Controller->GetPawn();

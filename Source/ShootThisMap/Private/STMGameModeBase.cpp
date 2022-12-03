@@ -10,15 +10,18 @@ ASTMGameModeBase::ASTMGameModeBase()
     PlayerControllerClass = ASTMPlayerController::StaticClass();
 }
 
-void ASTMGameModeBase::StartPlay()
+void ASTMGameModeBase::StartPlay() 
 {
     Super::StartPlay();
     SpawnBots();
 }
 
-UClass* ASTMGameModeBase::GetDefaultPawnClassForController_Implementation(AController *InController)
+
+UClass* ASTMGameModeBase::GetDefaultPawnClassForController_Implementation(AController *InController) 
 {
-    if (InController && InController->IsA<AAIController>()) return AIPawnClass;
+    if (InController && InController->IsA<AAIController>())
+        return AIPawnClass;
+
     return Super::GetDefaultPawnClassForController_Implementation(InController);
 }
 

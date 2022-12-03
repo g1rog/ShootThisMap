@@ -9,5 +9,4 @@ UCLASS()
 class SHOOTTHISMAP_API USTMReloadFinishedAnimNotify : public USTMAnimNotify
 {
 	GENERATED_BODY()
-	
 };

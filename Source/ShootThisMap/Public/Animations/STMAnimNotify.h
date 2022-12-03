@@ -20,6 +20,7 @@ private:
 
 public:
     FOnNotifiedSignature OnNotified;
+    
 protected:
 private:
     

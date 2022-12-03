@@ -16,16 +16,14 @@ void ASTMAIController::Tick(float DeltaTime)
     SetFocus(GetFocusOnActor());
 }
 
-void ASTMAIController::OnPossess(APawn *InPawn)
+void ASTMAIController::OnPossess(APawn *InPawn) 
 {
     Super::OnPossess(InPawn);
     if (const auto STMCharacter = Cast<ASTMAICharacter>(InPawn))
-    {
         RunBehaviorTree(STMCharacter->BehaviorTreeAsset);
-    }
 }
 
-TObjectPtr<AActor> ASTMAIController::GetFocusOnActor() const
+FORCEINLINE TObjectPtr<AActor> ASTMAIController::GetFocusOnActor() const 
 {
     if (!GetBlackboardComponent()) return nullptr;
     return Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(FocusOnKeyName));

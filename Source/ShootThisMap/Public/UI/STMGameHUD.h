@@ -15,7 +15,6 @@ protected:
     virtual void BeginPlay() override;
 
 private:
-
 public:
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")

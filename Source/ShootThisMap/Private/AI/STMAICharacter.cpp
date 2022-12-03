@@ -18,18 +18,17 @@ ASTMAICharacter::ASTMAICharacter(const FObjectInitializer& ObjInit)
     }
 }
 
-void ASTMAICharacter::BeginPlay()
+void ASTMAICharacter::BeginPlay() 
 {
     Super::BeginPlay();
 }
 
-void ASTMAICharacter::Tick(float DeltaTime)
+void ASTMAICharacter::Tick(float DeltaTime) 
 {
     Super::Tick(DeltaTime);
 }
 
-
-void ASTMAICharacter::OnDeath()
+void ASTMAICharacter::OnDeath() 
 {
     Super::OnDeath();
     const auto STMController = Cast<AAIController>(Controller);

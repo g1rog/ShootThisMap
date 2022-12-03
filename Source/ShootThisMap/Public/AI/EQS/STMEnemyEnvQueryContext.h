@@ -11,6 +11,7 @@ class SHOOTTHISMAP_API USTMEnemyEnvQueryContext : public UEnvQueryContext
 	GENERATED_BODY()
 public:
     virtual void ProvideContext(FEnvQueryInstance& QueryInstance, FEnvQueryContextData& ContextData) const override;
+    
 protected:
 private:
 

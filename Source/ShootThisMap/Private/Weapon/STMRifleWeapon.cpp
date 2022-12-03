@@ -76,8 +76,7 @@ void ASTMRifleWeapon::SetMuzzleFXVisibility(const bool Visible)
 
 void ASTMRifleWeapon::SpawnTraceFX(const FVector &TraceStart, const FVector &TraceEnd)
 {
-    const auto TraceFXComponent = UNiagaraFunctionLibrary::SpawnSystemAtLocation
-    (GetWorld(), TraceFX, TraceStart);
-    if (TraceFXComponent)
-        TraceFXComponent->SetNiagaraVariableVec3(TraceTargetName, TraceEnd);
+    if (const auto TraceFXComponent =
+        UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), TraceFX, TraceStart))
+            TraceFXComponent->SetNiagaraVariableVec3(TraceTargetName, TraceEnd);
 }

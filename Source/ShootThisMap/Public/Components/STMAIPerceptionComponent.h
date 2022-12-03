@@ -11,6 +11,5 @@ class SHOOTTHISMAP_API USTMAIPerceptionComponent : public UAIPerceptionComponent
 	GENERATED_BODY()
 
 public:
-    USTMAIPerceptionComponent();
     TObjectPtr<AActor> GetClosestEnemy() const;
 };

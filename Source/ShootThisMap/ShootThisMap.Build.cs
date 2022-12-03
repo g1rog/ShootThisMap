@@ -5,6 +5,7 @@ public class ShootThisMap : ModuleRules
 {
 	public ShootThisMap(ReadOnlyTargetRules Target) : base(Target)
 	{
+		CppStandard = CppStandardVersion.Cpp20;
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		PublicDependencyModuleNames.AddRange
 		(new string[] 
@@ -18,6 +19,5 @@ public class ShootThisMap : ModuleRules
 				"NavigationSystem"
 			}
 		);
-		CppStandard = CppStandardVersion.Cpp20;
 	}
 }

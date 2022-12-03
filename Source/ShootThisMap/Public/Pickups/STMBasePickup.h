@@ -20,10 +20,12 @@ protected:
 	virtual void BeginPlay() override;
     virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
     virtual bool GivePickUpTo(const TObjectPtr<APawn>& PlayerPawn);
+    
 private:
     void PickupWasTaken();
     void Respawn();
     void GenerateRotationYaw();
+    
 public:
 protected:
     UPROPERTY(VisibleAnywhere, Category = "Pickup")

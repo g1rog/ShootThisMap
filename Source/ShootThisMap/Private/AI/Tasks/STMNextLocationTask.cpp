@@ -3,14 +3,13 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
 #include "NavigationSystem.h"
-#include "AI/STMAIController.h"
 
 USTMNextLocationTask::USTMNextLocationTask()
 {
     NodeName = "Next Location";
 }
 
-EBTNodeResult::Type USTMNextLocationTask::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory)
+EBTNodeResult::Type USTMNextLocationTask::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) 
 {
     const auto Controller = OwnerComp.GetAIOwner();
     const auto Blackboard = OwnerComp.GetBlackboardComponent();
@@ -23,7 +22,7 @@ EBTNodeResult::Type USTMNextLocationTask::ExecuteTask(UBehaviorTreeComponent &Ow
     if (!NavSys) return EBTNodeResult::Failed;
     
     FNavLocation NavLocation;
-    auto Location = Pawn->GetActorLocation();
+    FVector Location = Pawn->GetActorLocation();
     if (!SelfCenter)
     {
         const auto CenterActor = Cast<AActor>(Blackboard->GetValueAsObject(CenterActorKey.SelectedKeyName));

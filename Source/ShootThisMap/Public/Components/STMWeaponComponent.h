@@ -19,32 +19,33 @@ public:
     virtual void StartFire();
     virtual void StopFire();
     virtual void NextWeapon();
-    void Reload();
     void OnClipEmpty(const TObjectPtr<ASTMBaseWeapon> AmmoEmptyWeapon);
     void ChangeClip();
     bool TryToAddAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType, int32 ClipsAmount);
     bool NeedAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType);
 
+    FORCEINLINE void Reload();
     FORCEINLINE bool GetCurrentWeaponUIData(FWeaponUIData& UIData) const;
     FORCEINLINE bool GetCurrentWeaponAmmoData(FAmmoData& AmmoData) const;
 
 protected:
 	virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-    bool CanFire() const;
-    bool CanEquip() const;
     void EquipWeapon(const int32& WeaponId);
+
+    FORCEINLINE bool CanFire() const;
+    FORCEINLINE bool CanEquip() const;
     
 private:
     void SpawnWeapons();
-    void AttachWeaponToSocket(const TObjectPtr<ASTMBaseWeapon>& Weapon, const TObjectPtr<USceneComponent>& SceneComponent, const FName& SocketName);
+    void AttachWeaponToSocket(const TObjectPtr<ASTMBaseWeapon>& Weapon,
+        const TObjectPtr<USceneComponent>& SceneComponent, const FName& SocketName);
     void PlayAnimMontage(const TObjectPtr<UAnimMontage>& Animation) const;
     void InitAnimations();
     void OnEquipFinished(const TObjectPtr<USkeletalMeshComponent> MeshComponent);
     void OnReloadFinished(const TObjectPtr<USkeletalMeshComponent> MeshComponent);
-    bool CanReload() const;
 
-  
+    FORCEINLINE bool CanReload() const;
 
 public:
 protected:
@@ -67,10 +68,10 @@ protected:
     TArray<TObjectPtr<ASTMBaseWeapon>> Weapons;
 
     int32 CurrentWeaponId = 0;
+    
 private:
     UPROPERTY()
     TObjectPtr<UAnimMontage> CurrentReloadAnimMontage = nullptr;
-    
     bool EquipAnimInProgress = false;
     bool ReloadAnimInProgress = false;
 		

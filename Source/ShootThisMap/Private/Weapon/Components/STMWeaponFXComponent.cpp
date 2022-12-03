@@ -17,14 +17,13 @@ void USTMWeaponFXComponent::PlayImpactFX(const FHitResult &Hit)
     {
         const auto PhysMat = Hit.PhysMaterial.Get();
         if (ImpactDataMap.Contains(PhysMat))
-        {
             ImpactData = ImpactDataMap[PhysMat];
-        }
     }
-    UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ImpactData.NiagaraEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
-    const auto DecalComponent = UGameplayStatics::SpawnDecalAtLocation(GetWorld(),ImpactData.DecalData.Material,
-        ImpactData.DecalData.Size, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
-    if (DecalComponent)
-        DecalComponent->SetFadeOut(ImpactData.DecalData.LifeTime, ImpactData.DecalData.FadeOutTime);
+    UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(),
+        ImpactData.NiagaraEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
+    
+    if (const auto DecalComponent = UGameplayStatics::SpawnDecalAtLocation(GetWorld(),ImpactData.DecalData.Material,
+        ImpactData.DecalData.Size, Hit.ImpactPoint, Hit.ImpactNormal.Rotation()))
+            DecalComponent->SetFadeOut(ImpactData.DecalData.LifeTime, ImpactData.DecalData.FadeOutTime);
 }
 

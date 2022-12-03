@@ -19,10 +19,7 @@ ASTMProjectile::ASTMProjectile()
     
     MovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>("MovementComponent");
     MovementComponent->InitialSpeed = 2000.0f;
-
     WeaponFXComponent = CreateDefaultSubobject<USTMWeaponFXComponent>("WeaponFXComponent");
-    
-    
 }
 
 void ASTMProjectile::BeginPlay()
@@ -48,8 +45,7 @@ void ASTMProjectile::OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* 
     WeaponFXComponent->PlayImpactFX(Hit);
     Destroy();
 }
-
-CONSTEXPR FORCEINLINE void ASTMProjectile::SetShotDirection(const FVector& Direction)
+FORCEINLINE constexpr void ASTMProjectile::SetShotDirection(const FVector& Direction)
 {
     ShotDirection = Direction;
 }

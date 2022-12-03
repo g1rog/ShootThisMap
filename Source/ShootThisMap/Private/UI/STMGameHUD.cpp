@@ -5,7 +5,7 @@
 void ASTMGameHUD::BeginPlay()
 {
     Super::BeginPlay();
-    const auto PlayerHUDWidget = CreateWidget<UUserWidget>(GetWorld(), PlayerHUDWidgetClass);
-    if (PlayerHUDWidget)
-        PlayerHUDWidget->AddToViewport();
+    if (const auto PlayerHUDWidget =
+        CreateWidget<UUserWidget>(GetWorld(), PlayerHUDWidgetClass))
+            PlayerHUDWidget->AddToViewport();
 }

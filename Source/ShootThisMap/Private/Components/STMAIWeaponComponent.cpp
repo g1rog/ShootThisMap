@@ -5,17 +5,14 @@
 void USTMAIWeaponComponent::StartFire()
 {
     if (!CanFire()) return;
-    if (CurrentWeapon->IsAmmoEmpty())
-        NextWeapon();
-    else
-        CurrentWeapon->StartFire();
+    CurrentWeapon->IsAmmoEmpty() ? NextWeapon() : CurrentWeapon->StartFire();
 }
 
 void USTMAIWeaponComponent::NextWeapon()
 {
     if (!CanEquip()) return;
     int32 NextIndex = (CurrentWeaponId + 1) % Weapons.Num();
-    while (NextIndex!=CurrentWeaponId)
+    while (NextIndex != CurrentWeaponId)
     {
         if (!Weapons[NextIndex]->IsAmmoEmpty()) break;
         NextIndex = (NextIndex + 1) % Weapons.Num();
@@ -25,5 +22,4 @@ void USTMAIWeaponComponent::NextWeapon()
         CurrentWeaponId = NextIndex;
         EquipWeapon(CurrentWeaponId);
     }
-    
 }

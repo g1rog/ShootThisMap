@@ -22,6 +22,7 @@ public:
 
 protected:
     virtual void MakeShot() override;
+    
 private:
     void MakeDamage(const FHitResult& HitResult);
     void InitMuzzleFX();
@@ -44,8 +45,7 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     FString TraceTargetName = "TraceTarget";
-    
-    
+
 private:
     UPROPERTY()
     TObjectPtr<UNiagaraComponent> MuzzleFXComponent;

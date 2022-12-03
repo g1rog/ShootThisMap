@@ -1,12 +1,10 @@
 
 #include "Components/STMWeaponComponent.h"
-
-#include "Animations/AnimUtils.h"
 #include "Weapon/STMBaseWeapon.h"
 #include "GameFramework/Character.h"
 #include "Animations/STMEquipFinishedAnimNotify.h"
 #include "Animations/STMReloadFinishedAnimNotify.h"
-#include "Dataflow/DataflowEdNode.h"
+#include "Animations/AnimUtils.h"
 
 USTMWeaponComponent::USTMWeaponComponent()
 {
@@ -18,7 +16,6 @@ void USTMWeaponComponent::BeginPlay()
 	Super::BeginPlay();
     InitAnimations();
     SpawnWeapons();
-    
     CurrentWeaponId = 0;
     EquipWeapon(CurrentWeaponId);
 }
@@ -59,15 +56,15 @@ void USTMWeaponComponent::AttachWeaponToSocket(const TObjectPtr<ASTMBaseWeapon>&
 void USTMWeaponComponent::EquipWeapon(const int32& WeaponId)
 {
     const TObjectPtr<ACharacter> Character = Cast<ACharacter>(GetOwner());
-    if (!Character) return;
-    if (CurrentWeapon)
+    if (CurrentWeapon && Character)
     {
         StopFire();
         AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponArmorySocketName);
     }
     CurrentWeapon = Weapons[WeaponId];
     const auto CurrentWeaponData = WeaponData.FindByPredicate([&]<typename Type> (const Type& Data)
-        -> bool {return Data.WeaponClass == CurrentWeapon->GetClass();});
+        constexpr -> bool { return Data.WeaponClass == CurrentWeapon->GetClass(); });
+
     CurrentReloadAnimMontage = CurrentWeaponData ? CurrentWeaponData->ReloadAnimMontage : nullptr;
     AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName);
     EquipAnimInProgress = true;
@@ -102,9 +99,9 @@ void USTMWeaponComponent::PlayAnimMontage(const TObjectPtr<UAnimMontage> &Animat
 
 void USTMWeaponComponent::InitAnimations()
 {
-    const auto EquipFinishedNotify = AnimUtils::FindNotifyByClass<USTMEquipFinishedAnimNotify>(EquipAnimMontage);
-    if (EquipFinishedNotify)
-        EquipFinishedNotify->OnNotified.AddUObject(this, &USTMWeaponComponent::OnEquipFinished);
+    if (const auto EquipFinishedNotify =
+        AnimUtils::FindNotifyByClass<USTMEquipFinishedAnimNotify>(EquipAnimMontage))
+            EquipFinishedNotify->OnNotified.AddUObject(this, &USTMWeaponComponent::OnEquipFinished);
     else
         checkNoEntry();
 
@@ -130,17 +127,17 @@ void USTMWeaponComponent::OnReloadFinished(const TObjectPtr<USkeletalMeshCompone
     ReloadAnimInProgress = false;
 }
 
-bool USTMWeaponComponent::CanFire() const
+FORCEINLINE bool USTMWeaponComponent::CanFire() const
 {
    return CurrentWeapon && !EquipAnimInProgress && !ReloadAnimInProgress;
 }
 
-bool USTMWeaponComponent::CanEquip() const
+FORCEINLINE bool USTMWeaponComponent::CanEquip() const
 {
     return !EquipAnimInProgress && !ReloadAnimInProgress;
 }
 
-bool USTMWeaponComponent::CanReload() const
+FORCEINLINE bool USTMWeaponComponent::CanReload() const
 {
     return CurrentWeapon
             && !EquipAnimInProgress
@@ -148,7 +145,7 @@ bool USTMWeaponComponent::CanReload() const
             && CurrentWeapon->CanReload();
 }
 
-void USTMWeaponComponent::Reload()
+FORCEINLINE void USTMWeaponComponent::Reload()
 {
     ChangeClip();
 }
@@ -162,7 +159,7 @@ void USTMWeaponComponent::OnClipEmpty(const TObjectPtr<ASTMBaseWeapon> AmmoEmpty
     }
     else
     {
-        for (auto Weapon : Weapons)
+        for (const auto& Weapon : Weapons)
         {
             if (Weapon == AmmoEmptyWeapon)
                 Weapon->ChangeClip();
@@ -197,22 +194,16 @@ bool USTMWeaponComponent::NeedAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType)
 
 bool USTMWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData &UIData) const
 {
-    if (CurrentWeapon)
-    {
-        UIData = CurrentWeapon->GetUIData();
-        return true;
-    }
-    return false;
+    if (!CurrentWeapon) return false;
+    UIData = CurrentWeapon->GetUIData();
+    return true;
 }
 
 bool USTMWeaponComponent::GetCurrentWeaponAmmoData(FAmmoData& AmmoData) const
  {
-    if (CurrentWeapon)
-    {
-        AmmoData = CurrentWeapon->GetAmmoData();
-        return true;
-    }
-    return false;
+    if (!CurrentWeapon) return false;
+    AmmoData = CurrentWeapon->GetAmmoData();
+    return true;
 }
 
 

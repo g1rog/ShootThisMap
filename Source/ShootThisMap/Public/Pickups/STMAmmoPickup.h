@@ -17,7 +17,6 @@ protected:
     virtual bool GivePickUpTo(const TObjectPtr<APawn>& PlayerPawn) override;
 
 private:
-
 public:
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup", meta = (ClampMin = "1.0", ClampMax = "10.0"))
@@ -25,6 +24,7 @@ protected:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
     TSubclassOf<ASTMBaseWeapon> WeaponType;
+
 private:
     
 };

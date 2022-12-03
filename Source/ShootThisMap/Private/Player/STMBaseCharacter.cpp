@@ -32,12 +32,12 @@ void ASTMBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-    check(SpringArmComponent);
-    check(CameraComponent);
-    check(HealthComponent);
-    check(HealthTextComponent);
-    check(GetCharacterMovement());
-    check(GetMesh());
+    // check(SpringArmComponent);
+    // check(CameraComponent);
+    // check(HealthComponent);
+    // check(HealthTextComponent);
+    // check(GetCharacterMovement());
+    // check(GetMesh());
 
     OnHealthChanged(HealthComponent->GetHealth(), 0.0f);
     HealthComponent->OnDeath.AddUObject(this, &ASTMBaseCharacter::OnDeath);

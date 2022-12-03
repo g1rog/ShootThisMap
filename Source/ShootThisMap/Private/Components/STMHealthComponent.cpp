@@ -6,7 +6,6 @@
 #include "Engine/World.h"
 #include "TimerManager.h"
 
-
 USTMHealthComponent::USTMHealthComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;

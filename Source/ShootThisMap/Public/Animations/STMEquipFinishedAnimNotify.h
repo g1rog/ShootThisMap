@@ -9,14 +9,4 @@ UCLASS()
 class SHOOTTHISMAP_API USTMEquipFinishedAnimNotify : public USTMAnimNotify
 {
 	GENERATED_BODY()
-
-public:
-    
-protected:
-private:
-
-public:
-protected:
-private:
-
 };

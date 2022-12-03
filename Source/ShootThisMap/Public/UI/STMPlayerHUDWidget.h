@@ -9,6 +9,7 @@ UCLASS()
 class SHOOTTHISMAP_API USTMPlayerHUDWidget : public UUserWidget
 {
 	GENERATED_BODY()
+    
 public:
     UFUNCTION(BlueprintCallable, Category = "UI")
     float GetHealthPercent() const;

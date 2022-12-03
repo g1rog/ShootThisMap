@@ -9,7 +9,7 @@ USTMChangeWeaponService::USTMChangeWeaponService()
     NodeName = "Change Weapon";
 }
 
-void USTMChangeWeaponService::TickNode(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory, float DeltaSeconds)
+void USTMChangeWeaponService::TickNode(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory, float DeltaSeconds) 
 {
     if (const auto Controller = OwnerComp.GetAIOwner())
     {

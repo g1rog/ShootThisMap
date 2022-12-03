@@ -1,13 +1,14 @@
-﻿#pragma once
+﻿
+#pragma once
 
 #include "STMCoreTypes.generated.h"
 
 class ASTMBaseWeapon;
+class UNiagaraSystem;
 
 DECLARE_MULTICAST_DELEGATE(FOnDeathSignature);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnClipEmptySignature, const TObjectPtr<ASTMBaseWeapon>&);
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHealthChangedSignature, float, float);
-
 
 USTRUCT(BlueprintType)
 struct FAmmoData
@@ -15,19 +16,18 @@ struct FAmmoData
     GENERATED_USTRUCT_BODY()
     
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    int32 Bullets;
+    int32 Bullets = 0;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon", meta = (EditCondition = "!Infinite"))
-    int32 Clips;
+    int32 Clips = 0;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    bool Infinite;
+    bool Infinite = false;
 };
 
 USTRUCT(BlueprintType)
 struct FWeaponData
 {
-
     GENERATED_USTRUCT_BODY()
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
@@ -49,10 +49,7 @@ struct FWeaponUIData
     TObjectPtr<UTexture2D> CrossHairIcon;
 };
 
-// VFX
-
-class UNiagaraSystem;
-
+/* VFX */
 USTRUCT(BlueprintType)
 struct FDecalData
 {
@@ -90,6 +87,4 @@ struct FGameData
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "1", ClampMax = "100"))
     int32 PlayersNum = 2;
-    
-
 };

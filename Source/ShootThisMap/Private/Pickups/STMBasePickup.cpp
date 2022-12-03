@@ -15,6 +15,8 @@ ASTMBasePickup::ASTMBasePickup()
 void ASTMBasePickup::BeginPlay()
 {
 	Super::BeginPlay();
+    
+    check(CollisionComponent);
 	GenerateRotationYaw();
 }
 

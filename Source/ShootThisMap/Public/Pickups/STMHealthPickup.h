@@ -15,11 +15,11 @@ protected:
     virtual bool GivePickUpTo(const TObjectPtr<APawn>& PlayerPawn) override;
 
 private:
-
 public:
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup", meta = (ClampMin = "1.0", ClampMax = "10.0"))
     float HealthAmount = 100.0f;
+    
 private:
     
 	

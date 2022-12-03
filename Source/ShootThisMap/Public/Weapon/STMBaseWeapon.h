@@ -17,37 +17,32 @@ class SHOOTTHISMAP_API ASTMBaseWeapon : public AActor
 	
 public:	
 	ASTMBaseWeapon();
-    
     virtual void StartFire();
     virtual void StopFire();
     void ChangeClip();
     bool TryToAddAmmo(int32 ClipsAmount);
+    
     FORCEINLINE bool IsAmmoEmpty() const;
     FORCEINLINE bool CanReload() const;
     FORCEINLINE bool IsAmmoFull() const;
     FORCEINLINE FWeaponUIData GetUIData() const { return UIData; }
     FORCEINLINE FAmmoData GetAmmoData() const { return CurrentAmmo; }
 
-    
 protected:
 	virtual void BeginPlay() override;
-
     virtual void MakeShot();
-    void DecreaseAmmo();
-    void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
-    
     virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
     bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
-
-    FORCEINLINE bool IsClipEmpty() const;
-    FORCEINLINE FVector GetMuzzleSocketLocation() const;
+    void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
+    void DecreaseAmmo();
     
     TObjectPtr<APlayerController> GetPlayerController() const;
     TObjectPtr<UNiagaraComponent> SpawnMuzzleFX();
 
-private:
-
+    FORCEINLINE bool IsClipEmpty() const;
+    FORCEINLINE FVector GetMuzzleSocketLocation() const;
     
+private:
 public:
     FOnClipEmptySignature OnClipEmpty;
     

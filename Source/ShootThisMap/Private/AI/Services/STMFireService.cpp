@@ -10,7 +10,7 @@ USTMFireService::USTMFireService()
     NodeName = "Fire";
 }
 
-void USTMFireService::TickNode(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory, float DeltaSeconds)
+void USTMFireService::TickNode(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory, float DeltaSeconds) 
 {
     const auto Blackboard = OwnerComp.GetBlackboardComponent();
     const auto HasAim = Blackboard && Blackboard->GetValueAsObject(EnemyActorKey.SelectedKeyName);

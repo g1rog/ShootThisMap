@@ -18,7 +18,6 @@ void ASTMBaseWeapon::BeginPlay()
 {
 	Super::BeginPlay();
     check(WeaponMesh);
-    
     CurrentAmmo = DefaultAmmo;
 }
 
@@ -38,7 +37,6 @@ bool ASTMBaseWeapon::GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRot
 {
     const auto STMCharacter = Cast<ACharacter>(GetOwner());
     if (!STMCharacter) return false;
-
     if (STMCharacter->IsPlayerControlled())
     {
         const auto Controller = GetPlayerController();
@@ -50,7 +48,6 @@ bool ASTMBaseWeapon::GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRot
         ViewLocation = GetMuzzleSocketLocation();
         ViewRotation = WeaponMesh->GetSocketRotation(MuzzleSocketName);
     }
-  
     return true;
 }
 

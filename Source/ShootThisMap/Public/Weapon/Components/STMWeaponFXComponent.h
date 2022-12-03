@@ -16,12 +16,10 @@ class SHOOTTHISMAP_API USTMWeaponFXComponent : public UActorComponent
 
 public:	
 	USTMWeaponFXComponent();
-
     void PlayImpactFX(const FHitResult& Hit);
     
 protected:
 private:	
-
 public:
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")

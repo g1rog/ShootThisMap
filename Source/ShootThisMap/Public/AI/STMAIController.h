@@ -28,5 +28,5 @@ protected:
     FName FocusOnKeyName = "EnemyActor";
 
 private:
-    TObjectPtr<AActor> GetFocusOnActor() const;
+    FORCEINLINE TObjectPtr<AActor> GetFocusOnActor() const;
 };

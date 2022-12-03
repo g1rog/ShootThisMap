@@ -5,7 +5,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 
-void USTMEnemyEnvQueryContext::ProvideContext(FEnvQueryInstance &QueryInstance, FEnvQueryContextData &ContextData) const
+void USTMEnemyEnvQueryContext::ProvideContext(FEnvQueryInstance &QueryInstance, FEnvQueryContextData &ContextData) const 
 {
     const auto QueryOwner = Cast<AActor>(QueryInstance.Owner.Get());
     const auto Blackboard = UAIBlueprintHelperLibrary::GetBlackboard(QueryOwner);

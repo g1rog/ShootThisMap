@@ -4,13 +4,12 @@
 #include "AIController.h"
 #include "STMUtils.h"
 
-
 USTMNeedAmmoDecorator::USTMNeedAmmoDecorator()
 {
     NodeName = "Need Ammo";
 }
 
-bool USTMNeedAmmoDecorator::CalculateRawConditionValue(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) const
+bool USTMNeedAmmoDecorator::CalculateRawConditionValue(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) const 
 {
     const auto Controller = OwnerComp.GetAIOwner();
     if (!Controller) return false;
