@@ -28,7 +28,7 @@ UClass* ASTMGameModeBase::GetDefaultPawnClassForController_Implementation(AContr
 void ASTMGameModeBase::SpawnBots()
 {
     if (!GetWorld()) return;
-    for (int32 i = 0; GameData.PlayersNum - 1; ++i)
+    for (int32 i = 0; i < GameData.PlayersNum - 1; ++i)
     {
         FActorSpawnParameters SpawnInfo;
         SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
