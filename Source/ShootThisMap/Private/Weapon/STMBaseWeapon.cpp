@@ -8,15 +8,14 @@
 
 ASTMBaseWeapon::ASTMBaseWeapon()
 {
-	PrimaryActorTick.bCanEverTick = false;
-
+    PrimaryActorTick.bCanEverTick = false;
     WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>("WeaponMesh");
     SetRootComponent(WeaponMesh);
 }
 
 void ASTMBaseWeapon::BeginPlay()
 {
-	Super::BeginPlay();
+    Super::BeginPlay();
     check(WeaponMesh);
     CurrentAmmo = DefaultAmmo;
 }
