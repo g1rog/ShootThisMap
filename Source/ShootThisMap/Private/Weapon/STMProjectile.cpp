@@ -24,7 +24,7 @@ ASTMProjectile::ASTMProjectile()
 
 void ASTMProjectile::BeginPlay()
 {
-	Super::BeginPlay();
+    Super::BeginPlay();
     check(MovementComponent);
     check(CollisionComponent);
     check(WeaponFXComponent);
