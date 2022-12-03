@@ -8,7 +8,7 @@
 
 ASTMProjectile::ASTMProjectile()
 {
-	PrimaryActorTick.bCanEverTick = false;
+    PrimaryActorTick.bCanEverTick = false;
 
     CollisionComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
     CollisionComponent->InitSphereRadius(5.0f);
@@ -24,7 +24,7 @@ ASTMProjectile::ASTMProjectile()
 
 void ASTMProjectile::BeginPlay()
 {
-	Super::BeginPlay();
+    Super::BeginPlay();
     check(MovementComponent);
     check(CollisionComponent);
     check(WeaponFXComponent);
