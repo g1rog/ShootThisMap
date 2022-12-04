@@ -5,6 +5,7 @@
 #include "Camera/CameraShakeBase.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+#include "STMGameModeBase.h"
 
 USTMHealthComponent::USTMHealthComponent()
 {
@@ -29,10 +30,15 @@ void USTMHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, const float Dama
     GetWorld()->GetTimerManager().ClearTimer(HealTimerHandle);
     
     if (IsDead())
+    {
+        Killed(InstigatedBy);
         OnDeath.Broadcast();
+    }
     else if (AutoHeal && GetWorld())
+    {
         GetWorld()->GetTimerManager().SetTimer(HealTimerHandle, this,
             &USTMHealthComponent::HealUpdate, HealUpdateTime, true, HealDelay);
+    }
     PlayCameraShake();
 }
 
@@ -76,5 +82,16 @@ void USTMHealthComponent::PlayCameraShake() const
         if (!Controller || !Controller->PlayerCameraManager) return;
         Controller->PlayerCameraManager->StartCameraShake(CameraShake);
     }
+}
+
+void USTMHealthComponent::Killed(const TObjectPtr<AController> &KillerController) const
+{
+    if (!GetWorld()) return;
+    
+    const auto GameMode = Cast<ASTMGameModeBase>(GetWorld()->GetAuthGameMode());
+    if (!GameMode) return;
+    const auto Player = Cast<APawn>(GetOwner());
+    const auto VictimController = Player ? Player->Controller : nullptr;
+    GameMode->Killed(KillerController, VictimController);
 }
 

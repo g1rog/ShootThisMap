@@ -24,10 +24,12 @@ protected:
     virtual void MakeShot() override;
     
 private:
+    FORCEINLINE TObjectPtr<AController> GetController() const;
+    
     void MakeDamage(const FHitResult& HitResult);
     void InitMuzzleFX();
-    void SetMuzzleFXVisibility(const bool Visible);
-    void SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd);
+    void SetMuzzleFXVisibility(const bool Visible) const;
+    void SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd) const;
 
 public:
 protected:

@@ -2,7 +2,6 @@
 #include "Weapon/STMBaseWeapon.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/Character.h"
-#include "Animations/AnimUtils.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
 
@@ -24,21 +23,13 @@ void ASTMBaseWeapon::StartFire() {}
 void ASTMBaseWeapon::StopFire() {}
 void ASTMBaseWeapon::MakeShot() {}
 
-TObjectPtr<APlayerController> ASTMBaseWeapon::GetPlayerController() const
-{
-    const TObjectPtr<ACharacter> Player = Cast<ACharacter>(GetOwner());
-    if (!Player) return nullptr;
-    const TObjectPtr<APlayerController> Controller = Player->GetController<APlayerController>();
-    return !Controller ? nullptr : Controller;
-}
-
 bool ASTMBaseWeapon::GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRotation) const
 {
     const auto STMCharacter = Cast<ACharacter>(GetOwner());
     if (!STMCharacter) return false;
     if (STMCharacter->IsPlayerControlled())
     {
-        const auto Controller = GetPlayerController();
+        const auto Controller = STMCharacter->GetController<APlayerController>();
         if (!Controller) return false;
         Controller->GetPlayerViewPoint(ViewLocation, ViewRotation);
     }

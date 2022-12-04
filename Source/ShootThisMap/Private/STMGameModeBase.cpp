@@ -105,7 +105,7 @@ FLinearColor ASTMGameModeBase::SetColorByTeam(int32 TeamID) const
         GameData.TeamColors[TeamID - 1] : GameData.DefaultTeamColor;
 }
 
-void ASTMGameModeBase::SetPlayerColor(const TObjectPtr<AController> &Controller)
+void ASTMGameModeBase::SetPlayerColor(const TObjectPtr<AController> &Controller) const
 {
     if (!Controller) return;
     const auto Character = Cast<ASTMBaseCharacter>(Controller->GetPawn());
@@ -115,5 +115,18 @@ void ASTMGameModeBase::SetPlayerColor(const TObjectPtr<AController> &Controller)
 
     if (!PlayerState) return;
     Character->SetPlayerColor(PlayerState->GetTeamColor());
+}
+
+
+void ASTMGameModeBase::Killed(const TObjectPtr<AController> &KillerController,
+    const TObjectPtr<AController> &VictimController) const
+{
+    const auto KillerPlayerState = KillerController ? Cast<ASTMPlayerState>(KillerController->PlayerState) : nullptr;
+    const auto VictimPlayerState = VictimController ? Cast<ASTMPlayerState>(VictimController->PlayerState) : nullptr;
+
+    if (KillerPlayerState)
+        KillerPlayerState->AddKill();
+    if (VictimPlayerState)
+        VictimPlayerState->AddDeath();
 }
 

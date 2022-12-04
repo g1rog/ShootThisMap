@@ -17,6 +17,13 @@ public:
     ASTMGameModeBase();
     virtual void StartPlay() override;
     virtual UClass* GetDefaultPawnClassForController_Implementation(AController *InController) override;
+
+    void Killed(const TObjectPtr<AController>& KillerController, const TObjectPtr<AController>& VictimController) const;
+
+    FORCEINLINE FGameData GetGameData() const { return GameData; }
+    FORCEINLINE constexpr int32 GetCurrentRoundNum() const { return CurrentRound; }
+    FORCEINLINE constexpr int32 GetRoundSecondsRemaining() const { return RoundCountDown; }
+
     
 protected:
 private:
@@ -26,7 +33,7 @@ private:
     void ResetPlayers();
     void CreateTeamsInfo();
     void ResetOnePlayer(const TObjectPtr<AController>& Controller);
-    void SetPlayerColor(const TObjectPtr<AController>& Controller);
+    void SetPlayerColor(const TObjectPtr<AController>& Controller) const;
     FLinearColor SetColorByTeam(int32 TeamID) const;
 
 

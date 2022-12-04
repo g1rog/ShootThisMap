@@ -56,7 +56,7 @@ void ASTMRifleWeapon::MakeDamage(const FHitResult& HitResult)
 {
     const auto DamagedActor = HitResult.GetActor();
     if (!DamagedActor) return;
-    DamagedActor->TakeDamage(DamageAmount, FDamageEvent{}, GetPlayerController(), this);
+    DamagedActor->TakeDamage(DamageAmount, FDamageEvent{}, GetController(), this);
 }
 
 void ASTMRifleWeapon::InitMuzzleFX()
@@ -65,7 +65,7 @@ void ASTMRifleWeapon::InitMuzzleFX()
     SetMuzzleFXVisibility(true);
 }
 
-void ASTMRifleWeapon::SetMuzzleFXVisibility(const bool Visible)
+void ASTMRifleWeapon::SetMuzzleFXVisibility(const bool Visible) const
 {
     if (MuzzleFXComponent)
     {
@@ -74,9 +74,17 @@ void ASTMRifleWeapon::SetMuzzleFXVisibility(const bool Visible)
     }
 }
 
-void ASTMRifleWeapon::SpawnTraceFX(const FVector &TraceStart, const FVector &TraceEnd)
+void ASTMRifleWeapon::SpawnTraceFX(const FVector &TraceStart, const FVector &TraceEnd) const
 {
     if (const auto TraceFXComponent =
         UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), TraceFX, TraceStart))
             TraceFXComponent->SetNiagaraVariableVec3(TraceTargetName, TraceEnd);
 }
+
+FORCEINLINE TObjectPtr<AController> ASTMRifleWeapon::GetController() const
+{
+    const auto Pawn = Cast<APawn>(GetOwner());
+    return Pawn ? Pawn->GetController() : nullptr;
+}
+
+

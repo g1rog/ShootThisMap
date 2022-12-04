@@ -36,7 +36,6 @@ protected:
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
     void DecreaseAmmo();
     
-    TObjectPtr<APlayerController> GetPlayerController() const;
     TObjectPtr<UNiagaraComponent> SpawnMuzzleFX();
 
     FORCEINLINE bool IsClipEmpty() const;

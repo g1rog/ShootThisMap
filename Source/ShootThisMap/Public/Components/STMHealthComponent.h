@@ -39,6 +39,7 @@ private:
     void SetHealth(const float NewHealth);
     void HealUpdate();
     void PlayCameraShake() const;
+    void Killed(const TObjectPtr<AController>& KillerController) const;
 
 public:
     FOnDeathSignature OnDeath;
