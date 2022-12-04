@@ -12,7 +12,7 @@ class UNiagaraSystem;
 UCLASS()
 class SHOOTTHISMAP_API ASTMRifleWeapon : public ASTMBaseWeapon
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     ASTMRifleWeapon();
