@@ -12,10 +12,10 @@ class USTMWeaponFXComponent;
 UCLASS()
 class SHOOTTHISMAP_API ASTMProjectile : public AActor
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 	
 public:	
-	ASTMProjectile();
+    ASTMProjectile();
     FORCEINLINE constexpr void SetShotDirection(const FVector& Direction);
     
 protected:
