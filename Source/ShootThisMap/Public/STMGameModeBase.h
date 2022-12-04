@@ -21,6 +21,14 @@ public:
 protected:
 private:
     void SpawnBots();
+    void StartRound();
+    void GameTimerUpdate();
+    void ResetPlayers();
+    void CreateTeamsInfo();
+    void ResetOnePlayer(const TObjectPtr<AController>& Controller);
+    void SetPlayerColor(const TObjectPtr<AController>& Controller);
+    FLinearColor SetColorByTeam(int32 TeamID) const;
+
 
 public:
 protected:
@@ -34,4 +42,8 @@ protected:
     FGameData GameData;
 
 private:
+    FTimerHandle GameRoundTimerHandle;
+    int32 CurrentRound = 1;
+    int32 RoundCountDown = 0;
+    
 };

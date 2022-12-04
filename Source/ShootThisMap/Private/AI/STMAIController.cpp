@@ -8,6 +8,8 @@ ASTMAIController::ASTMAIController()
 {
     STMAIPerceptionComponent = CreateDefaultSubobject<USTMAIPerceptionComponent>("STMPerceptionComponent");
     SetPerceptionComponent(*STMAIPerceptionComponent);
+
+    bWantsPlayerState = true;
 }
 
 void ASTMAIController::Tick(float DeltaTime)

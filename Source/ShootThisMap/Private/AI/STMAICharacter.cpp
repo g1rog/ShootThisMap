@@ -8,7 +8,7 @@
 ASTMAICharacter::ASTMAICharacter(const FObjectInitializer& ObjInit)
     : Super(ObjInit.SetDefaultSubobjectClass<USTMAIWeaponComponent>("WeaponComponent"))
 {
-    AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+    AutoPossessAI = EAutoPossessAI::Disabled;
     AIControllerClass = ASTMAIController::StaticClass();
     bUseControllerRotationYaw = false;
     if (GetCharacterMovement())

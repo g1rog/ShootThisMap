@@ -1,5 +1,8 @@
 ﻿#pragma once
 
+#include <concepts>
+#include "Player/STMPlayerState.h"
+
 class STMUtils
 {
 public:
@@ -9,5 +12,16 @@ public:
         if (!PlayerPawn) return nullptr;
         const auto Component = PlayerPawn->GetComponentByClass(ComponentType::StaticClass());
         return Cast<ComponentType>(Component);  
+    }
+    
+    static bool AreEnemies(const TObjectPtr<AController>& FirstController,
+                           const TObjectPtr<AController>& SecondController)
+    {
+        if (!FirstController || !SecondController || FirstController == SecondController) return false;
+        const auto FirstPlayerState = Cast<ASTMPlayerState>(FirstController->PlayerState);
+        const auto SecondPlayerState = Cast<ASTMPlayerState>(SecondController->PlayerState);
+
+        return FirstPlayerState && SecondPlayerState &&
+            FirstPlayerState->GetTeamID() != SecondPlayerState->GetTeamID();
     }
 };

@@ -93,6 +93,14 @@ FORCEINLINE void ASTMBaseCharacter::OnStopRunning()
     WantsToRun = false;
 }
 
+FORCEINLINE constexpr void ASTMBaseCharacter::SetPlayerColor(const FLinearColor& Color)
+{
+    const auto MaterialInstance = GetMesh()->CreateAndSetMaterialInstanceDynamic(0);
+    if (!MaterialInstance) return;
+    MaterialInstance->SetVectorParameterValue(MaterialColorName, Color);
+}
+
+
 bool ASTMBaseCharacter::IsRunning() const
 {
     return WantsToRun && IsMovingForward && !GetVelocity().IsZero() ? true : false;
@@ -124,4 +132,5 @@ void ASTMBaseCharacter::OnHealthChanged(const float Health, const float HealthDe
 {
     HealthTextComponent->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), Health)));
 }
+
 

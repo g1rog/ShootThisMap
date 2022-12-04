@@ -21,8 +21,14 @@ TObjectPtr<AActor> USTMAIPerceptionComponent::GetClosestEnemy() const
 
     for (const auto& PercieveActor : PercieveActors)
     {
-        const auto HealthComponent = STMUtils::GetSTMPlayerComponent<USTMHealthComponent>(PercieveActor);
-        if (HealthComponent && !HealthComponent->IsDead())
+        const auto PercievePawn = Cast<APawn>(PercieveActor);
+        const auto HealthComponent =
+            STMUtils::GetSTMPlayerComponent<USTMHealthComponent>(PercieveActor);
+        
+        const auto AreEnemies = PercievePawn &&
+            STMUtils::AreEnemies(Controller, PercievePawn->Controller);
+        
+        if (HealthComponent && !HealthComponent->IsDead() && AreEnemies)
         {
             const auto CurrentDistance = (PercieveActor->GetActorLocation() - Pawn->GetActorLocation()).Size();
             if (CurrentDistance < BestDistance)

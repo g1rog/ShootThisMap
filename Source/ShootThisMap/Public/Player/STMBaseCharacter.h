@@ -24,9 +24,10 @@ public:
     
     UFUNCTION(BlueprintCallable, Category = "Movement")
     float GetMovementDirection() const;
-
+    
     virtual void Tick(float DeltaTime) override;
     virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+    FORCEINLINE constexpr void SetPlayerColor(const FLinearColor& LinearColor);
     
 protected:
 	virtual void BeginPlay() override;
@@ -59,6 +60,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category = "Animations")
     TObjectPtr<UAnimMontage> DeathAnimMontage;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Material")
+    FName MaterialColorName = "Paint Color" ;
 
 private:
     bool WantsToRun = false;
