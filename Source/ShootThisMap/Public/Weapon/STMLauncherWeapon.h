@@ -10,7 +10,7 @@ class ASTMProjectile;
 UCLASS()
 class SHOOTTHISMAP_API ASTMLauncherWeapon : public ASTMBaseWeapon
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     virtual void StartFire() override;
@@ -18,14 +18,8 @@ public:
 protected:
     virtual void MakeShot() override;
     
-private:
 public:
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    TSubclassOf<ASTMProjectile> ProjectileClass;
-    
-private:
-    
-    
-	
+    TSubclassOf<ASTMProjectile> ProjectileClass;	
 };
