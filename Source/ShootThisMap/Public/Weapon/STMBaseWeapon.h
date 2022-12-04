@@ -13,10 +13,10 @@ class UNiagaraComponent;
 UCLASS()
 class SHOOTTHISMAP_API ASTMBaseWeapon : public AActor
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 	
 public:	
-	ASTMBaseWeapon();
+    ASTMBaseWeapon();
     virtual void StartFire();
     virtual void StopFire();
     void ChangeClip();
@@ -29,7 +29,7 @@ public:
     FORCEINLINE FAmmoData GetAmmoData() const { return CurrentAmmo; }
 
 protected:
-	virtual void BeginPlay() override;
+    virtual void BeginPlay() override;
     virtual void MakeShot();
     virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
     bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
