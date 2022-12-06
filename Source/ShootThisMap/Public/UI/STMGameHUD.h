@@ -8,7 +8,7 @@
 UCLASS()
 class SHOOTTHISMAP_API ASTMGameHUD : public AHUD
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
 protected:
