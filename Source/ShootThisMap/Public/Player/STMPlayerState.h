@@ -8,7 +8,7 @@
 UCLASS()
 class SHOOTTHISMAP_API ASTMPlayerState : public APlayerState
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     FORCEINLINE constexpr void SetTeamID(int32 ID) { TeamID = ID; }
