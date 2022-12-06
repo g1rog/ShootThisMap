@@ -8,7 +8,7 @@
 UCLASS()
 class SHOOTTHISMAP_API USTMPlayerHUDWidget : public UUserWidget
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
     
 public:
     UFUNCTION(BlueprintCallable, Category = "UI")
