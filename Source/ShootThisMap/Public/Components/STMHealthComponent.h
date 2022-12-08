@@ -23,10 +23,9 @@ public:
     float GetHealthPercent() const { return Health / MaxHealth; }
     
     FORCEINLINE constexpr float GetHealth() const { return Health; }
-    
     FORCEINLINE bool IsHealthFull () const;
-    bool TryToAddHealth(const float HealthAmount);
     
+    bool TryToAddHealth(const float HealthAmount);
 
 protected:
 	virtual void BeginPlay() override;

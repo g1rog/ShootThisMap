@@ -3,11 +3,14 @@
 #include "AI/STMAICharacter.h"
 #include "Components/STMAIPerceptionComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Components/STMRespawnComponent.h"
 
 ASTMAIController::ASTMAIController()
 {
     STMAIPerceptionComponent = CreateDefaultSubobject<USTMAIPerceptionComponent>("STMPerceptionComponent");
     SetPerceptionComponent(*STMAIPerceptionComponent);
+
+    RespawnComponent = CreateDefaultSubobject<USTMRespawnComponent>("RespawnComponent");
 
     bWantsPlayerState = true;
 }

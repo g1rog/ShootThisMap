@@ -6,47 +6,58 @@
 
 float USTMPlayerHUDWidget::GetHealthPercent() const
 {
-    const auto HealthComponent = STMUtils::GetSTMPlayerComponent<USTMHealthComponent>(GetOwningPlayerPawn());
-    if (!HealthComponent) return 0.0f;
-    return HealthComponent->GetHealthPercent();
+    const auto HealthComponent =
+        STMUtils::GetSTMPlayerComponent<USTMHealthComponent>(GetOwningPlayerPawn());
+    return HealthComponent ? HealthComponent->GetHealthPercent() : 0.0f;
 }
 
 bool USTMPlayerHUDWidget::GetCurrentWeaponUIData(FWeaponUIData &UIData) const
 {
-    const auto WeaponComponent = STMUtils::GetSTMPlayerComponent<USTMWeaponComponent>(GetOwningPlayerPawn());
-    if (!WeaponComponent) return false;
-    return WeaponComponent->GetCurrentWeaponUIData(UIData);
+    const auto WeaponComponent =
+        STMUtils::GetSTMPlayerComponent<USTMWeaponComponent>(GetOwningPlayerPawn());
+    return WeaponComponent ? WeaponComponent->GetCurrentWeaponUIData(UIData) : false;
 }
 
 bool USTMPlayerHUDWidget::GetCurrentWeaponAmmoData(FAmmoData &AmmoData) const
 {
-    const auto WeaponComponent = STMUtils::GetSTMPlayerComponent<USTMWeaponComponent>(GetOwningPlayerPawn());
-    if (!WeaponComponent) return false;
-    return WeaponComponent->GetCurrentWeaponAmmoData(AmmoData);
+    const auto WeaponComponent =
+        STMUtils::GetSTMPlayerComponent<USTMWeaponComponent>(GetOwningPlayerPawn());
+    return WeaponComponent ? WeaponComponent->GetCurrentWeaponAmmoData(AmmoData) : false;
 }
 
 bool USTMPlayerHUDWidget::IsPlayerAlive() const
 {
-    const auto HealthComponent = STMUtils::GetSTMPlayerComponent<USTMHealthComponent>(GetOwningPlayerPawn());
+    const auto HealthComponent =
+        STMUtils::GetSTMPlayerComponent<USTMHealthComponent>(GetOwningPlayerPawn());
     return HealthComponent && !HealthComponent->IsDead();
 }
 
 bool USTMPlayerHUDWidget::IsPlayerSpectating() const
 {
-    const auto Controller = GetOwningPlayer();
+    const auto Controller = GetOwningPlayer(); 
     return Controller && Controller->GetStateName() == NAME_Spectating;
 }
 
 bool USTMPlayerHUDWidget::Initialize()
 {
-    const auto HealthComponent =
-        STMUtils::GetSTMPlayerComponent<USTMHealthComponent>(GetOwningPlayerPawn());
-    if (HealthComponent)
-        HealthComponent->OnHealthChanged.AddUObject(this, &USTMPlayerHUDWidget::OnHealthChanged);
+    if (GetOwningPlayer())
+    {
+        GetOwningPlayer()->GetOnNewPawnNotifier().AddUObject(this, &USTMPlayerHUDWidget::OnNewPawn);
+        OnNewPawn(GetOwningPlayerPawn());
+    }
     return Super::Initialize();
 }
 
-void USTMPlayerHUDWidget::OnHealthChanged(const float Health, const float HealthDelta)
+void USTMPlayerHUDWidget::OnNewPawn(APawn* NewPawn)
+{
+    const auto HealthComponent =
+        STMUtils::GetSTMPlayerComponent<USTMHealthComponent>(NewPawn);
+    if (HealthComponent && !HealthComponent->OnHealthChanged.IsBoundToObject(this))
+            HealthComponent->OnHealthChanged.AddUObject(this, &USTMPlayerHUDWidget::OnHealthChanged);
+}
+
+FORCEINLINE void USTMPlayerHUDWidget::OnHealthChanged(const float Health, const float HealthDelta)
 {
     if (HealthDelta < 0.0f) OnTakeDamage();
 }
+

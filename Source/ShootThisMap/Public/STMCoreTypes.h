@@ -94,11 +94,14 @@ struct FGameData
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "5", ClampMax = "100"))
     int32 RoundTime = 10;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "5", ClampMax = "20"))
+    int32 RespawnTime = 5;
+
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
     FLinearColor DefaultTeamColor = FColor::Red;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
     TArray<FLinearColor> TeamColors;
     
-
+    static constexpr int32 MinRoundTimeForRespawn = 5;
 };

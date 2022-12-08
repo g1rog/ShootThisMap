@@ -1,10 +1,14 @@
 
 #include "STMGameModeBase.h"
-#include "AIController.h"
+#include "Components/STMRespawnComponent.h"
 #include "Player/STMBaseCharacter.h"
 #include "Player/STMPlayerController.h"
 #include "Player/STMPlayerState.h"
 #include "UI/STMGameHUD.h"
+#include "EngineUtils.h"
+#include "AIController.h"
+#include "STMUtils.h"
+
 
 ASTMGameModeBase::ASTMGameModeBase()
 {
@@ -62,6 +66,10 @@ void ASTMGameModeBase::GameTimerUpdate()
             ResetPlayers();
             StartRound();
         }
+        else
+        {
+            GameOver();
+        }
     }
 }
 
@@ -117,9 +125,8 @@ void ASTMGameModeBase::SetPlayerColor(const TObjectPtr<AController> &Controller)
     Character->SetPlayerColor(PlayerState->GetTeamColor());
 }
 
-
 void ASTMGameModeBase::Killed(const TObjectPtr<AController> &KillerController,
-    const TObjectPtr<AController> &VictimController) const
+                              const TObjectPtr<AController> &VictimController)
 {
     const auto KillerPlayerState = KillerController ? Cast<ASTMPlayerState>(KillerController->PlayerState) : nullptr;
     const auto VictimPlayerState = VictimController ? Cast<ASTMPlayerState>(VictimController->PlayerState) : nullptr;
@@ -128,5 +135,36 @@ void ASTMGameModeBase::Killed(const TObjectPtr<AController> &KillerController,
         KillerPlayerState->AddKill();
     if (VictimPlayerState)
         VictimPlayerState->AddDeath();
+    
+    StartRespawn(VictimController);
 }
+
+void ASTMGameModeBase::RespawnRequest(const TObjectPtr<AController> &Controller)
+{
+    ResetOnePlayer(Controller);
+}
+
+void ASTMGameModeBase::StartRespawn(const TObjectPtr<AController> &Controller) const
+{
+    const auto RespawnAvailable = RoundCountDown > GameData.MinRoundTimeForRespawn + GameData.RespawnTime;
+    if (!RespawnAvailable) return;
+    const auto RespawnComponent =
+        STMUtils::GetSTMPlayerComponent<USTMRespawnComponent>(Controller);
+    if (!RespawnComponent) return;
+    RespawnComponent->Respawn(GameData.RespawnTime);
+    
+}
+
+void ASTMGameModeBase::GameOver() const
+{
+    for (const auto& Pawn : TActorRange<APawn>(GetWorld()))
+    {
+        if (Pawn)
+        {
+            Pawn->TurnOff();
+            Pawn->DisableInput(nullptr);
+        }
+    }
+}
+
 

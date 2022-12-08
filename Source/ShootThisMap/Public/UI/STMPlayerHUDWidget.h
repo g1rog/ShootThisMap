@@ -33,7 +33,8 @@ public:
 
 protected:
 private:
-    void OnHealthChanged(const float Health, const float HealthDelta);
+    FORCEINLINE void OnHealthChanged(const float Health, const float HealthDelta);
+    void OnNewPawn(APawn* NewPawn);
    
 
 };
