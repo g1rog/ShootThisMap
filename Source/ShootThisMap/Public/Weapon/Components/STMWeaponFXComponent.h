@@ -12,10 +12,10 @@ class UPhysicalMaterial;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SHOOTTHISMAP_API USTMWeaponFXComponent : public UActorComponent
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:	
-	USTMWeaponFXComponent();
+    USTMWeaponFXComponent();
     void PlayImpactFX(const FHitResult& Hit);
     
 protected:
