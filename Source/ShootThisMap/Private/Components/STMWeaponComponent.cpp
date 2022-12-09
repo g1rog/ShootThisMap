@@ -8,12 +8,12 @@
 
 USTMWeaponComponent::USTMWeaponComponent()
 {
-	PrimaryComponentTick.bCanEverTick = false;
+    PrimaryComponentTick.bCanEverTick = false;
 }
 
 void USTMWeaponComponent::BeginPlay()
 {
-	Super::BeginPlay();
+    Super::BeginPlay();
     InitAnimations();
     SpawnWeapons();
     CurrentWeaponId = 0;
