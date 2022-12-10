@@ -11,7 +11,7 @@ class ASTMPlayerState;
 UCLASS()
 class SHOOTTHISMAP_API USTMGameDataWidget : public UUserWidget
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     UFUNCTION(BlueprintCallable, Category = "UI")
