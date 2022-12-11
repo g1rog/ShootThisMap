@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <concepts>
 #include "Player/STMPlayerState.h"
 
 class STMUtils
@@ -23,5 +22,10 @@ public:
 
         return FirstPlayerState && SecondPlayerState &&
             FirstPlayerState->GetTeamID() != SecondPlayerState->GetTeamID();
+    }
+    
+    static FText TextFromInt(const int32 Number)
+    {
+        return FText::FromString(FString::FromInt(Number));
     }
 };

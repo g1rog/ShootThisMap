@@ -9,7 +9,6 @@
 #include "AIController.h"
 #include "STMUtils.h"
 
-
 ASTMGameModeBase::ASTMGameModeBase()
 {
     DefaultPawnClass = ASTMBaseCharacter::StaticClass();
@@ -25,6 +24,7 @@ void ASTMGameModeBase::StartPlay()
     CreateTeamsInfo();
     CurrentRound = 1;
     StartRound();
+    SetMatchState(ESTMMatchState::InProgress);
 }
 
 
@@ -34,6 +34,22 @@ UClass* ASTMGameModeBase::GetDefaultPawnClassForController_Implementation(AContr
         return AIPawnClass;
 
     return Super::GetDefaultPawnClassForController_Implementation(InController);
+}
+
+bool ASTMGameModeBase::SetPause(APlayerController *PC, FCanUnpause CanUnpauseDelegate)
+{
+    const auto PauseSet = Super::SetPause(PC, CanUnpauseDelegate);
+    if (PauseSet)
+        SetMatchState(ESTMMatchState::Pause);
+    return PauseSet;
+}
+
+bool ASTMGameModeBase::ClearPause()
+{
+    const auto PauseCleared = Super::ClearPause();
+    if (PauseCleared)
+        SetMatchState(ESTMMatchState::InProgress);
+    return PauseCleared;
 }
 
 void ASTMGameModeBase::SpawnBots()
@@ -101,6 +117,7 @@ void ASTMGameModeBase::CreateTeamsInfo()
 
         PlayerState->SetTeamID(TeamID);
         PlayerState->SetTeamColor(SetColorByTeam(TeamID));
+        PlayerState->SetPlayerName(Controller->IsPlayerController() ? "Player" : "Bot");
         SetPlayerColor(Controller);
         TeamID = TeamID == 1 ? 2 : 1;
     }
@@ -155,7 +172,7 @@ void ASTMGameModeBase::StartRespawn(const TObjectPtr<AController> &Controller) c
     
 }
 
-void ASTMGameModeBase::GameOver() const
+void ASTMGameModeBase::GameOver()
 {
     for (const auto& Pawn : TActorRange<APawn>(GetWorld()))
     {
@@ -165,6 +182,14 @@ void ASTMGameModeBase::GameOver() const
             Pawn->DisableInput(nullptr);
         }
     }
+    SetMatchState(ESTMMatchState::GameOver);
+}
+
+void ASTMGameModeBase::SetMatchState(ESTMMatchState State)
+{
+    if (MatchState == State) return;
+    MatchState = State;
+    OnMatchStateChanged.Broadcast(MatchState);
 }
 
 

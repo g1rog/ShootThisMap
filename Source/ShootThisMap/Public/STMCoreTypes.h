@@ -9,6 +9,8 @@ class UNiagaraSystem;
 DECLARE_MULTICAST_DELEGATE(FOnDeathSignature);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnClipEmptySignature, const TObjectPtr<ASTMBaseWeapon>&);
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHealthChangedSignature, float, float);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChangedSignature, ESTMMatchState);
+
 
 USTRUCT(BlueprintType)
 struct FAmmoData
@@ -104,4 +106,13 @@ struct FGameData
     TArray<FLinearColor> TeamColors;
     
     static constexpr int32 MinRoundTimeForRespawn = 5;
+};
+
+UENUM(BlueprintType)
+enum class ESTMMatchState : uint8
+{
+    WaitingToStart = 0,
+    InProgress,
+    Pause,
+    GameOver
 };

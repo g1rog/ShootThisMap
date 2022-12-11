@@ -2,6 +2,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "STMCoreTypes.h"
 #include "GameFramework/PlayerController.h"
 #include "STMPlayerController.generated.h"
 
@@ -14,10 +15,16 @@ class SHOOTTHISMAP_API ASTMPlayerController : public APlayerController
 
 public:
     ASTMPlayerController();
-    
-protected:
-private:
 
+protected:
+    virtual void BeginPlay() override;
+    virtual void OnPossess(APawn* InPawn) override;
+    virtual void SetupInputComponent() override;
+    
+private:
+    void OnPauseGame();
+    void OnMatchStateChanged(ESTMMatchState State);
+    
 public:
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
