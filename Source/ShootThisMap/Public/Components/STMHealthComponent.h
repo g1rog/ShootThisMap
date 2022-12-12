@@ -28,7 +28,7 @@ public:
     bool TryToAddHealth(const float HealthAmount);
 
 protected:
-	virtual void BeginPlay() override;
+    virtual void BeginPlay() override;
     
 private:
     UFUNCTION()

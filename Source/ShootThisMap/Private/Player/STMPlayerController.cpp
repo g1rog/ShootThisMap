@@ -8,7 +8,7 @@ ASTMPlayerController::ASTMPlayerController()
     RespawnComponent = CreateDefaultSubobject<USTMRespawnComponent>("RespawnComponent");
 }
 
-void ASTMPlayerController::BeginPlay()
+constexpr void ASTMPlayerController::BeginPlay()
 {
     Super::BeginPlay();
     if (!GetWorld()) return;
