@@ -12,10 +12,9 @@ class SHOOTTHISMAP_API USTMPauseWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
-public:
-    virtual bool Initialize() override;
-
 protected:
+    virtual void NativeOnInitialized() override;
+
 private:
     UFUNCTION()
     void OnClearPause();

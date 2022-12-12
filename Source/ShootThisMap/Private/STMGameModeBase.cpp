@@ -32,7 +32,6 @@ UClass* ASTMGameModeBase::GetDefaultPawnClassForController_Implementation(AContr
 {
     if (InController && InController->IsA<AAIController>())
         return AIPawnClass;
-
     return Super::GetDefaultPawnClassForController_Implementation(InController);
 }
 
@@ -68,7 +67,6 @@ void ASTMGameModeBase::StartRound()
 {
     RoundCountDown = GameData.RoundTime;
     GetWorldTimerManager().SetTimer(GameRoundTimerHandle, this, &ASTMGameModeBase::GameTimerUpdate, 1.0f, true);
-    
 }
 
 void ASTMGameModeBase::GameTimerUpdate()
@@ -121,7 +119,6 @@ void ASTMGameModeBase::CreateTeamsInfo()
         SetPlayerColor(Controller);
         TeamID = TeamID == 1 ? 2 : 1;
     }
-
 }
 
 FLinearColor ASTMGameModeBase::SetColorByTeam(int32 TeamID) const
@@ -169,7 +166,6 @@ void ASTMGameModeBase::StartRespawn(const TObjectPtr<AController> &Controller) c
         STMUtils::GetSTMPlayerComponent<USTMRespawnComponent>(Controller);
     if (!RespawnComponent) return;
     RespawnComponent->Respawn(GameData.RespawnTime);
-    
 }
 
 void ASTMGameModeBase::GameOver()

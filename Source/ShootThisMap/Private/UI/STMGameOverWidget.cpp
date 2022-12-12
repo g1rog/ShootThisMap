@@ -3,15 +3,25 @@
 #include "UI/STMPlayerStatRowWidget.h"
 #include "Player/STMPlayerState.h"
 #include "Components/VerticalBox.h"
+#include "Components/Button.h"
+#include "Kismet/GameplayStatics.h"
 #include "STMGameModeBase.h"
 #include "STMUtils.h"
 
-bool USTMGameOverWidget::Initialize()
+void USTMGameOverWidget::NativeOnInitialized()
 {
-    if (!GetWorld()) return false;
+    Super::NativeOnInitialized();
+    if (!GetWorld()) return;
     if (const auto GameMode = Cast<ASTMGameModeBase>(GetWorld()->GetAuthGameMode()))
         GameMode->OnMatchStateChanged.AddUObject(this, &USTMGameOverWidget::OnMatchStateChanged);
-    return Super::Initialize();
+    if (ResetLevelButton)
+        ResetLevelButton->OnClicked.AddDynamic(this, &USTMGameOverWidget::OnResetLevel);
+}
+
+void USTMGameOverWidget::OnResetLevel()
+{
+    const auto CurrentLevelName = UGameplayStatics::GetCurrentLevelName(this);
+    UGameplayStatics::OpenLevel(this, FName(CurrentLevelName));
 }
 
 void USTMGameOverWidget::OnMatchStateChanged(ESTMMatchState State)
@@ -20,7 +30,7 @@ void USTMGameOverWidget::OnMatchStateChanged(ESTMMatchState State)
         UpdatePlayersStat();
 }
 
-void USTMGameOverWidget::UpdatePlayersStat()
+void USTMGameOverWidget::UpdatePlayersStat() const
 {
     if (!GetWorld() || !PlayerStatBox) return;
     PlayerStatBox->ClearChildren();
@@ -46,5 +56,4 @@ void USTMGameOverWidget::UpdatePlayersStat()
     }
     
 }
-
 

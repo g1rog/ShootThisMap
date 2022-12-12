@@ -29,9 +29,10 @@ public:
     UFUNCTION(BlueprintImplementableEvent, Category = "UI")
     void OnTakeDamage();
     
-    virtual bool Initialize() override;
 
 protected:
+    virtual void NativeOnInitialized() override;
+
 private:
     FORCEINLINE void OnHealthChanged(const float Health, const float HealthDelta);
     void OnNewPawn(APawn* NewPawn);
