@@ -10,7 +10,7 @@ class UBehaviorTree;
 UCLASS()
 class SHOOTTHISMAP_API ASTMAICharacter : public ASTMBaseCharacter
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
     
 public:
     ASTMAICharacter(const FObjectInitializer& ObjInit);
