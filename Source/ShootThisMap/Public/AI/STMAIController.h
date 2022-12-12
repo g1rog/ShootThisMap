@@ -11,7 +11,7 @@ class USTMRespawnComponent;
 UCLASS()
 class SHOOTTHISMAP_API ASTMAIController : public AAIController
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 public:
     ASTMAIController();
     
