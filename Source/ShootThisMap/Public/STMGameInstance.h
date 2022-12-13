@@ -8,7 +8,7 @@
 UCLASS()
 class SHOOTTHISMAP_API USTMGameInstance : public UGameInstance
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     FName GetStartupLevelName() const { return StartUpLevelName; }
