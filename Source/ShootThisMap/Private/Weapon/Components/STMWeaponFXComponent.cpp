@@ -7,7 +7,7 @@
 
 USTMWeaponFXComponent::USTMWeaponFXComponent()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+    PrimaryComponentTick.bCanEverTick = true;
 }
 
 void USTMWeaponFXComponent::PlayImpactFX(const FHitResult &Hit)
