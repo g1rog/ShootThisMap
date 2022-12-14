@@ -10,7 +10,7 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FOnNotifiedSignature, TObjectPtr<USkeletalMe
 UCLASS()
 class SHOOTTHISMAP_API USTMAnimNotify : public UAnimNotify
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;
