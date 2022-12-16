@@ -11,7 +11,7 @@ class USTMRespawnComponent;
 UCLASS()
 class SHOOTTHISMAP_API ASTMPlayerController : public APlayerController
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     ASTMPlayerController();
