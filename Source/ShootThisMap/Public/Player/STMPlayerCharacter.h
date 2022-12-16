@@ -12,7 +12,8 @@ class USphereComponent;
 UCLASS()
 class SHOOTTHISMAP_API ASTMPlayerCharacter : public ASTMBaseCharacter
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
+    
 public:
     ASTMPlayerCharacter(const FObjectInitializer& ObjInit);
     virtual bool IsRunning() const override;
