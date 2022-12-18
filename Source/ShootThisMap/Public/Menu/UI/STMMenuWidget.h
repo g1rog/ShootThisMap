@@ -14,7 +14,7 @@ class USTMLevelItemWidget;
 UCLASS()
 class SHOOTTHISMAP_API USTMMenuWidget : public UUserWidget
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
     
 protected:
     virtual void NativeOnInitialized() override;
