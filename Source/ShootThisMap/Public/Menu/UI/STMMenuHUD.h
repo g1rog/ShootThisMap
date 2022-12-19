@@ -8,7 +8,7 @@
 UCLASS()
 class SHOOTTHISMAP_API ASTMMenuHUD : public AHUD
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     virtual void BeginPlay() override;
