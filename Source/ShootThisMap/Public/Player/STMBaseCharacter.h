@@ -15,24 +15,21 @@ class SHOOTTHISMAP_API ASTMBaseCharacter : public ACharacter
 
 public:
     ASTMBaseCharacter(const FObjectInitializer& ObjInit);
-    
+    virtual void Tick(float DeltaTime) override;
+
     UFUNCTION(BlueprintCallable, Category = "Movement")
     virtual bool IsRunning() const;
     
     UFUNCTION(BlueprintCallable, Category = "Movement")
     float GetMovementDirection() const;
     
-    virtual void Tick(float DeltaTime) override;
     FORCEINLINE constexpr void SetPlayerColor(const FLinearColor& LinearColor);
     
 protected:
 	virtual void BeginPlay() override;
     virtual void OnDeath();
+    virtual void OnHealthChanged(const float Health, const float HealthDelta) const;
 
-private:
-    
-    void OnHealthChanged(const float Health, const float HealthDelta) const;
-    
 public:
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
@@ -49,6 +46,6 @@ protected:
 
     bool WantsToRun = false;
     bool IsMovingForward = false;
-private:
     
+private:
 };
