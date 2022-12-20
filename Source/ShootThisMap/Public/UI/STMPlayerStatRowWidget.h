@@ -18,6 +18,7 @@ public:
     FORCEINLINE void SetKills(const FText& Text) const;
     FORCEINLINE void SetDeaths(const FText& Text) const;
     FORCEINLINE void SetTeam(const FText& Text) const;
+    FORCEINLINE void SetTeamColor(const FLinearColor& Color) const;
     FORCEINLINE void SetPlayerIndicatorVisibility(const bool Visible) const;
     
 protected:
@@ -35,6 +36,7 @@ protected:
     
     UPROPERTY(meta = (BindWidget))
     TObjectPtr<UImage> PlayerIndicatorImage;
-    
-    
+
+    UPROPERTY(meta = (BindWidget))
+    TObjectPtr<UImage> TeamImage;
 };

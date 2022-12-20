@@ -52,6 +52,7 @@ void USTMGameOverWidget::UpdatePlayersStat() const
         PlayerStatRowWidget->SetDeaths(STMUtils::TextFromInt(PlayerState->GetDeathsNum()));
         PlayerStatRowWidget->SetTeam(STMUtils::TextFromInt(PlayerState->GetTeamID()));
         PlayerStatRowWidget->SetPlayerIndicatorVisibility(Controller->IsPlayerController());
+        PlayerStatRowWidget->SetTeamColor(PlayerState->GetTeamColor());
         PlayerStatBox->AddChild(PlayerStatRowWidget);
     }
     

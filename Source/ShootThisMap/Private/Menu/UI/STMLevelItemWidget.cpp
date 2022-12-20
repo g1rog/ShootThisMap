@@ -8,21 +8,18 @@
 void USTMLevelItemWidget::NativeOnInitialized()
 {
     Super::NativeOnInitialized();
-
+    
     if (LevelSelectButton)
-        LevelSelectButton->OnClicked
-            .AddDynamic(this, &USTMLevelItemWidget::OnLevelItemClicked);
+    {
+        LevelSelectButton->OnClicked.AddDynamic(this, &USTMLevelItemWidget::OnLevelItemClicked);
+        LevelSelectButton->OnHovered.AddDynamic(this, &USTMLevelItemWidget::OnLevelItemHovered);
+        LevelSelectButton->OnUnhovered.AddDynamic(this, &USTMLevelItemWidget::OnLevelItemUnhovered);
+    }
 }
 
 void USTMLevelItemWidget::OnLevelItemClicked()
 {
     OnLevelSelected.Broadcast(LevelData);
-}
-
-void USTMLevelItemWidget::SetSelected(const bool IsSelected)
-{
-   if (FrameImage)
-       FrameImage->SetVisibility(IsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 }
 
 void USTMLevelItemWidget::SetLevelData(const FLevelData &Data)
@@ -33,3 +30,23 @@ void USTMLevelItemWidget::SetLevelData(const FLevelData &Data)
     if (LevelImage)
        LevelImage->SetBrushFromTexture(Data.LevelThumb);
 }
+
+void USTMLevelItemWidget::SetSelected(const bool IsSelected) const
+{
+    if (LevelImage)
+        LevelImage->SetColorAndOpacity(IsSelected ? FColor::Red : FColor::White);
+}
+
+void USTMLevelItemWidget::OnLevelItemHovered()
+{
+    if (FrameImage)
+        FrameImage->SetVisibility(ESlateVisibility::Visible);
+}
+
+void USTMLevelItemWidget::OnLevelItemUnhovered()
+{
+    if (FrameImage)
+        FrameImage->SetVisibility(ESlateVisibility::Hidden);
+}
+
+

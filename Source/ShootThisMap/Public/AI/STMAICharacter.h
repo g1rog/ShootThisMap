@@ -36,7 +36,6 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AI")
     float HealthVisibilityDistance = 1000.0f;
     
-protected:
 private:
     
 	

@@ -17,7 +17,7 @@ class SHOOTTHISMAP_API USTMLevelItemWidget : public UUserWidget
 
 public:
 	FORCEINLINE auto GetLevelData() const { return LevelData; }
-	FORCEINLINE void SetSelected(const bool IsSelected);
+	FORCEINLINE void SetSelected(const bool IsSelected) const;
 
     void SetLevelData(const FLevelData& Data);
 
@@ -27,6 +27,12 @@ protected:
 private:
 	UFUNCTION()
 	void OnLevelItemClicked();
+
+    UFUNCTION()
+    void OnLevelItemHovered();
+
+    UFUNCTION()
+    void OnLevelItemUnhovered();
 
 public:
     FOnLevelSelectedSignature OnLevelSelected;
