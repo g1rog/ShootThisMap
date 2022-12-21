@@ -2,13 +2,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "STMBaseWidget.h"
+#include "UI/STMBaseWidget.h"
 #include "STMPauseWidget.generated.h"
 
 class UButton;
 
 UCLASS()
-class SHOOTTHISMAP_API USTMPauseWidget : public UUserWidget
+class SHOOTTHISMAP_API USTMPauseWidget : public USTMBaseWidget
 {
 	GENERATED_BODY()
 

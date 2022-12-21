@@ -3,7 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "STMCoreTypes.h"
-#include "Blueprint/UserWidget.h"
+#include "UI/STMBaseWidget.h"
 #include "STMMenuWidget.generated.h"
 
 class UButton;
@@ -12,12 +12,13 @@ class USTMGameInstance;
 class USTMLevelItemWidget;
 
 UCLASS()
-class SHOOTTHISMAP_API USTMMenuWidget : public UUserWidget
+class SHOOTTHISMAP_API USTMMenuWidget : public USTMBaseWidget
 {
     GENERATED_BODY()
     
 protected:
     virtual void NativeOnInitialized() override;
+    virtual void OnAnimationFinished_Implementation(const UWidgetAnimation *Animation) override;
 
 private:
     UFUNCTION()
@@ -41,8 +42,13 @@ protected:
     UPROPERTY(meta = (BindWidget))
     TObjectPtr<UHorizontalBox> LevelItemsBox;
 
+    UPROPERTY(meta = (BindWidgetAnim), Transient)
+    TObjectPtr<UWidgetAnimation> HideAnimation;
+
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     TSubclassOf<UUserWidget> LevelItemWidgetClass;
+
+    
 
 private:
     UPROPERTY()

@@ -1,17 +1,17 @@
 
 #include "UI/STMGameHUD.h"
-#include "Blueprint/UserWidget.h"
+#include "UI/STMBaseWidget.h"
 #include "STMGameModeBase.h"
 
 void ASTMGameHUD::BeginPlay()
 {
     Super::BeginPlay();
     
-    GameWidgets.Add(ESTMMatchState::InProgress, CreateWidget<UUserWidget>
+    GameWidgets.Add(ESTMMatchState::InProgress, CreateWidget<USTMBaseWidget>
         (GetWorld(), PlayerHUDWidgetClass));
-    GameWidgets.Add(ESTMMatchState::Pause, CreateWidget<UUserWidget>
+    GameWidgets.Add(ESTMMatchState::Pause, CreateWidget<USTMBaseWidget>
        (GetWorld(), PauseWidgetClass));
-    GameWidgets.Add(ESTMMatchState::GameOver, CreateWidget<UUserWidget>
+    GameWidgets.Add(ESTMMatchState::GameOver, CreateWidget<USTMBaseWidget>
       (GetWorld(), GameOverWidgetClass));
 
     for (const auto& GameWidgetPair : GameWidgets)
@@ -33,7 +33,10 @@ void ASTMGameHUD::OnMatchStateChanged(ESTMMatchState State)
     if (GameWidgets.Contains(State))
         CurrentWidget = GameWidgets[State];
     if (CurrentWidget)
+    {
         CurrentWidget->SetVisibility(ESlateVisibility::Visible);
+        CurrentWidget->Show();
+    }
     
     GEngine->AddOnScreenDebugMessage(1, 5.0f, FColor::Green, *UEnum::GetValueAsString(State));
 }

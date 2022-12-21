@@ -6,6 +6,8 @@
 #include "STMCoreTypes.h"
 #include "STMGameHUD.generated.h"
 
+class USTMBaseWidget;
+
 UCLASS()
 class SHOOTTHISMAP_API ASTMGameHUD : public AHUD
 {
@@ -31,8 +33,8 @@ protected:
     
 private:
     UPROPERTY()
-    TMap<ESTMMatchState, TObjectPtr<UUserWidget>> GameWidgets;
+    TMap<ESTMMatchState, TObjectPtr<USTMBaseWidget>> GameWidgets;
 
     UPROPERTY()
-    TObjectPtr<UUserWidget> CurrentWidget = nullptr;
+    TObjectPtr<USTMBaseWidget> CurrentWidget = nullptr;
 };

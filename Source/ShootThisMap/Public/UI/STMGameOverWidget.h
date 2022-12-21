@@ -2,15 +2,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "STMBaseWidget.h"
 #include "STMCoreTypes.h"
-#include "Blueprint/UserWidget.h"
+#include "UI/STMBaseWidget.h"
 #include "STMGameOverWidget.generated.h"
 
 class UVerticalBox;
 class UButton;
 
 UCLASS()
-class SHOOTTHISMAP_API USTMGameOverWidget : public UUserWidget
+class SHOOTTHISMAP_API USTMGameOverWidget : public USTMBaseWidget
 {
 	GENERATED_BODY()
 

@@ -20,9 +20,14 @@ void USTMMenuWidget::NativeOnInitialized()
 
 void USTMMenuWidget::OnStartGame()
 {
+    PlayAnimation(HideAnimation);
+}
+
+void USTMMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation *Animation)
+{
+    if (Animation != HideAnimation) return;
     const auto GameInstance = GetSTMGameInstance();
     if (!GameInstance) return;
-    
     UGameplayStatics::OpenLevel(this, GameInstance->GetStartupLevel().LevelName);
 }
 

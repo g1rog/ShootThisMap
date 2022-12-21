@@ -61,7 +61,12 @@ void USTMPlayerHUDWidget::OnNewPawn(APawn* NewPawn)
 
 FORCEINLINE void USTMPlayerHUDWidget::OnHealthChanged(const float Health, const float HealthDelta)
 {
-    if (HealthDelta < 0.0f) OnTakeDamage();
+    if (HealthDelta < 0.0f)
+    {
+        OnTakeDamage();
+        if (!IsAnimationPlaying(DamageAnimation))
+            PlayAnimation(DamageAnimation);
+    }
     UpdateHealthBar();
 }
 
