@@ -10,6 +10,7 @@ class UButton;
 class UHorizontalBox;
 class USTMGameInstance;
 class USTMLevelItemWidget;
+class USoundCue;
 
 UCLASS()
 class SHOOTTHISMAP_API USTMMenuWidget : public USTMBaseWidget
@@ -48,7 +49,8 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     TSubclassOf<UUserWidget> LevelItemWidgetClass;
 
-    
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
+    TObjectPtr<USoundCue> StartGameSound;
 
 private:
     UPROPERTY()

@@ -5,6 +5,7 @@
 #include "Components/HorizontalBox.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Sound/SoundCue.h"
 #include "STMGameInstance.h"
 
 void USTMMenuWidget::NativeOnInitialized()
@@ -21,6 +22,7 @@ void USTMMenuWidget::NativeOnInitialized()
 void USTMMenuWidget::OnStartGame()
 {
     PlayAnimation(HideAnimation);
+    UGameplayStatics::PlaySound2D(GetWorld(), StartGameSound);
 }
 
 void USTMMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation *Animation)
