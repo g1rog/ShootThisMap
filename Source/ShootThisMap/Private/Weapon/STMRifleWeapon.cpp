@@ -3,6 +3,9 @@
 #include "Weapon/Components/STMWeaponFXComponent.h"
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
+#include "Components/AudioComponent.h"
 
 ASTMRifleWeapon::ASTMRifleWeapon()
 {
@@ -17,7 +20,7 @@ void ASTMRifleWeapon::BeginPlay()
 
 void ASTMRifleWeapon::StartFire()
 {
-    InitMuzzleFX();
+    InitFX();
    // GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Red, FString::Printf(TEXT("Fire")));
     MakeShot();
     GetWorldTimerManager().SetTimer(ShotTimerHandle, this, &ASTMRifleWeapon::MakeShot, TimeBetweenShots, true);
@@ -26,7 +29,7 @@ void ASTMRifleWeapon::StartFire()
 void ASTMRifleWeapon::StopFire()
 {
     GetWorldTimerManager().ClearTimer(ShotTimerHandle);
-    SetMuzzleFXVisibility(false);
+    SetFXActive(false);
 }
 
 void ASTMRifleWeapon::MakeShot()
@@ -59,19 +62,25 @@ void ASTMRifleWeapon::MakeDamage(const FHitResult& HitResult)
     DamagedActor->TakeDamage(DamageAmount, FDamageEvent{}, GetController(), this);
 }
 
-void ASTMRifleWeapon::InitMuzzleFX()
+void ASTMRifleWeapon::InitFX()
 {
-    if (!MuzzleFXComponent) MuzzleFXComponent = SpawnMuzzleFX();
-    SetMuzzleFXVisibility(true);
+    if (!MuzzleFXComponent)
+        MuzzleFXComponent = SpawnMuzzleFX();
+    if (!FireAudioComponent)
+        FireAudioComponent = UGameplayStatics::SpawnSoundAttached(FireSound,WeaponMesh, MuzzleSocketName);
+
+    SetFXActive(true);
 }
 
-void ASTMRifleWeapon::SetMuzzleFXVisibility(const bool Visible) const
+void ASTMRifleWeapon::SetFXActive(const bool IsActive) const
 {
     if (MuzzleFXComponent)
     {
-        MuzzleFXComponent->SetPaused(!Visible);
-        MuzzleFXComponent->SetVisibility(Visible, true);
+        MuzzleFXComponent->SetPaused(!IsActive);
+        MuzzleFXComponent->SetVisibility(IsActive, true);
     }
+    if (FireAudioComponent)
+        IsActive ? FireAudioComponent->Play() : FireAudioComponent->Stop();
 }
 
 void ASTMRifleWeapon::SpawnTraceFX(const FVector &TraceStart, const FVector &TraceEnd) const

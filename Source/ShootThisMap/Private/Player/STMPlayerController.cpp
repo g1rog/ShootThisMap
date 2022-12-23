@@ -41,6 +41,7 @@ void ASTMPlayerController::SetupInputComponent()
     Super::SetupInputComponent();
     if (!InputComponent) return;
     InputComponent->BindAction("PauseGame", IE_Pressed, this, &ASTMPlayerController::OnPauseGame);
+    InputComponent->BindAction("Mute", IE_Pressed, this, &ASTMPlayerController::OnMuteSound);
 }
 
 void ASTMPlayerController::OnPauseGame()
@@ -48,3 +49,11 @@ void ASTMPlayerController::OnPauseGame()
     if (!GetWorld() || !GetWorld()->GetAuthGameMode()) return;
     GetWorld()->GetAuthGameMode()->SetPause(this);
 }
+
+void ASTMPlayerController::OnMuteSound()
+{
+    if (!GetWorld()) return;
+    if (const auto GameInstance = GetWorld()->GetGameInstance<USTMGameInstance>())
+        GameInstance->ToggleVolume();
+}
+

@@ -4,10 +4,11 @@
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/DecalComponent.h"
+#include "Sound/SoundCue.h"
 
 USTMWeaponFXComponent::USTMWeaponFXComponent()
 {
-    PrimaryComponentTick.bCanEverTick = true;
+    PrimaryComponentTick.bCanEverTick = false;
 }
 
 void USTMWeaponFXComponent::PlayImpactFX(const FHitResult &Hit)
@@ -25,5 +26,7 @@ void USTMWeaponFXComponent::PlayImpactFX(const FHitResult &Hit)
     if (const auto DecalComponent = UGameplayStatics::SpawnDecalAtLocation(GetWorld(),ImpactData.DecalData.Material,
         ImpactData.DecalData.Size, Hit.ImpactPoint, Hit.ImpactNormal.Rotation()))
             DecalComponent->SetFadeOut(ImpactData.DecalData.LifeTime, ImpactData.DecalData.FadeOutTime);
+
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactData.Sound, Hit.ImpactPoint);
 }
 

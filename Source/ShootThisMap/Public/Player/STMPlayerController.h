@@ -3,6 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "STMCoreTypes.h"
+#include "STMGameInstance.h"
 #include "GameFramework/PlayerController.h"
 #include "STMPlayerController.generated.h"
 
@@ -24,6 +25,7 @@ protected:
 private:
     void OnPauseGame();
     void OnMatchStateChanged(ESTMMatchState State);
+    void OnMuteSound();
     
 public:
 protected:

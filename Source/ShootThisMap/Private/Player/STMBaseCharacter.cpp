@@ -5,6 +5,8 @@
 #include "GameFramework/Controller.h"
 #include "Components/STMWeaponComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 ASTMBaseCharacter::ASTMBaseCharacter(const FObjectInitializer& ObjInit)
     : Super(ObjInit.SetDefaultSubobjectClass<USTMCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
@@ -64,6 +66,7 @@ void ASTMBaseCharacter::OnDeath()
     GetCapsuleComponent()->SetCollisionResponseToChannels(ECollisionResponse::ECR_Ignore);
     GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
     GetMesh()->SetSimulatePhysics(true);
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), DeathSound, GetActorLocation());
 }
 
 void ASTMBaseCharacter::OnHealthChanged(const float Health, const float HealthDelta) const

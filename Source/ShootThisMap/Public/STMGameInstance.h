@@ -6,6 +6,8 @@
 #include "STMCoreTypes.h"
 #include "STMGameInstance.generated.h"
 
+class USoundClass;
+
 UCLASS()
 class SHOOTTHISMAP_API USTMGameInstance : public UGameInstance
 {
@@ -16,9 +18,8 @@ public:
     FORCEINLINE FName GetMenuLevelName() const { return MenuLevelName; }
     FORCEINLINE TArray<FLevelData> GetLevelsData() const { return LevelsData; }
     FORCEINLINE constexpr void SetStartupLevel(const FLevelData& Data) { StartupLevel = Data; }
+    FORCEINLINE void ToggleVolume() const;
 
-
-    
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     TArray<FLevelData> LevelsData;
@@ -26,6 +27,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     FName MenuLevelName = NAME_None;
 
+    UPROPERTY(EditDefaultsOnly, Category = "Sound")
+    USoundClass* MasterSoundClass;
+    
 private:
     FLevelData StartupLevel;
 };

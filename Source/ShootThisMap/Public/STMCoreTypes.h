@@ -5,6 +5,7 @@
 
 class ASTMBaseWeapon;
 class UNiagaraSystem;
+class USoundCue;
 
 DECLARE_MULTICAST_DELEGATE(FOnDeathSignature);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnClipEmptySignature, const TObjectPtr<ASTMBaseWeapon>&);
@@ -77,9 +78,14 @@ struct FImpactData
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     TObjectPtr<UNiagaraSystem> NiagaraEffect;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    TObjectPtr<USoundCue> Sound;
     
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     FDecalData DecalData;
+
+    
 };
 
 USTRUCT(BlueprintType)

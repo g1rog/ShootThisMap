@@ -8,6 +8,7 @@
 class USTMWeaponFXComponent;
 class UNiagaraComponent;
 class UNiagaraSystem;
+class UAudioComponent;
 
 UCLASS()
 class SHOOTTHISMAP_API ASTMRifleWeapon : public ASTMBaseWeapon
@@ -27,8 +28,8 @@ private:
     FORCEINLINE TObjectPtr<AController> GetController() const;
     
     void MakeDamage(const FHitResult& HitResult);
-    void InitMuzzleFX();
-    void SetMuzzleFXVisibility(const bool Visible) const;
+    void InitFX();
+    void SetFXActive(const bool IsActive) const;
     void SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd) const;
 
 public:
@@ -51,5 +52,9 @@ protected:
 private:
     UPROPERTY()
     TObjectPtr<UNiagaraComponent> MuzzleFXComponent;
+
+    UPROPERTY()
+    TObjectPtr<UAudioComponent> FireAudioComponent;
+    
     FTimerHandle ShotTimerHandle;
 };

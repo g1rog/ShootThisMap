@@ -1,6 +1,8 @@
 
 #include "Pickups/STMBasePickup.h"
 #include "Components/SphereComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 ASTMBasePickup::ASTMBasePickup()
 {
@@ -40,6 +42,7 @@ void ASTMBasePickup::PickupWasTaken()
     GetRootComponent()->SetVisibility(false, true);
     FTimerHandle RespawnTimerHandle;
     GetWorldTimerManager().SetTimer(RespawnTimerHandle, this, &ASTMBasePickup::Respawn, RespawnTime);
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), PickupTakenSound, GetActorLocation());
 }
 
 void ASTMBasePickup::Respawn()

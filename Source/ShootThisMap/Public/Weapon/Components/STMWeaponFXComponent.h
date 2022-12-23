@@ -17,18 +17,11 @@ class SHOOTTHISMAP_API USTMWeaponFXComponent : public UActorComponent
 public:	
     USTMWeaponFXComponent();
     void PlayImpactFX(const FHitResult& Hit);
-    
-protected:
-private:	
-public:
+
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     FImpactData DefaultImpactData;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     TMap<TObjectPtr<UPhysicalMaterial>, FImpactData> ImpactDataMap;
-    
-private:
-    
-		
 };

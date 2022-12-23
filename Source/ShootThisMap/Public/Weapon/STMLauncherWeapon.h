@@ -6,6 +6,7 @@
 #include "STMLauncherWeapon.generated.h"
 
 class ASTMProjectile;
+class USoundCue;
 
 UCLASS()
 class SHOOTTHISMAP_API ASTMLauncherWeapon : public ASTMBaseWeapon
@@ -21,5 +22,8 @@ protected:
 public:
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    TSubclassOf<ASTMProjectile> ProjectileClass;	
+    TSubclassOf<ASTMProjectile> ProjectileClass;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
+    TObjectPtr<USoundCue> NoAmmoSound;
 };

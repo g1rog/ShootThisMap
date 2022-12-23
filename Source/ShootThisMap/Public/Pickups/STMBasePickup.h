@@ -6,6 +6,7 @@
 #include "STMBasePickup.generated.h"
 
 class USphereComponent;
+class USoundCue;
 
 UCLASS()
 class SHOOTTHISMAP_API ASTMBasePickup : public AActor
@@ -30,6 +31,9 @@ public:
 protected:
     UPROPERTY(VisibleAnywhere, Category = "Pickup")
     TObjectPtr<USphereComponent> CollisionComponent;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+    TObjectPtr<USoundCue> PickupTakenSound;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
     float RespawnTime = 5.0f;

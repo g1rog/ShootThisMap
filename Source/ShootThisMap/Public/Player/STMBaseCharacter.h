@@ -7,6 +7,7 @@
 
 class USTMHealthComponent;
 class USTMWeaponComponent;
+class USoundCue;
 
 UCLASS()
 class SHOOTTHISMAP_API ASTMBaseCharacter : public ACharacter
@@ -42,7 +43,10 @@ protected:
     TObjectPtr<UAnimMontage> DeathAnimMontage;
 
     UPROPERTY(EditDefaultsOnly, Category = "Material")
-    FName MaterialColorName = "Paint Color" ;
+    FName MaterialColorName = "Paint Color";
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+    TObjectPtr<USoundCue> DeathSound;
 
     bool WantsToRun = false;
     bool IsMovingForward = false;

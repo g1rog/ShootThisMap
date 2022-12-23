@@ -9,6 +9,7 @@
 class USkeletalMeshComponent;
 class UNiagaraSystem;
 class UNiagaraComponent;
+class USoundCue;
 
 UCLASS()
 class SHOOTTHISMAP_API ASTMBaseWeapon : public AActor
@@ -63,6 +64,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     TObjectPtr<UNiagaraSystem> MuzzleFX;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+    TObjectPtr<USoundCue> FireSound;
 
 private:
     FAmmoData CurrentAmmo;
