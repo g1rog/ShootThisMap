@@ -37,6 +37,5 @@ void ASTMGameHUD::OnMatchStateChanged(ESTMMatchState State)
         CurrentWidget->SetVisibility(ESlateVisibility::Visible);
         CurrentWidget->Show();
     }
-    
     GEngine->AddOnScreenDebugMessage(1, 5.0f, FColor::Green, *UEnum::GetValueAsString(State));
 }
