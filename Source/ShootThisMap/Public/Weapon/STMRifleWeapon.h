@@ -20,13 +20,13 @@ public:
     virtual void BeginPlay() override;
     virtual void StartFire() override;
     virtual void StopFire() override;
+    virtual void Zoom(bool Enabled) override;
 
 protected:
     virtual void MakeShot() override;
     
 private:
     FORCEINLINE TObjectPtr<AController> GetController() const;
-    
     void MakeDamage(const FHitResult& HitResult);
     void InitFX();
     void SetFXActive(const bool IsActive) const;
@@ -34,11 +34,14 @@ private:
 
 public:
 protected:
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float TimeBetweenShots = 0.1f;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float DamageAmount = 20.0f;
+    
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+    float FOVZoomAngle = 60.0f;
 
     UPROPERTY(VisibleAnywhere, Category = "VFX")
     TObjectPtr<USTMWeaponFXComponent> WeaponFXComponent;
@@ -57,4 +60,6 @@ private:
     TObjectPtr<UAudioComponent> FireAudioComponent;
     
     FTimerHandle ShotTimerHandle;
+
+    float DefaultCameraFOV = 90.0f;
 };

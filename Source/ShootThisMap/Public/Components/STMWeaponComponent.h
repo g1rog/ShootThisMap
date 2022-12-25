@@ -21,6 +21,7 @@ public:
     virtual void NextWeapon();
     void OnClipEmpty(const TObjectPtr<ASTMBaseWeapon> AmmoEmptyWeapon);
     void ChangeClip();
+    void Zoom(bool Enabled);
     bool TryToAddAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType, int32 ClipsAmount);
     bool NeedAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType);
 

@@ -140,7 +140,7 @@ void ASTMGameModeBase::SetPlayerColor(const TObjectPtr<AController> &Controller)
 }
 
 void ASTMGameModeBase::Killed(const TObjectPtr<AController> &KillerController,
-                              const TObjectPtr<AController> &VictimController)
+                              const TObjectPtr<AController> &VictimController) const
 {
     const auto KillerPlayerState = KillerController ? Cast<ASTMPlayerState>(KillerController->PlayerState) : nullptr;
     const auto VictimPlayerState = VictimController ? Cast<ASTMPlayerState>(VictimController->PlayerState) : nullptr;

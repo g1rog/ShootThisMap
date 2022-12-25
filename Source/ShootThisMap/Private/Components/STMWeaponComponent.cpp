@@ -69,6 +69,7 @@ void USTMWeaponComponent::EquipWeapon(const int32& WeaponId)
     AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName);
     EquipAnimInProgress = true;
     PlayAnimMontage(EquipAnimMontage);
+    Zoom(false);
 }
 
 void USTMWeaponComponent::StartFire()
@@ -174,6 +175,12 @@ void USTMWeaponComponent::ChangeClip()
     CurrentWeapon->ChangeClip();
     ReloadAnimInProgress = true;
     PlayAnimMontage(CurrentReloadAnimMontage);
+}
+
+void USTMWeaponComponent::Zoom(bool Enabled)
+{
+    if (CurrentWeapon)
+        CurrentWeapon->Zoom(Enabled);
 }
 
 bool USTMWeaponComponent::TryToAddAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType, int32 ClipsAmount)

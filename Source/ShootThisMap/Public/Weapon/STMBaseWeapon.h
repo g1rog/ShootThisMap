@@ -20,6 +20,7 @@ public:
     ASTMBaseWeapon();
     virtual void StartFire();
     virtual void StopFire();
+    virtual void Zoom(bool Enabled) {}
     void ChangeClip();
     bool TryToAddAmmo(int32 ClipsAmount);
     

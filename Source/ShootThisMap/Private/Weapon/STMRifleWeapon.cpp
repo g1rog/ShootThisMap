@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 #include "Components/AudioComponent.h"
+#include "Engine/DamageEvents.h"
 
 ASTMRifleWeapon::ASTMRifleWeapon()
 {
@@ -30,6 +31,16 @@ void ASTMRifleWeapon::StopFire()
 {
     GetWorldTimerManager().ClearTimer(ShotTimerHandle);
     SetFXActive(false);
+}
+
+void ASTMRifleWeapon::Zoom(bool Enabled)
+{
+    Super::Zoom(Enabled);
+    const auto Controller = Cast<APlayerController>(GetController());
+    if (!Controller || !Controller->PlayerCameraManager) return;
+    if (Enabled)
+        DefaultCameraFOV = Controller->PlayerCameraManager->GetFOVAngle();
+    Controller->PlayerCameraManager->SetFOV(Enabled ? FOVZoomAngle : DefaultCameraFOV);
 }
 
 void ASTMRifleWeapon::MakeShot()
@@ -59,7 +70,10 @@ void ASTMRifleWeapon::MakeDamage(const FHitResult& HitResult)
 {
     const auto DamagedActor = HitResult.GetActor();
     if (!DamagedActor) return;
-    DamagedActor->TakeDamage(DamageAmount, FDamageEvent{}, GetController(), this);
+    
+    FPointDamageEvent PointDamageEvent;
+    PointDamageEvent.HitInfo = HitResult;
+    DamagedActor->TakeDamage(DamageAmount, PointDamageEvent, GetController(), this);
 }
 
 void ASTMRifleWeapon::InitFX()

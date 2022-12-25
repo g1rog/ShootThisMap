@@ -20,7 +20,7 @@ public:
     virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
     virtual bool ClearPause() override;
     
-    void Killed(const TObjectPtr<AController>& KillerController, const TObjectPtr<AController>& VictimController);
+    void Killed(const TObjectPtr<AController>& KillerController, const TObjectPtr<AController>& VictimController) const;
     void RespawnRequest(const TObjectPtr<AController>& Controller);
 
     
