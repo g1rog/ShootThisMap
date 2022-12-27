@@ -16,7 +16,7 @@ class SHOOTTHISMAP_API ASTMProjectile : public AActor
 	
 public:	
     ASTMProjectile();
-    FORCEINLINE constexpr void SetShotDirection(const FVector& Direction);
+	void SetShotDirection(const FVector& Direction);
     
 protected:
 	virtual void BeginPlay() override;
@@ -26,7 +26,7 @@ private:
     void OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
         UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
-    FORCEINLINE TObjectPtr<AController> GetController() const;
+	TObjectPtr<AController> GetController() const;
 
 public:
 protected:

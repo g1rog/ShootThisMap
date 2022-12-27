@@ -1,7 +1,7 @@
 
 #include "Menu/STMMenuPlayerController.h"
 
-constexpr void ASTMMenuPlayerController::BeginPlay()
+void ASTMMenuPlayerController::BeginPlay()
 {
     Super::BeginPlay();
     SetInputMode(FInputModeUIOnly());

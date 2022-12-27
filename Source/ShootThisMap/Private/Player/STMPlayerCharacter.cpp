@@ -57,14 +57,14 @@ void ASTMPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
     PlayerInputComponent->BindAction<FZoomInputSignature>("Zoom", IE_Released, WeaponComponent, &USTMWeaponComponent::Zoom, false);
 }
 
-FORCEINLINE void ASTMPlayerCharacter::MoveForward(const float Amount)
+void ASTMPlayerCharacter::MoveForward(const float Amount)
 {
     if (FMath::IsNearlyZero(Amount, 0.0f)) return;
     IsMovingForward = FMath::IsNearlyEqual(Amount, 0.0f);
     AddMovementInput(GetActorForwardVector(), Amount);
 }
 
-FORCEINLINE void ASTMPlayerCharacter::MoveRight(const float Amount)
+void ASTMPlayerCharacter::MoveRight(const float Amount)
 {
     AddMovementInput(GetActorRightVector(), Amount);
 }

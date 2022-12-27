@@ -41,7 +41,7 @@ bool ASTMBaseWeapon::GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRot
     return true;
 }
 
-FORCEINLINE FVector ASTMBaseWeapon::GetMuzzleSocketLocation() const
+FVector ASTMBaseWeapon::GetMuzzleSocketLocation() const
 {
     return WeaponMesh->GetSocketLocation(MuzzleSocketName);
 }
@@ -77,17 +77,17 @@ void ASTMBaseWeapon::DecreaseAmmo()
     }
 }
 
-FORCEINLINE bool ASTMBaseWeapon::IsAmmoEmpty() const
+bool ASTMBaseWeapon::IsAmmoEmpty() const
 {
     return !CurrentAmmo.Infinite && CurrentAmmo.Clips == 0 && IsClipEmpty();
 }
 
-FORCEINLINE bool ASTMBaseWeapon::IsClipEmpty() const
+bool ASTMBaseWeapon::IsClipEmpty() const
 {
     return CurrentAmmo.Bullets == 0;
 }
 
-FORCEINLINE bool ASTMBaseWeapon::IsAmmoFull() const
+bool ASTMBaseWeapon::IsAmmoFull() const
 {
     return CurrentAmmo.Clips == DefaultAmmo.Clips &&
            CurrentAmmo.Bullets == DefaultAmmo.Bullets;
@@ -127,13 +127,12 @@ bool ASTMBaseWeapon::TryToAddAmmo(int32 ClipsAmount)
     return true;
 }
 
-FORCEINLINE bool ASTMBaseWeapon::CanReload() const
+bool ASTMBaseWeapon::CanReload() const
 {
     return CurrentAmmo.Bullets < DefaultAmmo.Bullets && CurrentAmmo.Clips > 0;
 }
 
-
-TObjectPtr<UNiagaraComponent> ASTMBaseWeapon::SpawnMuzzleFX()
+UNiagaraComponent* ASTMBaseWeapon::SpawnMuzzleFX()
 {
     return UNiagaraFunctionLibrary::SpawnSystemAttached(MuzzleFX, WeaponMesh, MuzzleSocketName,
         FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::SnapToTarget, true);

@@ -98,7 +98,7 @@ void USTMHealthComponent::SetHealth(const float NewHealth)
     OnHealthChanged.Broadcast(Health, HealthDelta);
 }
 
-FORCEINLINE bool USTMHealthComponent::IsHealthFull() const
+bool USTMHealthComponent::IsHealthFull() const
 {
     return FMath::IsNearlyEqual(Health, MaxHealth);
 }

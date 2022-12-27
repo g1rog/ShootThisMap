@@ -26,7 +26,7 @@ protected:
     virtual void MakeShot() override;
     
 private:
-    FORCEINLINE TObjectPtr<AController> GetController() const;
+	TObjectPtr<AController> GetController() const;
     void MakeDamage(const FHitResult& HitResult);
     void InitFX();
     void SetFXActive(const bool IsActive) const;
@@ -47,14 +47,14 @@ protected:
     TObjectPtr<USTMWeaponFXComponent> WeaponFXComponent;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
-    TObjectPtr<UNiagaraSystem> TraceFX;
+    UNiagaraSystem* TraceFX;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     FString TraceTargetName = "TraceTarget";
 
 private:
     UPROPERTY()
-    TObjectPtr<UNiagaraComponent> MuzzleFXComponent;
+    UNiagaraComponent* MuzzleFXComponent;
 
     UPROPERTY()
     TObjectPtr<UAudioComponent> FireAudioComponent;

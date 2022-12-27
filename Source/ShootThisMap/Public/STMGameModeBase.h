@@ -24,9 +24,9 @@ public:
     void RespawnRequest(const TObjectPtr<AController>& Controller);
 
     
-    FORCEINLINE FGameData GetGameData() const { return GameData; }
-    FORCEINLINE constexpr int32 GetCurrentRoundNum() const { return CurrentRound; }
-    FORCEINLINE constexpr int32 GetRoundSecondsRemaining() const { return RoundCountDown; }
+	FGameData GetGameData() const { return GameData; }
+	int32 GetCurrentRoundNum() const { return CurrentRound; }
+	int32 GetRoundSecondsRemaining() const { return RoundCountDown; }
 
     
 protected:

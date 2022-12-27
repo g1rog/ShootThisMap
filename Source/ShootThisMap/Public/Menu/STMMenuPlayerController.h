@@ -11,6 +11,6 @@ class SHOOTTHISMAP_API ASTMMenuPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
-    constexpr virtual void BeginPlay() override;
+	virtual void BeginPlay() override;
     
 };

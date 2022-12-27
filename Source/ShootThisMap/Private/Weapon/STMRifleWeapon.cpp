@@ -6,7 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 #include "Components/AudioComponent.h"
-#include "Engine/DamageEvents.h"
+//#include "Engine/DamageEvents.h"
 
 ASTMRifleWeapon::ASTMRifleWeapon()
 {
@@ -104,7 +104,7 @@ void ASTMRifleWeapon::SpawnTraceFX(const FVector &TraceStart, const FVector &Tra
             TraceFXComponent->SetNiagaraVariableVec3(TraceTargetName, TraceEnd);
 }
 
-FORCEINLINE TObjectPtr<AController> ASTMRifleWeapon::GetController() const
+TObjectPtr<AController> ASTMRifleWeapon::GetController() const
 {
     const auto Pawn = Cast<APawn>(GetOwner());
     return Pawn ? Pawn->GetController() : nullptr;

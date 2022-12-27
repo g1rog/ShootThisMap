@@ -62,8 +62,8 @@ void USTMWeaponComponent::EquipWeapon(const int32& WeaponId)
         AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponArmorySocketName);
     }
     CurrentWeapon = Weapons[WeaponId];
-    const auto CurrentWeaponData = WeaponData.FindByPredicate([&]<typename Type> (const Type& Data)
-        constexpr -> bool { return Data.WeaponClass == CurrentWeapon->GetClass(); });
+    const auto CurrentWeaponData = WeaponData.FindByPredicate([&](const auto& Data)
+         -> bool { return Data.WeaponClass == CurrentWeapon->GetClass(); });
 
     CurrentReloadAnimMontage = CurrentWeaponData ? CurrentWeaponData->ReloadAnimMontage : nullptr;
     AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName);
@@ -103,13 +103,11 @@ void USTMWeaponComponent::InitAnimations()
     if (const auto EquipFinishedNotify =
         AnimUtils::FindNotifyByClass<USTMEquipFinishedAnimNotify>(EquipAnimMontage))
             EquipFinishedNotify->OnNotified.AddUObject(this, &USTMWeaponComponent::OnEquipFinished);
-    else
-        checkNoEntry();
 
     for (const auto& i : WeaponData)
     {
         const auto ReloadFinishedNotify = AnimUtils::FindNotifyByClass<USTMReloadFinishedAnimNotify>(i.ReloadAnimMontage);
-        if (!ReloadFinishedNotify) checkNoEntry();
+        if (!ReloadFinishedNotify) continue;
         ReloadFinishedNotify->OnNotified.AddUObject(this, &USTMWeaponComponent::OnReloadFinished);
     }
 }
@@ -128,17 +126,17 @@ void USTMWeaponComponent::OnReloadFinished(const TObjectPtr<USkeletalMeshCompone
     ReloadAnimInProgress = false;
 }
 
-FORCEINLINE bool USTMWeaponComponent::CanFire() const
+bool USTMWeaponComponent::CanFire() const
 {
    return CurrentWeapon && !EquipAnimInProgress && !ReloadAnimInProgress;
 }
 
-FORCEINLINE bool USTMWeaponComponent::CanEquip() const
+bool USTMWeaponComponent::CanEquip() const
 {
     return !EquipAnimInProgress && !ReloadAnimInProgress;
 }
 
-FORCEINLINE bool USTMWeaponComponent::CanReload() const
+bool USTMWeaponComponent::CanReload() const
 {
     return CurrentWeapon
             && !EquipAnimInProgress
@@ -146,7 +144,7 @@ FORCEINLINE bool USTMWeaponComponent::CanReload() const
             && CurrentWeapon->CanReload();
 }
 
-FORCEINLINE void USTMWeaponComponent::Reload()
+void USTMWeaponComponent::Reload()
 {
     ChangeClip();
 }

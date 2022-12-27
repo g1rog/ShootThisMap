@@ -43,7 +43,7 @@ protected:
     virtual void NativeOnInitialized() override;
 
 private:
-    FORCEINLINE void OnHealthChanged(const float Health, const float HealthDelta);
+	void OnHealthChanged(const float Health, const float HealthDelta);
     void OnNewPawn(APawn* NewPawn);
     void UpdateHealthBar() const;
 

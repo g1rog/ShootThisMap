@@ -27,7 +27,7 @@ void USTMRespawnComponent::RespawnTimerUpdate()
     }
 }
 
-FORCEINLINE constexpr bool USTMRespawnComponent::IsRespawnInProgress() const
+bool USTMRespawnComponent::IsRespawnInProgress() const
 {
     return GetWorld() && GetWorld()->GetTimerManager().IsTimerActive(RespawnTimerHandle);
 }

@@ -13,7 +13,7 @@ class SHOOTTHISMAP_API USTMBaseWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
-    FORCEINLINE virtual void Show();
+	virtual void Show();
     
 protected:
     UPROPERTY(meta = (BindWidgetAnim), Transient)

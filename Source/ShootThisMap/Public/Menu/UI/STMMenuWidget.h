@@ -28,7 +28,7 @@ private:
     UFUNCTION()
     void OnQuitGame();
 
-    FORCEINLINE TObjectPtr<USTMGameInstance> GetSTMGameInstance() const;
+	TObjectPtr<USTMGameInstance> GetSTMGameInstance() const;
 
     void InitLevelItems();
     void OnLevelSelected(const FLevelData& Data);

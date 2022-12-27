@@ -24,7 +24,7 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Movement")
     float GetMovementDirection() const;
     
-    FORCEINLINE constexpr void SetPlayerColor(const FLinearColor& LinearColor) const;
+	void SetPlayerColor(const FLinearColor& LinearColor) const;
     
 protected:
 	virtual void BeginPlay() override;

@@ -21,12 +21,12 @@ int32 USTMGameDataWidget::GetRoundSecondsRemaining() const
     return GameMode ? GameMode->GetRoundSecondsRemaining() : 0;
 }
 
-FORCEINLINE TObjectPtr<ASTMGameModeBase> USTMGameDataWidget::GetSTMGameMode() const
+TObjectPtr<ASTMGameModeBase> USTMGameDataWidget::GetSTMGameMode() const
 {
     return GetWorld() ? Cast<ASTMGameModeBase>(GetWorld()->GetAuthGameMode()) : nullptr;
 }
 
-FORCEINLINE TObjectPtr<ASTMPlayerState> USTMGameDataWidget::GetSTMPlayerState() const
+TObjectPtr<ASTMPlayerState> USTMGameDataWidget::GetSTMPlayerState() const
 {
     return GetOwningPlayer() ? Cast<ASTMPlayerState>(GetOwningPlayer()->PlayerState) : nullptr;
 }

@@ -25,17 +25,17 @@ public:
     bool TryToAddAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType, int32 ClipsAmount);
     bool NeedAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType);
 
-    FORCEINLINE void Reload();
-    FORCEINLINE bool GetCurrentWeaponUIData(FWeaponUIData& UIData) const;
-    FORCEINLINE bool GetCurrentWeaponAmmoData(FAmmoData& AmmoData) const;
+    void Reload();
+    bool GetCurrentWeaponUIData(FWeaponUIData& UIData) const;
+    bool GetCurrentWeaponAmmoData(FAmmoData& AmmoData) const;
 
 protected:
 	virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
     void EquipWeapon(const int32& WeaponId);
 
-    FORCEINLINE bool CanFire() const;
-    FORCEINLINE bool CanEquip() const;
+    bool CanFire() const;
+    bool CanEquip() const;
     
 private:
     void SpawnWeapons();
@@ -45,8 +45,7 @@ private:
     void InitAnimations();
     void OnEquipFinished(const TObjectPtr<USkeletalMeshComponent> MeshComponent);
     void OnReloadFinished(const TObjectPtr<USkeletalMeshComponent> MeshComponent);
-
-    FORCEINLINE bool CanReload() const;
+    bool CanReload() const;
 
 public:
 protected:

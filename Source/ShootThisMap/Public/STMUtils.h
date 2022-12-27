@@ -2,15 +2,25 @@
 
 #include "Player/STMPlayerState.h"
 
+namespace STMComponentConcept
+{
+	template <typename ComponentType>
+	concept STMComponent = std::is_base_of_v<UActorComponent, ComponentType>
+	|| requires(ComponentType Type) {{ ComponentType::StaticClass() }
+		-> std::convertible_to<UClass*>;};;
+}
+
 class STMUtils
 {
 public:
-    template <typename ComponentType>
-    static constexpr TObjectPtr<ComponentType> GetSTMPlayerComponent(const TObjectPtr<AActor>& PlayerPawn)
+    template <STMComponentConcept::STMComponent ComponentType>
+	//template <typename ComponentType>
+    static auto GetSTMPlayerComponent(const TObjectPtr<AActor>& PlayerPawn)
+		-> TObjectPtr<ComponentType>
     {
         if (!PlayerPawn) return nullptr;
         const auto Component = PlayerPawn->GetComponentByClass(ComponentType::StaticClass());
-        return Cast<ComponentType>(Component);  
+        return Component ? Cast<ComponentType>(Component) : nullptr;  
     }
     
     static bool AreEnemies(const TObjectPtr<AController>& FirstController,
@@ -24,8 +34,5 @@ public:
             FirstPlayerState->GetTeamID() != SecondPlayerState->GetTeamID();
     }
     
-    static FText TextFromInt(const int32 Number)
-    {
-        return FText::FromString(FString::FromInt(Number));
-    }
+    static FText TextFromInt(const int32 Number) { return FText::AsNumber(Number); }
 };

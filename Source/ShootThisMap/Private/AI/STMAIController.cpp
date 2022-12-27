@@ -28,7 +28,7 @@ void ASTMAIController::OnPossess(APawn *InPawn)
         RunBehaviorTree(STMCharacter->BehaviorTreeAsset);
 }
 
-FORCEINLINE TObjectPtr<AActor> ASTMAIController::GetFocusOnActor() const 
+TObjectPtr<AActor> ASTMAIController::GetFocusOnActor() const 
 {
     if (!GetBlackboardComponent()) return nullptr;
     return Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(FocusOnKeyName));

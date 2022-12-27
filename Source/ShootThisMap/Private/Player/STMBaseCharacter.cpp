@@ -35,7 +35,7 @@ void ASTMBaseCharacter::Tick(const float DeltaTime)
    // TakeDamage(0.3f, FDamageEvent{}, nullptr, this);
 }
 
-FORCEINLINE constexpr void ASTMBaseCharacter::SetPlayerColor(const FLinearColor& Color) const
+void ASTMBaseCharacter::SetPlayerColor(const FLinearColor& Color) const
 {
     const auto MaterialInstance = GetMesh()->CreateAndSetMaterialInstanceDynamic(0);
     if (!MaterialInstance) return;

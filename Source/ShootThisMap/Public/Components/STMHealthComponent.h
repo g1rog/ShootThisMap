@@ -23,8 +23,8 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Health")
     float GetHealthPercent() const { return Health / MaxHealth; }
     
-    FORCEINLINE constexpr float GetHealth() const { return Health; }
-    FORCEINLINE bool IsHealthFull () const;
+    float GetHealth() const { return Health; }
+    bool IsHealthFull () const;
     
     bool TryToAddHealth(const float HealthAmount);
 

@@ -32,11 +32,10 @@ private:
     void OnCameraCollisionEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
         UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
     
-    FORCEINLINE void MoveForward(const float Amount);
-    FORCEINLINE void MoveRight(const float Amount);
-    FORCEINLINE void OnStartRunning() { WantsToRun = true; }
-    FORCEINLINE void OnStopRunning() { WantsToRun = false; }
-
+	void MoveForward(const float Amount);
+	void MoveRight(const float Amount);
+	void OnStartRunning() { WantsToRun = true; }
+	void OnStopRunning() { WantsToRun = false; }
     void CheckCameraOverlap() const;
     
     

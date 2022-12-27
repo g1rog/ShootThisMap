@@ -11,13 +11,13 @@ class SHOOTTHISMAP_API ASTMPlayerState : public APlayerState
     GENERATED_BODY()
 
 public:
-    FORCEINLINE constexpr void SetTeamID(int32 ID) { TeamID = ID; }
-    FORCEINLINE constexpr void SetTeamColor(const FLinearColor& Color) {  TeamColor = Color; }
-    FORCEINLINE constexpr FLinearColor GetTeamColor() const { return TeamColor; }
+	void SetTeamID(int32 ID) { TeamID = ID; }
+	void SetTeamColor(const FLinearColor& Color) {  TeamColor = Color; }
+	FLinearColor GetTeamColor() const { return TeamColor; }
     
-    FORCEINLINE constexpr int32 GetTeamID() const { return TeamID; }
-    FORCEINLINE constexpr int32 GetKillsNum() const { return KillsNum; }
-    FORCEINLINE constexpr int32 GetDeathsNum() const { return DeathsNum; }
+    int32 GetTeamID() const { return TeamID; }
+    int32 GetKillsNum() const { return KillsNum; }
+    int32 GetDeathsNum() const { return DeathsNum; }
     
     void AddKill() { ++KillsNum; }
     void AddDeath() { ++DeathsNum; }

@@ -14,8 +14,8 @@ public:
 	USTMRespawnComponent();
     void Respawn(int32 RespawnTime);
     
-    FORCEINLINE constexpr bool IsRespawnInProgress() const;
-    FORCEINLINE constexpr int32 GetRespawnCountDown() const { return RespawnCountDown; }
+    bool IsRespawnInProgress() const;
+    int32 GetRespawnCountDown() const { return RespawnCountDown; }
     
 protected:
 private:

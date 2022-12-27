@@ -4,11 +4,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "STMCoreTypes.h"
+#include "NiagaraComponent.h"
 #include "STMBaseWeapon.generated.h"
 
 class USkeletalMeshComponent;
-class UNiagaraSystem;
-class UNiagaraComponent;
+//class UNiagaraSystem;
+//class UNiagaraComponent;
 class USoundCue;
 
 UCLASS()
@@ -24,11 +25,11 @@ public:
     void ChangeClip();
     bool TryToAddAmmo(int32 ClipsAmount);
     
-    FORCEINLINE bool IsAmmoEmpty() const;
-    FORCEINLINE bool CanReload() const;
-    FORCEINLINE bool IsAmmoFull() const;
-    FORCEINLINE FWeaponUIData GetUIData() const { return UIData; }
-    FORCEINLINE FAmmoData GetAmmoData() const { return CurrentAmmo; }
+	bool IsAmmoEmpty() const;
+	bool CanReload() const;
+	bool IsAmmoFull() const;
+	FWeaponUIData GetUIData() const { return UIData; }
+	FAmmoData GetAmmoData() const { return CurrentAmmo; }
 
 protected:
     virtual void BeginPlay() override;
@@ -38,10 +39,10 @@ protected:
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
     void DecreaseAmmo();
     
-    TObjectPtr<UNiagaraComponent> SpawnMuzzleFX();
+    UNiagaraComponent* SpawnMuzzleFX();
 
-    FORCEINLINE bool IsClipEmpty() const;
-    FORCEINLINE FVector GetMuzzleSocketLocation() const;
+	bool IsClipEmpty() const;
+    FVector GetMuzzleSocketLocation() const;
     
 private:
 public:

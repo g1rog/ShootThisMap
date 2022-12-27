@@ -59,7 +59,7 @@ void USTMPlayerHUDWidget::OnNewPawn(APawn* NewPawn)
     UpdateHealthBar();
 }
 
-FORCEINLINE void USTMPlayerHUDWidget::OnHealthChanged(const float Health, const float HealthDelta)
+void USTMPlayerHUDWidget::OnHealthChanged(const float Health, const float HealthDelta)
 {
     if (HealthDelta < 0.0f)
     {

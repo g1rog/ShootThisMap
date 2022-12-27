@@ -14,12 +14,12 @@ class SHOOTTHISMAP_API USTMPlayerStatRowWidget : public UUserWidget
 	GENERATED_BODY()
     
 public:
-    FORCEINLINE void SetPlayerName(const FText& Text) const;
-    FORCEINLINE void SetKills(const FText& Text) const;
-    FORCEINLINE void SetDeaths(const FText& Text) const;
-    FORCEINLINE void SetTeam(const FText& Text) const;
-    FORCEINLINE void SetTeamColor(const FLinearColor& Color) const;
-    FORCEINLINE void SetPlayerIndicatorVisibility(const bool Visible) const;
+	void SetPlayerName(const FText& Text) const;
+	void SetKills(const FText& Text) const;
+	void SetDeaths(const FText& Text) const;
+	void SetTeam(const FText& Text) const;
+	void SetTeamColor(const FLinearColor& Color) const;
+	void SetPlayerIndicatorVisibility(const bool Visible) const;
     
 protected:
     UPROPERTY(meta = (BindWidget))

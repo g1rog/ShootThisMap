@@ -45,12 +45,12 @@ void ASTMProjectile::OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* 
     WeaponFXComponent->PlayImpactFX(Hit);
     Destroy();
 }
-FORCEINLINE constexpr void ASTMProjectile::SetShotDirection(const FVector& Direction)
+void ASTMProjectile::SetShotDirection(const FVector& Direction)
 {
     ShotDirection = Direction;
 }
 
-FORCEINLINE TObjectPtr<AController> ASTMProjectile::GetController() const
+TObjectPtr<AController> ASTMProjectile::GetController() const
 {
     const auto Pawn = Cast<APawn>(GetOwner());
     return Pawn ? Pawn->GetController() : nullptr;

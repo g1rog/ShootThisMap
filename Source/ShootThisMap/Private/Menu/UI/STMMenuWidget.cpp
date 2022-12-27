@@ -78,7 +78,7 @@ void USTMMenuWidget::OnLevelSelected(const FLevelData &Data)
     }
 }
 
-FORCEINLINE TObjectPtr<USTMGameInstance> USTMMenuWidget::GetSTMGameInstance() const
+TObjectPtr<USTMGameInstance> USTMMenuWidget::GetSTMGameInstance() const
 {
     return GetWorld() == nullptr ? nullptr : GetWorld()->GetGameInstance<USTMGameInstance>();
 }
