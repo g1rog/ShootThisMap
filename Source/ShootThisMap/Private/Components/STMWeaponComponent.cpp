@@ -62,7 +62,7 @@ void USTMWeaponComponent::EquipWeapon(const int32& WeaponId)
         AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponArmorySocketName);
     }
     CurrentWeapon = Weapons[WeaponId];
-    const auto CurrentWeaponData = WeaponData.FindByPredicate([&](const auto& Data)
+    const auto CurrentWeaponData = WeaponData.FindByPredicate([&]<typename Type>(const Type& Data)
          -> bool { return Data.WeaponClass == CurrentWeapon->GetClass(); });
 
     CurrentReloadAnimMontage = CurrentWeaponData ? CurrentWeaponData->ReloadAnimMontage : nullptr;

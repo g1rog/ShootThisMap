@@ -2,7 +2,7 @@
 
 #include "Player/STMPlayerState.h"
 
-namespace STMComponentConcept
+namespace 
 {
 	template <typename ComponentType>
 	concept STMComponent = std::is_base_of_v<UActorComponent, ComponentType>
@@ -13,9 +13,9 @@ namespace STMComponentConcept
 class STMUtils
 {
 public:
-    template <STMComponentConcept::STMComponent ComponentType>
+    template <STMComponent ComponentType>
 	//template <typename ComponentType>
-    static auto GetSTMPlayerComponent(const TObjectPtr<AActor>& PlayerPawn)
+    static constexpr auto GetSTMPlayerComponent(const TObjectPtr<AActor>& PlayerPawn)
 		-> TObjectPtr<ComponentType>
     {
         if (!PlayerPawn) return nullptr;
