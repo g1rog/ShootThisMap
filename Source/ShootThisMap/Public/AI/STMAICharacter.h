@@ -34,7 +34,7 @@ protected:
     TObjectPtr<UWidgetComponent> HealthWidgetComponent;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "AI")
-    float HealthVisibilityDistance = 1000.0f;
+    float HealthVisibilityDistance = 10000.0f;
     
 private:
     

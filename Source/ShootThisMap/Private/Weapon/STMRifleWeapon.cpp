@@ -6,7 +6,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 #include "Components/AudioComponent.h"
-//#include "Engine/DamageEvents.h"
 
 ASTMRifleWeapon::ASTMRifleWeapon()
 {
@@ -21,10 +20,11 @@ void ASTMRifleWeapon::BeginPlay()
 
 void ASTMRifleWeapon::StartFire()
 {
+	Super::StartFire();
     InitFX();
    // GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Red, FString::Printf(TEXT("Fire")));
-    MakeShot();
     GetWorldTimerManager().SetTimer(ShotTimerHandle, this, &ASTMRifleWeapon::MakeShot, TimeBetweenShots, true);
+	MakeShot();
 }
 
 void ASTMRifleWeapon::StopFire()
@@ -33,7 +33,7 @@ void ASTMRifleWeapon::StopFire()
     SetFXActive(false);
 }
 
-void ASTMRifleWeapon::Zoom(bool Enabled)
+void ASTMRifleWeapon::Zoom(const bool Enabled)
 {
     Super::Zoom(Enabled);
     const auto Controller = Cast<APlayerController>(GetController());
@@ -45,10 +45,19 @@ void ASTMRifleWeapon::Zoom(bool Enabled)
 
 void ASTMRifleWeapon::MakeShot()
 {
-    if (!GetWorld() || IsAmmoEmpty()) return;
+    if (!GetWorld() || IsAmmoEmpty())
+    {
+	    StopFire();
+    	return;
+    }
+	
     FVector TraceStart, TraceEnd;
-
-    if (!GetTraceData(TraceStart, TraceEnd)) return;
+    if (!GetTraceData(TraceStart, TraceEnd))
+    {
+	    StopFire();
+    	return;
+    }
+	
     FHitResult HitResult;
     MakeHit(HitResult, TraceStart, TraceEnd);
     

@@ -30,7 +30,7 @@ void USTMMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation *
     if (Animation != HideAnimation) return;
     const auto GameInstance = GetSTMGameInstance();
     if (!GameInstance) return;
-    UGameplayStatics::OpenLevel(this, GameInstance->GetStartupLevel().LevelName);
+    UGameplayStatics::OpenLevel(this, GameInstance->GetStartupLevelData().LevelName);
 }
 
 void USTMMenuWidget::OnQuitGame()
@@ -43,8 +43,8 @@ void USTMMenuWidget::InitLevelItems()
     const auto GameInstance = GetSTMGameInstance();
     if (!GameInstance) return;
     checkf(GameInstance->GetLevelsData().Num() != 0, TEXT("Level data is empty"));
-    if (LevelItemsBox)
-        LevelItemsBox->ClearChildren();
+	if (!LevelItemsBox) return;
+	LevelItemsBox->ClearChildren();
 
     for (const auto& LevelData : GameInstance->GetLevelsData())
     {
@@ -56,10 +56,10 @@ void USTMMenuWidget::InitLevelItems()
         LevelItemsBox->AddChild(LevelItemWidget);
         LevelItemWidgets.Add(LevelItemWidget);
     }
-    if (GameInstance->GetStartupLevel().LevelName.IsNone())
+    if (GameInstance->GetStartupLevelData().LevelName.IsNone())
         OnLevelSelected(GameInstance->GetLevelsData()[0]);
     else
-        OnLevelSelected(GameInstance->GetStartupLevel());
+        OnLevelSelected(GameInstance->GetStartupLevelData());
 }
 
 void USTMMenuWidget::OnLevelSelected(const FLevelData &Data)
@@ -80,5 +80,5 @@ void USTMMenuWidget::OnLevelSelected(const FLevelData &Data)
 
 TObjectPtr<USTMGameInstance> USTMMenuWidget::GetSTMGameInstance() const
 {
-    return GetWorld() == nullptr ? nullptr : GetWorld()->GetGameInstance<USTMGameInstance>();
+    return GetWorld() ?  GetWorld()->GetGameInstance<USTMGameInstance>() : nullptr;
 }

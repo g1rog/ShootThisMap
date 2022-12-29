@@ -16,11 +16,11 @@ TObjectPtr<AActor> USTMAIPerceptionComponent::GetClosestEnemy() const
         GetCurrentlyPerceivedActors(UAISense_Damage::StaticClass(), PercieveActors);
         if (PercieveActors.Num() == 0) return nullptr;
     }
+	
     const auto Controller = Cast<AAIController>(GetOwner());
     if (!Controller) return nullptr;
     const auto Pawn = Controller->GetPawn();
     if (!Pawn) return nullptr;
-
     float BestDistance = MAX_FLT;
     TObjectPtr<AActor> BestPawn = nullptr;
 
@@ -29,7 +29,6 @@ TObjectPtr<AActor> USTMAIPerceptionComponent::GetClosestEnemy() const
         const auto PercievePawn = Cast<APawn>(PercieveActor);
         const auto HealthComponent =
             STMUtils::GetSTMPlayerComponent<USTMHealthComponent>(PercieveActor);
-        
         const auto AreEnemies = PercievePawn &&
             STMUtils::AreEnemies(Controller, PercievePawn->Controller);
         

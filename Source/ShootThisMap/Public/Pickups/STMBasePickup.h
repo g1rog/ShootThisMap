@@ -16,10 +16,12 @@ class SHOOTTHISMAP_API ASTMBasePickup : public AActor
 public:	
 	ASTMBasePickup();
     virtual void Tick(const float DeltaTime) override;
+	bool CouldBeTaken() const;
 
 protected:
 	virtual void BeginPlay() override;
     virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
+	virtual void NotifyActorEndOverlap(AActor* OtherActor) override;
     virtual bool GivePickUpTo(const TObjectPtr<APawn>& PlayerPawn);
     
 private:
@@ -39,6 +41,10 @@ protected:
     float RespawnTime = 5.0f;
     
 private:
+	UPROPERTY()
+	TArray<TObjectPtr<APawn>> OverlappingPawns;
+
+	FTimerHandle RespawnTimerHandle;
     float RotationYaw = 0.0f;
 
 };

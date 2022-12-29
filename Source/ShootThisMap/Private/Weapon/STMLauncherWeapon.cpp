@@ -6,6 +6,7 @@
 
 void ASTMLauncherWeapon::StartFire()
 {
+	Super::StartFire();
     MakeShot();
 }
 
@@ -17,7 +18,6 @@ void ASTMLauncherWeapon::MakeShot()
         UGameplayStatics::SpawnSoundAtLocation(GetWorld(), NoAmmoSound, GetActorLocation());
         return;
     }
-        
     FVector TraceStart, TraceEnd;
     if (!GetTraceData(TraceStart, TraceEnd)) return;
     FHitResult HitResult;
@@ -36,5 +36,6 @@ void ASTMLauncherWeapon::MakeShot()
     DecreaseAmmo();
     SpawnMuzzleFX();
     UGameplayStatics::SpawnSoundAttached(FireSound, WeaponMesh, MuzzleSocketName);
+	StopFire();
 }
 

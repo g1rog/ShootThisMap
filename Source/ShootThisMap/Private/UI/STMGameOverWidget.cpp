@@ -11,9 +11,11 @@
 void USTMGameOverWidget::NativeOnInitialized()
 {
     Super::NativeOnInitialized();
-    if (!GetWorld()) return;
-    if (const auto GameMode = Cast<ASTMGameModeBase>(GetWorld()->GetAuthGameMode()))
-        GameMode->OnMatchStateChanged.AddUObject(this, &USTMGameOverWidget::OnMatchStateChanged);
+    if (GetWorld())
+    {
+	    if (const auto GameMode = Cast<ASTMGameModeBase>(GetWorld()->GetAuthGameMode()))
+	    	GameMode->OnMatchStateChanged.AddUObject(this, &USTMGameOverWidget::OnMatchStateChanged);
+    }
     if (ResetLevelButton)
         ResetLevelButton->OnClicked.AddDynamic(this, &USTMGameOverWidget::OnResetLevel);
 }
@@ -24,7 +26,7 @@ void USTMGameOverWidget::OnResetLevel()
     UGameplayStatics::OpenLevel(this, FName(CurrentLevelName));
 }
 
-void USTMGameOverWidget::OnMatchStateChanged(ESTMMatchState State)
+void USTMGameOverWidget::OnMatchStateChanged(const ESTMMatchState State)
 {
     if (State == ESTMMatchState::GameOver)
         UpdatePlayersStat();

@@ -4,11 +4,9 @@
 #include "Components/TextBlock.h"
 #include "Components/Image.h"
 
-
 void USTMLevelItemWidget::NativeOnInitialized()
 {
     Super::NativeOnInitialized();
-    
     if (LevelSelectButton)
     {
         LevelSelectButton->OnClicked.AddDynamic(this, &USTMLevelItemWidget::OnLevelItemClicked);

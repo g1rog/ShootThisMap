@@ -6,6 +6,8 @@
 #include "Animations/STMReloadFinishedAnimNotify.h"
 #include "Animations/AnimUtils.h"
 
+static constexpr int32 WeaponNum = 2;
+
 USTMWeaponComponent::USTMWeaponComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
@@ -14,9 +16,10 @@ USTMWeaponComponent::USTMWeaponComponent()
 void USTMWeaponComponent::BeginPlay()
 {
     Super::BeginPlay();
-    InitAnimations();
+	checkf(WeaponData.Num() == WeaponNum, TEXT("Our character can hold only %i weapon items"), WeaponNum);
+	CurrentWeaponId = 0;
+	InitAnimations();
     SpawnWeapons();
-    CurrentWeaponId = 0;
     EquipWeapon(CurrentWeaponId);
 }
 
@@ -36,13 +39,14 @@ void USTMWeaponComponent::SpawnWeapons()
 {
     const TObjectPtr<ACharacter> Character = Cast<ACharacter>(GetOwner());
     if (!Character || !GetWorld()) return;
-    for (const auto& i : WeaponData)
+    for (const auto& OneWeaponData : WeaponData)
     {
-        const auto Weapon = GetWorld()->SpawnActor<ASTMBaseWeapon>(i.WeaponClass);
-        if (!Weapon) return;
-        Weapon->SetOwner(Character);
-        Weapons.Add(Weapon);
-        AttachWeaponToSocket(Weapon, Character->GetMesh(), WeaponArmorySocketName);
+        const auto TempWeapon = GetWorld()->SpawnActor<ASTMBaseWeapon>(OneWeaponData.WeaponClass);
+        if (!TempWeapon) continue;;
+    	TempWeapon->OnClipEmpty.AddUObject(this, &USTMWeaponComponent::OnClipEmpty);
+    	TempWeapon->SetOwner(Character);
+        Weapons.Add(TempWeapon);
+        AttachWeaponToSocket(TempWeapon, Character->GetMesh(), WeaponArmorySocketName);
     }
 }
 
@@ -53,8 +57,13 @@ void USTMWeaponComponent::AttachWeaponToSocket(const TObjectPtr<ASTMBaseWeapon>&
     Weapon->AttachToComponent(Mesh, AttachmentRules, SocketName);
 }
 
-void USTMWeaponComponent::EquipWeapon(const int32& WeaponId)
+void USTMWeaponComponent::EquipWeapon(int32 WeaponId)
 {
+	if (WeaponId < 0 || WeaponId >= Weapons.Num())
+	{
+		GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Yellow, "Invalid weapon index");
+		return;
+	}
     const TObjectPtr<ACharacter> Character = Cast<ACharacter>(GetOwner());
     if (CurrentWeapon && Character)
     {
@@ -104,9 +113,9 @@ void USTMWeaponComponent::InitAnimations()
         AnimUtils::FindNotifyByClass<USTMEquipFinishedAnimNotify>(EquipAnimMontage))
             EquipFinishedNotify->OnNotified.AddUObject(this, &USTMWeaponComponent::OnEquipFinished);
 
-    for (const auto& i : WeaponData)
+    for (const auto& OneWeaponData : WeaponData)
     {
-        const auto ReloadFinishedNotify = AnimUtils::FindNotifyByClass<USTMReloadFinishedAnimNotify>(i.ReloadAnimMontage);
+        const auto ReloadFinishedNotify = AnimUtils::FindNotifyByClass<USTMReloadFinishedAnimNotify>(OneWeaponData.ReloadAnimMontage);
         if (!ReloadFinishedNotify) continue;
         ReloadFinishedNotify->OnNotified.AddUObject(this, &USTMWeaponComponent::OnReloadFinished);
     }
@@ -149,7 +158,7 @@ void USTMWeaponComponent::Reload()
     ChangeClip();
 }
 
-void USTMWeaponComponent::OnClipEmpty(const TObjectPtr<ASTMBaseWeapon> AmmoEmptyWeapon)
+void USTMWeaponComponent::OnClipEmpty(const TObjectPtr<ASTMBaseWeapon>& AmmoEmptyWeapon)
 {
     if (!AmmoEmptyWeapon) return;
     if (CurrentWeapon == AmmoEmptyWeapon)

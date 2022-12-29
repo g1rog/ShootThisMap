@@ -21,7 +21,7 @@ protected:
 private:
     UFUNCTION()
     void OnResetLevel();
-    void OnMatchStateChanged(ESTMMatchState State);
+    void OnMatchStateChanged(const ESTMMatchState State);
     void UpdatePlayersStat() const;
     
 protected:

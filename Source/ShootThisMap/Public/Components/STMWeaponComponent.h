@@ -19,7 +19,7 @@ public:
     virtual void StartFire();
     virtual void StopFire();
     virtual void NextWeapon();
-    void OnClipEmpty(const TObjectPtr<ASTMBaseWeapon> AmmoEmptyWeapon);
+    void OnClipEmpty(const TObjectPtr<ASTMBaseWeapon>& AmmoEmptyWeapon);
     void ChangeClip();
     void Zoom(bool Enabled);
     bool TryToAddAmmo(TSubclassOf<ASTMBaseWeapon> WeaponType, int32 ClipsAmount);
@@ -32,7 +32,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-    void EquipWeapon(const int32& WeaponId);
+    void EquipWeapon(int32 WeaponId);
 
     bool CanFire() const;
     bool CanEquip() const;

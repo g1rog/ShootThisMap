@@ -34,8 +34,8 @@ private:
     
 	void MoveForward(const float Amount);
 	void MoveRight(const float Amount);
-	void OnStartRunning() { WantsToRun = true; }
-	void OnStopRunning() { WantsToRun = false; }
+	void OnStartRunning();
+	void OnStopRunning();
     void CheckCameraOverlap() const;
     
     

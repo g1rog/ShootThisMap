@@ -7,14 +7,12 @@ void USTMPlayerStatRowWidget::SetPlayerName(const FText& Text) const
 {
     if (!PlayerNameTextBlock) return;
     PlayerNameTextBlock->SetText(Text);
-    
 }
 
 void USTMPlayerStatRowWidget::SetKills(const FText& Text) const
 {
     if (!KillsTextBlock) return;
     KillsTextBlock->SetText(Text);
-    
 }
 
 void USTMPlayerStatRowWidget::SetDeaths(const FText& Text) const

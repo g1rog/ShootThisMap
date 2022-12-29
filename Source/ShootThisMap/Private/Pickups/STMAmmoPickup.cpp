@@ -12,7 +12,6 @@ bool ASTMAmmoPickup::GivePickUpTo(const TObjectPtr<APawn> &PlayerPawn)
     
     const auto WeaponComponent =
         STMUtils::GetSTMPlayerComponent<USTMWeaponComponent>(PlayerPawn);
-    if (!WeaponComponent) return false;
     
-    return WeaponComponent->TryToAddAmmo(WeaponType, ClipsAmount);
+    return WeaponComponent ? WeaponComponent->TryToAddAmmo(WeaponType, ClipsAmount) : false;
 }

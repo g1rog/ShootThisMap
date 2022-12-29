@@ -43,7 +43,7 @@ protected:
     UPROPERTY(meta = (BindWidget))
     TObjectPtr<UHorizontalBox> LevelItemsBox;
 
-    UPROPERTY(meta = (BindWidgetAnim), Transient)
+    UPROPERTY(Transient, meta = (BindWidgetAnim))
     TObjectPtr<UWidgetAnimation> HideAnimation;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")

@@ -30,7 +30,6 @@ void ASTMPlayerCharacter::BeginPlay()
 
     CameraCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &ASTMPlayerCharacter::OnCameraCollisionBeginOverlap);
     CameraCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &ASTMPlayerCharacter::OnCameraCollisionEndOverlap);
-
 }
 
 void ASTMPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -57,16 +56,29 @@ void ASTMPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
     PlayerInputComponent->BindAction<FZoomInputSignature>("Zoom", IE_Released, WeaponComponent, &USTMWeaponComponent::Zoom, false);
 }
 
-void ASTMPlayerCharacter::MoveForward(const float Amount)
+void ASTMPlayerCharacter::MoveForward(float Amount)
 {
-    if (FMath::IsNearlyZero(Amount, 0.0f)) return;
-    IsMovingForward = FMath::IsNearlyEqual(Amount, 0.0f);
+	IsMovingForward = Amount > 0.0f;
+	if (Amount == 0.0f) return;
     AddMovementInput(GetActorForwardVector(), Amount);
 }
 
 void ASTMPlayerCharacter::MoveRight(const float Amount)
 {
+	if (Amount == 0.0f) return;
     AddMovementInput(GetActorRightVector(), Amount);
+}
+
+void ASTMPlayerCharacter::OnStartRunning()
+{
+	WantsToRun = true;
+	if (IsRunning())
+		WeaponComponent->StopFire();
+}
+
+void ASTMPlayerCharacter::OnStopRunning()
+{
+	WantsToRun = false;
 }
 
 void ASTMPlayerCharacter::CheckCameraOverlap() const
@@ -86,7 +98,7 @@ void ASTMPlayerCharacter::CheckCameraOverlap() const
 
 bool ASTMPlayerCharacter::IsRunning() const
 {
-    return WantsToRun && IsMovingForward && !GetVelocity().IsZero() ? true : false;
+    return WantsToRun && IsMovingForward && !GetVelocity().IsZero();
 }
 
 void ASTMPlayerCharacter::OnDeath()

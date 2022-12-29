@@ -17,7 +17,6 @@ ASTMBasePickup::ASTMBasePickup()
 void ASTMBasePickup::BeginPlay()
 {
 	Super::BeginPlay();
-    
     check(CollisionComponent);
 	GenerateRotationYaw();
 }
@@ -26,6 +25,20 @@ void ASTMBasePickup::Tick(const float DeltaTime)
 {
 	Super::Tick(DeltaTime);
     AddActorLocalRotation(FRotator(0.0f, RotationYaw, 0.0f));
+	
+	for (const auto& OverlapPawn : OverlappingPawns)
+	{
+		if (GivePickUpTo(OverlapPawn))
+		{
+			PickupWasTaken();
+			break;
+		}
+	}
+}
+
+bool ASTMBasePickup::CouldBeTaken() const
+{
+	return !GetWorldTimerManager().IsTimerActive(RespawnTimerHandle);
 }
 
 void ASTMBasePickup::NotifyActorBeginOverlap(AActor *OtherActor)
@@ -34,13 +47,22 @@ void ASTMBasePickup::NotifyActorBeginOverlap(AActor *OtherActor)
     const auto Pawn = Cast<APawn>(OtherActor);
     if (GivePickUpTo(Pawn))
         PickupWasTaken();
+	else if (Pawn)
+		OverlappingPawns.Add(Pawn);
+}
+
+void ASTMBasePickup::NotifyActorEndOverlap(AActor* OtherActor)
+{
+	Super::NotifyActorBeginOverlap(OtherActor);
+	const auto Pawn = Cast<APawn>(OtherActor);
+	OverlappingPawns.Remove(Pawn);
 }
 
 void ASTMBasePickup::PickupWasTaken()
 {
     CollisionComponent->SetCollisionResponseToAllChannels(ECR_Ignore);
-    GetRootComponent()->SetVisibility(false, true);
-    FTimerHandle RespawnTimerHandle;
+	if (GetRootComponent())	
+		GetRootComponent()->SetVisibility(false, true);
     GetWorldTimerManager().SetTimer(RespawnTimerHandle, this, &ASTMBasePickup::Respawn, RespawnTime);
     UGameplayStatics::PlaySoundAtLocation(GetWorld(), PickupTakenSound, GetActorLocation());
 }
@@ -48,8 +70,9 @@ void ASTMBasePickup::PickupWasTaken()
 void ASTMBasePickup::Respawn()
 {
     GenerateRotationYaw();
-    CollisionComponent->SetCollisionResponseToAllChannels(ECR_Overlap);
-    GetRootComponent()->SetVisibility(true, true);
+	if (GetRootComponent())
+		GetRootComponent()->SetVisibility(true, true);
+	CollisionComponent->SetCollisionResponseToAllChannels(ECR_Overlap);
 }
 
 void ASTMBasePickup::GenerateRotationYaw()

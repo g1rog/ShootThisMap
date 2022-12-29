@@ -12,7 +12,6 @@ ASTMBaseCharacter::ASTMBaseCharacter(const FObjectInitializer& ObjInit)
     : Super(ObjInit.SetDefaultSubobjectClass<USTMCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
 	PrimaryActorTick.bCanEverTick = true;
-
     HealthComponent = CreateDefaultSubobject<USTMHealthComponent>("HealthComponent");
     WeaponComponent = CreateDefaultSubobject<USTMWeaponComponent>("WeaponComponent");
 }
@@ -70,9 +69,6 @@ void ASTMBaseCharacter::OnDeath()
     WeaponComponent->Zoom(false);
 }
 
-void ASTMBaseCharacter::OnHealthChanged(const float Health, const float HealthDelta) const
-{
-    
-}
+void ASTMBaseCharacter::OnHealthChanged(const float Health, const float HealthDelta) const {}
 
 

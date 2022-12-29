@@ -17,7 +17,7 @@ class SHOOTTHISMAP_API USTMLevelItemWidget : public UUserWidget
 
 public:
 	auto GetLevelData() const { return LevelData; }
-	void SetSelected(const bool IsSelected) const;
+	void SetSelected(bool IsSelected) const;
     void SetLevelData(const FLevelData& Data);
 
 protected:

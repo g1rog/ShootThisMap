@@ -11,6 +11,5 @@ void ASTMMenuHUD::BeginPlay()
         MenuWidget->AddToViewport();
         MenuWidget->Show();
     }
-        
 }
 

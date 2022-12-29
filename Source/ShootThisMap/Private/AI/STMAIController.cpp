@@ -9,9 +9,7 @@ ASTMAIController::ASTMAIController()
 {
     STMAIPerceptionComponent = CreateDefaultSubobject<USTMAIPerceptionComponent>("STMPerceptionComponent");
     SetPerceptionComponent(*STMAIPerceptionComponent);
-
     RespawnComponent = CreateDefaultSubobject<USTMRespawnComponent>("RespawnComponent");
-
     bWantsPlayerState = true;
 }
 

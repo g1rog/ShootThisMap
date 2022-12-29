@@ -24,12 +24,12 @@ public:
     virtual void Zoom(bool Enabled) {}
     void ChangeClip();
     bool TryToAddAmmo(int32 ClipsAmount);
-    
 	bool IsAmmoEmpty() const;
 	bool CanReload() const;
 	bool IsAmmoFull() const;
-	FWeaponUIData GetUIData() const { return UIData; }
-	FAmmoData GetAmmoData() const { return CurrentAmmo; }
+	bool IsFiring() const { return FireInProgress; }
+	auto GetUIData() const { return UIData; }
+	auto GetAmmoData() const { return CurrentAmmo; }
 
 protected:
     virtual void BeginPlay() override;
@@ -69,6 +69,8 @@ protected:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
     TObjectPtr<USoundCue> FireSound;
+
+	bool FireInProgress = false;
 
 private:
     FAmmoData CurrentAmmo;

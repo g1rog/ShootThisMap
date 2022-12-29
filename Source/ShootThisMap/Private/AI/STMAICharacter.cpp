@@ -23,7 +23,6 @@ ASTMAICharacter::ASTMAICharacter(const FObjectInitializer& ObjInit)
     HealthWidgetComponent->SetupAttachment(GetRootComponent());
     HealthWidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
     HealthWidgetComponent->SetDrawAtDesiredSize(true);
-
 }
 
 void ASTMAICharacter::BeginPlay() 

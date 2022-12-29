@@ -14,11 +14,13 @@ class SHOOTTHISMAP_API USTMGameInstance : public UGameInstance
     GENERATED_BODY()
 
 public:
-    FLevelData GetStartupLevel() const { return StartupLevel; }
-    FName GetMenuLevelName() const { return MenuLevelName; }
-    TArray<FLevelData> GetLevelsData() const { return LevelsData; }
-    void SetStartupLevel(const FLevelData& Data) { StartupLevel = Data; }
+	TArray<FLevelData> GetLevelsData() const { return LevelsData; }
+
+    auto GetStartupLevelData() const { return StartupLevelData; }
+	auto GetMenuLevelName() const { return MenuLevelName; }
+	void SetStartupLevel(const FLevelData& Data) { StartupLevelData = Data; }
     void ToggleVolume() const;
+
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
@@ -26,10 +28,10 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     FName MenuLevelName = NAME_None;
-
+	
     UPROPERTY(EditDefaultsOnly, Category = "Sound")
     USoundClass* MasterSoundClass;
     
 private:
-    FLevelData StartupLevel;
+    FLevelData StartupLevelData;
 };

@@ -16,11 +16,13 @@ void ASTMBaseWeapon::BeginPlay()
 {
     Super::BeginPlay();
     check(WeaponMesh);
+	checkf(DefaultAmmo.Bullets > 0, TEXT("Bullets count couldn't be less or equal zero"));
+	checkf(DefaultAmmo.Clips > 0, TEXT("Clips count couldn't be less or equal zero"));
     CurrentAmmo = DefaultAmmo;
 }
 
-void ASTMBaseWeapon::StartFire() {}
-void ASTMBaseWeapon::StopFire() {}
+void ASTMBaseWeapon::StartFire() { FireInProgress = true; }
+void ASTMBaseWeapon::StopFire() { FireInProgress = false; }
 void ASTMBaseWeapon::MakeShot() {}
 
 bool ASTMBaseWeapon::GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRotation) const
@@ -95,8 +97,12 @@ bool ASTMBaseWeapon::IsAmmoFull() const
 
 void ASTMBaseWeapon::ChangeClip()
 {
+	if (!CurrentAmmo.Infinite)
+	{
+		if (CurrentAmmo.Clips == 0) return;
+		CurrentAmmo.Clips--;
+	}
     CurrentAmmo.Bullets = DefaultAmmo.Bullets;
-    if (!CurrentAmmo.Infinite) CurrentAmmo.Clips--;
 }
 
 bool ASTMBaseWeapon::TryToAddAmmo(int32 ClipsAmount)
