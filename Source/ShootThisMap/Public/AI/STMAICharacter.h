@@ -37,6 +37,4 @@ protected:
     float HealthVisibilityDistance = 10000.0f;
     
 private:
-    
-	
 };

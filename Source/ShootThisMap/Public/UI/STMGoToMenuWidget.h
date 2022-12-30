@@ -22,5 +22,4 @@ private:
 protected:
     UPROPERTY(meta = (BindWidget))
     TObjectPtr<UButton> GoToMenuButton;
-    
 };

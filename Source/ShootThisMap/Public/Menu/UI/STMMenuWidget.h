@@ -55,5 +55,4 @@ protected:
 private:
     UPROPERTY()
     TArray<TObjectPtr<USTMLevelItemWidget>> LevelItemWidgets;
-
 };

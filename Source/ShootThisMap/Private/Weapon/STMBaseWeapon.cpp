@@ -138,7 +138,7 @@ bool ASTMBaseWeapon::CanReload() const
     return CurrentAmmo.Bullets < DefaultAmmo.Bullets && CurrentAmmo.Clips > 0;
 }
 
-UNiagaraComponent* ASTMBaseWeapon::SpawnMuzzleFX()
+UNiagaraComponent* ASTMBaseWeapon::SpawnMuzzleFX() const
 {
     return UNiagaraFunctionLibrary::SpawnSystemAttached(MuzzleFX, WeaponMesh, MuzzleSocketName,
         FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::SnapToTarget, true);

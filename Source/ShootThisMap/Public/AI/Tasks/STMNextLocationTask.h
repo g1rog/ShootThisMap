@@ -26,5 +26,4 @@ protected:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (EditCondition = "!SelfCenter"))
     FBlackboardKeySelector CenterActorKey;
-   
 };

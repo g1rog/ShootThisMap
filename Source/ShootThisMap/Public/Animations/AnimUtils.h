@@ -11,12 +11,11 @@ class AnimUtils
 {
 public:
     template <NotifyClass Type>
-    static constexpr auto FindNotifyByClass(const TObjectPtr<UAnimSequenceBase>& Animation)
+    FORCEINLINE static constexpr auto FindNotifyByClass(const TObjectPtr<UAnimSequenceBase>& Animation)
 		-> TObjectPtr<Type>
     {
         if (!Animation) return nullptr;
-        const auto NotifyEvents = Animation->Notifies;
-        for (const auto& NotifyEvent : NotifyEvents)
+        for (const auto& NotifyEvent : Animation->Notifies)
         {
             if (const auto AnimNotify = Cast<Type>(NotifyEvent.Notify))
                 return AnimNotify;

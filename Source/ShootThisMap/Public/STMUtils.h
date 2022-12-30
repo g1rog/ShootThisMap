@@ -14,8 +14,7 @@ class STMUtils
 {
 public:
     template <STMComponent ComponentType>
-	//template <typename ComponentType>
-    static constexpr auto GetSTMPlayerComponent(const TObjectPtr<AActor>& PlayerPawn)
+    FORCEINLINE static constexpr auto GetSTMPlayerComponent(const TObjectPtr<AActor>& PlayerPawn)
 		-> TObjectPtr<ComponentType>
     {
         if (!PlayerPawn) return nullptr;
@@ -23,7 +22,7 @@ public:
         return Component ? Cast<ComponentType>(Component) : nullptr;  
     }
     
-    static bool AreEnemies(const TObjectPtr<AController>& FirstController,
+    FORCEINLINE static bool AreEnemies(const TObjectPtr<AController>& FirstController,
                            const TObjectPtr<AController>& SecondController)
     {
         if (!FirstController || !SecondController || FirstController == SecondController) return false;
@@ -34,5 +33,5 @@ public:
             FirstPlayerState->GetTeamID() != SecondPlayerState->GetTeamID();
     }
     
-    static FText TextFromInt(const int32 Number) { return FText::AsNumber(Number); }
+    FORCEINLINE static FText TextFromInt(const int32 Number) { return FText::AsNumber(Number); }
 };

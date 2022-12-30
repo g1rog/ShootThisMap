@@ -12,5 +12,4 @@ class SHOOTTHISMAP_API ASTMMenuPlayerController : public APlayerController
 
 public:
 	virtual void BeginPlay() override;
-    
 };

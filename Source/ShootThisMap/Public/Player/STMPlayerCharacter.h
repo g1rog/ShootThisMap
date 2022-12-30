@@ -37,8 +37,7 @@ private:
 	void OnStartRunning();
 	void OnStopRunning();
     void CheckCameraOverlap() const;
-    
-    
+
 public:
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")

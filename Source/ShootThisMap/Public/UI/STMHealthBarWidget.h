@@ -30,6 +30,4 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     FLinearColor BadColor = FColor::Red;
-    
-	
 };

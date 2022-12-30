@@ -51,5 +51,4 @@ protected:
     
 private:
 	FLevelData LevelData;
-	
 };

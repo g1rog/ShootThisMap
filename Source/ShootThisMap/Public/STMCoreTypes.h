@@ -134,5 +134,4 @@ struct FLevelData
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
     TObjectPtr<UTexture2D> LevelThumb;
-
 };

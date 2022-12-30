@@ -24,5 +24,4 @@ protected:
     float Probability = 0.5f;
 
 private:
-    
 };

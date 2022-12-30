@@ -27,5 +27,4 @@ protected:
 private:
 	TObjectPtr<ASTMGameModeBase> GetSTMGameMode() const;
 	TObjectPtr<ASTMPlayerState> GetSTMPlayerState() const;
-    
 };

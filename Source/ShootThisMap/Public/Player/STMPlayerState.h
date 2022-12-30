@@ -13,7 +13,7 @@ class SHOOTTHISMAP_API ASTMPlayerState : public APlayerState
 public:
 	void SetTeamID(int32 ID) { TeamID = ID; }
 	void SetTeamColor(const FLinearColor& Color) {  TeamColor = Color; }
-	FLinearColor GetTeamColor() const { return TeamColor; }
+	auto GetTeamColor() const { return TeamColor; }
     
     int32 GetTeamID() const { return TeamID; }
     int32 GetKillsNum() const { return KillsNum; }

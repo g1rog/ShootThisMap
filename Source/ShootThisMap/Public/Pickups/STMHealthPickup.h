@@ -21,6 +21,4 @@ protected:
     float HealthAmount = 100.0f;
     
 private:
-    
-	
 };

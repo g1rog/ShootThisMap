@@ -5,6 +5,6 @@
 float USTMCharacterMovementComponent::GetMaxSpeed() const 
 {
     const float MaxSpeed = Super::GetMaxSpeed();
-	TObjectPtr<ASTMBaseCharacter> Player = Cast<ASTMBaseCharacter>(GetPawnOwner());
+	const TObjectPtr<ASTMBaseCharacter> Player = Cast<ASTMBaseCharacter>(GetPawnOwner());
     return Player && Player->IsRunning() ? MaxSpeed * RunModifier : MaxSpeed;
 }

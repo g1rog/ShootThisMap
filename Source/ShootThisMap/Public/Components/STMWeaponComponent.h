@@ -74,5 +74,4 @@ private:
     TObjectPtr<UAnimMontage> CurrentReloadAnimMontage = nullptr;
     bool EquipAnimInProgress = false;
     bool ReloadAnimInProgress = false;
-		
 };

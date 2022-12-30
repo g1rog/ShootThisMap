@@ -46,5 +46,4 @@ private:
 
 	FTimerHandle RespawnTimerHandle;
     float RotationYaw = 0.0f;
-
 };

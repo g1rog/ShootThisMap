@@ -23,5 +23,4 @@ private:
 protected:
     UPROPERTY(meta = (BindWidget))
     TObjectPtr<UButton> ClearPauseButton;
-    
 };

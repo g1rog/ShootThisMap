@@ -26,5 +26,4 @@ protected:
     TSubclassOf<ASTMBaseWeapon> WeaponType;
 
 private:
-    
 };

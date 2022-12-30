@@ -26,5 +26,4 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
     TObjectPtr<USoundCue> NoAmmoSound;
-	
 };

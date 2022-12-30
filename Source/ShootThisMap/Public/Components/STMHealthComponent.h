@@ -25,7 +25,6 @@ public:
     
     float GetHealth() const { return Health; }
     bool IsHealthFull () const;
-    
     bool TryToAddHealth(const float HealthAmount);
 
 protected:

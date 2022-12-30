@@ -8,8 +8,6 @@
 #include "STMBaseWeapon.generated.h"
 
 class USkeletalMeshComponent;
-//class UNiagaraSystem;
-//class UNiagaraComponent;
 class USoundCue;
 
 UCLASS()
@@ -39,7 +37,7 @@ protected:
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
     void DecreaseAmmo();
     
-    UNiagaraComponent* SpawnMuzzleFX();
+    UNiagaraComponent* SpawnMuzzleFX() const;
 
 	bool IsClipEmpty() const;
     FVector GetMuzzleSocketLocation() const;
@@ -74,5 +72,4 @@ protected:
 
 private:
     FAmmoData CurrentAmmo;
-    
 };

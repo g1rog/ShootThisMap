@@ -13,5 +13,4 @@ class SHOOTTHISMAP_API USTMSpectatorWidget : public UUserWidget
 public:
     UFUNCTION(BlueprintCallable, Category = "UI")
     bool GetRespawnTime(int32& CountDownTime) const;
-	
 };

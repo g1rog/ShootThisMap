@@ -24,6 +24,4 @@ protected:
     FBlackboardKeySelector EnemyActorKey;
 
 private:
-    
-	
 };

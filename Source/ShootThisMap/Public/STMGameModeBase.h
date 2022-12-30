@@ -22,12 +22,10 @@ public:
     
     void Killed(const TObjectPtr<AController>& KillerController, const TObjectPtr<AController>& VictimController) const;
     void RespawnRequest(const TObjectPtr<AController>& Controller);
+	auto GetGameData() const { return GameData; }
 
-    
-	FGameData GetGameData() const { return GameData; }
 	int32 GetCurrentRoundNum() const { return CurrentRound; }
 	int32 GetRoundSecondsRemaining() const { return RoundCountDown; }
-
     
 protected:
 private:
@@ -43,7 +41,6 @@ private:
     void SetMatchState(ESTMMatchState State);
     FLinearColor SetColorByTeam(int32 TeamID) const;
 
-
 public:
     FOnMatchStateChangedSignature OnMatchStateChanged;
 
@@ -56,7 +53,6 @@ protected:
     
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     FGameData GameData;
-
 
 private:
     FTimerHandle GameRoundTimerHandle;

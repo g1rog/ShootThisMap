@@ -21,11 +21,9 @@ protected:
 private:
     void RespawnTimerUpdate();
 
-
 public:
 protected:
 private:
     FTimerHandle RespawnTimerHandle;
     int32 RespawnCountDown;
-    
 };

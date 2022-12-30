@@ -36,9 +36,8 @@ void ASTMBaseCharacter::Tick(const float DeltaTime)
 
 void ASTMBaseCharacter::SetPlayerColor(const FLinearColor& Color) const
 {
-    const auto MaterialInstance = GetMesh()->CreateAndSetMaterialInstanceDynamic(0);
-    if (!MaterialInstance) return;
-    MaterialInstance->SetVectorParameterValue(MaterialColorName, Color);
+    if (const auto MaterialInstance = GetMesh()->CreateAndSetMaterialInstanceDynamic(0))
+		MaterialInstance->SetVectorParameterValue(MaterialColorName, Color);
 }
 
 bool ASTMBaseCharacter::IsRunning() const

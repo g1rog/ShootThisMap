@@ -12,5 +12,4 @@ class SHOOTTHISMAP_API ASTMMenuGameModeBase : public AGameModeBase
     
 public:
     ASTMMenuGameModeBase();
-    
 };
